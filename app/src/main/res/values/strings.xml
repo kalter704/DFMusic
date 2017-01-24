@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DF Music</string>
+
+    <string name="main_toolbar_title">DANCE FAMILY</string>
+    <string name="main_toolbar_subtitle">MUSIC</string>
+
+
+    <string name="admob_app_id">ca-app-pub-6263456605318646~9593782010</string>
+
+    <string-array name="interstitial_ad_unit_id_array">
+        <item>ca-app-pub-6263456605318646/2070515217</item>
+    </string-array>
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "837895031191",
+    "firebase_url": "https://dfmusic-efd82.firebaseio.com",
+    "project_id": "dfmusic-efd82",
+    "storage_bucket": "dfmusic-efd82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837895031191:android:41074b2902676240",
+        "android_client_info": {
+          "package_name": "com.wiretech.df.dfmusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837895031191-0bj3u1ftoft411nbpj57ldgnrta9vq1i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wiretech.df.dfmusic",
+            "certificate_hash": "E6737334664019B26A70A4EA8785145821E495FC"
+          }
+        },
+        {
+          "client_id": "837895031191-tk3hruvou8vtal0lns618j33thn5fse6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzV6Lj0EU9pEr48fj1I8srQAi5DudLOfE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837895031191-tk3hruvou8vtal0lns618j33thn5fse6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
