@@ -4,7 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="text_size_title_toolbar">20sp</dimen>
-    <dimen name="text_size_subtitle_toolbar">16sp</dimen>
+    <dimen name="text_size_subtitle_toolbar">18sp</dimen>
+    <dimen name="text_size_menu_items">18sp</dimen>
 
     <dimen name="text_size_main_list_school_name">18sp</dimen>
     <dimen name="text_size_main_list_playlist">14sp</dimen>

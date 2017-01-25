@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#ffffff</color>
 
+    <color name="colorClear">#00121212</color>
+
     <color name="textColorPrimary">#ffffff</color>
     <color name="textColorSecondary">#ffffff</color>
     <color name="textColorSecondPrimary">#000000</color>
@@ -12,7 +14,10 @@
     <color name="colorWhiteBackground">#ffffff</color>
     <color name="colorBlackBackground">#000000</color>
 
+    <color name="colorPressedMenuButton">#3cffffff</color>
+    <!--
     <color name="colorPressedMenuButton">#1F1F1F</color>
+    -->
     <color name="colorPressedRecyclerItem">#E8E8E8</color>
 
     <color name="snackErrorNetworkColor">#d9000000</color>
