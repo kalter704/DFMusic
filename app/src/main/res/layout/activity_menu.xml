@@ -50,138 +50,156 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            style="@style/menu_item"
-            android:id="@+id/rlShare">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_share_all"/>
+            <RelativeLayout
+                android:id="@+id/rlShare"
+                style="@style/menu_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_share"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_menu_items"
-                android:layout_marginLeft="72dp"
-                android:layout_centerVertical="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_share_all" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="@string/menu_share"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_menu_items" />
 
-        <RelativeLayout
-            style="@style/menu_item"
-            android:id="@+id/tlAbout">
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_info_menu"/>
+            <RelativeLayout
+                android:id="@+id/tlAbout"
+                style="@style/menu_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_about"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_menu_items"
-                android:layout_marginLeft="72dp"
-                android:layout_centerVertical="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_info_menu" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="@string/menu_about"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_menu_items" />
 
-        <RelativeLayout
-            style="@style/menu_item"
-            android:id="@+id/rlSavedAudio">
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_save_menu"/>
+            <RelativeLayout
+                android:id="@+id/rlSavedAudio"
+                style="@style/menu_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_save_audio"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_menu_items"
-                android:layout_marginLeft="72dp"
-                android:layout_centerVertical="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_save_menu" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="@string/menu_save_audio"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_menu_items" />
 
-        <RelativeLayout
-            style="@style/menu_item"
-            android:id="@+id/rlRating">
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_rating_menu"/>
+            <RelativeLayout
+                android:id="@+id/rlRating"
+                style="@style/menu_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_star"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_menu_items"
-                android:layout_marginLeft="72dp"
-                android:layout_centerVertical="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_rating_menu" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="@string/menu_star"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_menu_items" />
 
-        <RelativeLayout
-            style="@style/menu_item"
-            android:id="@+id/rlDonate">
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_money_menu"/>
+            <RelativeLayout
+                android:id="@+id/rlDonate"
+                style="@style/menu_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_donate"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_menu_items"
-                android:layout_marginLeft="72dp"
-                android:layout_centerVertical="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_money_menu" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="@string/menu_donate"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_menu_items" />
 
-        <RelativeLayout
-            style="@style/menu_item"
-            android:id="@+id/rlWrite">
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_vertical_margin"
-                android:src="@drawable/ic_email_menu"/>
+            <RelativeLayout
+                android:id="@+id/rlWrite"
+                style="@style/menu_item">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/menu_write"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_menu_items"
-                android:layout_marginLeft="72dp"
-                android:layout_centerVertical="true" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:src="@drawable/ic_email_menu" />
 
-        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="72dp"
+                    android:text="@string/menu_write"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/text_size_menu_items" />
 
-    </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Версия: alpha"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="12sp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="32dp"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
 

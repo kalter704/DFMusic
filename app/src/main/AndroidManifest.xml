@@ -24,7 +24,9 @@
         <activity
             android:name=".Activityes.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activityes.MenuActivity"></activity>
+        <activity android:name=".Activityes.MenuActivity" />
+        <activity android:name=".Activityes.AboutActivity" />
+        <activity android:name=".Activityes.About2Activity"></activity>
     </application>
 
 </manifest>

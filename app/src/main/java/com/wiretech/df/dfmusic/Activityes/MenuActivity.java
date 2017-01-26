@@ -1,5 +1,6 @@
 package com.wiretech.df.dfmusic.Activityes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,8 +21,6 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.rlRating).setOnClickListener(this);
         findViewById(R.id.rlDonate).setOnClickListener(this);
         findViewById(R.id.rlWrite).setOnClickListener(this);
-
-
     }
 
     @Override
@@ -34,7 +33,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tlAbout:
-
+                startActivity(new Intent(MenuActivity.this, AboutActivity.class));
                 break;
             case R.id.rlSavedAudio:
 

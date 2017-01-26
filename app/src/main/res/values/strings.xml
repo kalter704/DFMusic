@@ -5,6 +5,7 @@
     <string name="main_toolbar_subtitle">MUSIC</string>
 
     <string name="menu_toolbar_title">MENU</string>
+    <string name="about_toolbar_title">INFO PAGE</string>
 
     <string name="menu_share">Рассказать друзьям</string>
     <string name="menu_about">О Dance Family</string>
@@ -12,6 +13,16 @@
     <string name="menu_star">Оценить приложение</string>
     <string name="menu_donate">Помочь проекту</string>
     <string name="menu_write">Написать разработчикам</string>
+
+    <string name="info_page_cd">CRAZY DREAM</string>
+    <string name="info_page_since">Since 2004</string>
+    <string name="info_page_location">Москва, Россия</string>
+    <string name="info_page_peoples">> 1 500 чел.</string>
+    <string name="info_page_site">crazydreamdancefamily.com</string>
+    <string name="info_page_intagram">instagram.com/crazydream_msk</string>
+    <string name="info_page_vk">vk.com/crazy_dream_official</string>
+    <string name="info_page_youtube">youtube.com/qwerty</string>
+    
 
 
     <string name="admob_app_id">ca-app-pub-6263456605318646~9593782010</string>

@@ -15,7 +15,8 @@
         android:layout_marginRight="16dp"
         android:text="CRAZY DREAM"
         android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/text_size_main_list_school_name" />
+        android:textSize="@dimen/text_size_main_list_school_name"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/tvPlayList"
