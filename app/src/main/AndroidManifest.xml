@@ -25,9 +25,9 @@
             android:name=".Activityes.MainActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activityes.MenuActivity" />
-        <activity android:name=".Activityes.AboutActivity" />
-        <activity android:name=".Activityes.About2Activity" />
-        <activity android:name=".Activityes.PlayListActivity"></activity>
+        <activity android:name=".Activityes.AboutCrazyDreamActivity" />
+        <activity android:name=".Activityes.PlayListActivity" />
+        <activity android:name=".Activityes.DFClubsActivity"></activity>
     </application>
 
 </manifest>

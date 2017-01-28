@@ -18,13 +18,16 @@
     <string name="menu_write">Написать разработчикам</string>
 
     <string name="info_page_cd">CRAZY DREAM</string>
-    <string name="info_page_since">Since 2004</string>
-    <string name="info_page_location">Москва, Россия</string>
-    <string name="info_page_peoples">> 1 500 чел.</string>
-    <string name="info_page_site">crazydreamdancefamily.com</string>
-    <string name="info_page_intagram">instagram.com/crazydream_msk</string>
-    <string name="info_page_vk">vk.com/crazy_dream_official</string>
-    <string name="info_page_youtube">youtube.com/qwerty</string>
+    <string name="info_page_cd_since">Since 2004</string>
+    <string name="info_page_cd_location">Москва, Россия</string>
+    <string name="info_page_cd_peoples">> 1 500 чел.</string>
+    <string name="info_page_cd_site">crazydreamdancefamily.com</string>
+    <string name="info_page_cd_intagram">instagram.com/crazydream_msk</string>
+    <string name="info_page_cd_vk">vk.com/crazy_dream_official</string>
+    <string name="info_page_cd_youtube">youtube.com/qwerty</string>
+
+    <string name="clubs_toolbar_title">DANCE FAMILY</string>
+    <string name="clubs_toolbar_subtitle">CLUBS</string>
 
 
     <string name="admob_app_id">ca-app-pub-6263456605318646~9593782010</string>
@@ -32,11 +35,6 @@
     <string-array name="interstitial_ad_unit_id_array">
         <item>ca-app-pub-6263456605318646/2070515217</item>
     </string-array>
-
-
-
-
-
 
 
 

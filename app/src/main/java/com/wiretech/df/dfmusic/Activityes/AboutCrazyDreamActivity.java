@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.wiretech.df.dfmusic.R;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutCrazyDreamActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

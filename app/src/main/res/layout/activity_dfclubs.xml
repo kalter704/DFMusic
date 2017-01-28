@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_between_titles_in_toolbar"
-                android:text="@string/playlist_toolbar_title"
+                android:text="@string/clubs_toolbar_title"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_title_toolbar"
                 android:textStyle="normal|bold" />
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="1dp"
-                android:text="@string/playlist_toolbar_subtitle"
+                android:text="@string/clubs_toolbar_subtitle"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/text_size_subtitle_toolbar" />
         </LinearLayout>

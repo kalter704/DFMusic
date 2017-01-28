@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/info_page_since"
+                        android:text="@string/info_page_cd_since"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/text_size_main_list_playlist" />
 
@@ -142,7 +142,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
-                    android:text="@string/info_page_location"
+                    android:text="@string/info_page_cd_location"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
@@ -161,7 +161,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
-                    android:text="@string/info_page_peoples"
+                    android:text="@string/info_page_cd_peoples"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
@@ -180,7 +180,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
-                    android:text="@string/info_page_site"
+                    android:text="@string/info_page_cd_site"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
@@ -199,7 +199,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
-                    android:text="@string/info_page_intagram"
+                    android:text="@string/info_page_cd_intagram"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
@@ -218,7 +218,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
-                    android:text="@string/info_page_vk"
+                    android:text="@string/info_page_cd_vk"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
@@ -237,7 +237,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
-                    android:text="@string/info_page_youtube"
+                    android:text="@string/info_page_cd_youtube"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
