@@ -33,7 +33,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.tlAbout:
-                startActivity(new Intent(MenuActivity.this, AboutCrazyDreamActivity.class));
+                startActivity(new Intent(MenuActivity.this, DFClubsActivity.class));
                 break;
             case R.id.rlSavedAudio:
 
