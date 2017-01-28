@@ -1,6 +1,7 @@
 package com.wiretech.df.dfmusic.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +9,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wiretech.df.dfmusic.Activityes.PlayListActivity;
 import com.wiretech.df.dfmusic.Classes.PlayList;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
 
-public class PlayListAdapter extends BaseAdapter {
+public class PlayListsAdapter extends BaseAdapter {
     Context context;
     LayoutInflater layoutInflater;
     ArrayList<PlayList> playLists;
 
-    public PlayListAdapter(Context context, ArrayList<PlayList> playLists) {
+    public PlayListsAdapter(Context context, ArrayList<PlayList> playLists) {
         this.context = context;
         this.playLists = playLists;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,6 +55,7 @@ public class PlayListAdapter extends BaseAdapter {
 
         view.setOnClickListener(onClickListener);
 
+        // Временные фоны
         int drawableId = 0;
         switch (i % 3) {
             case 0:
@@ -74,7 +77,9 @@ public class PlayListAdapter extends BaseAdapter {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(context, "id = " + String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, PlayListActivity.class);
+            intent.putExtra(PlayListActivity.PLAYLIST_ID_EXTRA, view.getId());
+            context.startActivity(intent);
         }
     };
 }

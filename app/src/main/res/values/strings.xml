@@ -7,6 +7,9 @@
     <string name="menu_toolbar_title">MENU</string>
     <string name="about_toolbar_title">INFO PAGE</string>
 
+    <string name="playlist_toolbar_title">CRAZY DREAM</string>
+    <string name="playlist_toolbar_subtitle">PLAYLIST</string>
+
     <string name="menu_share">Рассказать друзьям</string>
     <string name="menu_about">О Dance Family</string>
     <string name="menu_save_audio">Сохраненные аудиозаписи</string>
@@ -22,7 +25,6 @@
     <string name="info_page_intagram">instagram.com/crazydream_msk</string>
     <string name="info_page_vk">vk.com/crazy_dream_official</string>
     <string name="info_page_youtube">youtube.com/qwerty</string>
-    
 
 
     <string name="admob_app_id">ca-app-pub-6263456605318646~9593782010</string>
@@ -30,4 +32,69 @@
     <string-array name="interstitial_ad_unit_id_array">
         <item>ca-app-pub-6263456605318646/2070515217</item>
     </string-array>
+
+
+
+
+
+
+
+
+
+    <!--  Временные данные для тестирования  -->
+
+    <string-array name="temp_songs_ids">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+    </string-array>
+
+    <string-array name="temp_songs_names">
+        <item>SONGNAME1</item>
+        <item>SONGNAME2</item>
+        <item>SONGNAME3</item>
+        <item>SONGNAMEaergserhasergsergeasrhaserg4</item>
+        <item>SONGNAME5 sd dfgwe sdgfwe sge sdgwr et</item>
+        <item>SONGNAME1</item>
+        <item>SONGNAME2</item>
+        <item>SONGNAME3</item>
+        <item>SONGNAMEaergserhasergsergeasrhaserg4</item>
+        <item>SONGNAME5 sd dfgwe sdgfwe sge sdgwr et</item>
+        <item>SONGNAME1</item>
+        <item>SONGNAME2</item>
+        <item>SONGNAME3</item>
+        <item>SONGNAMEaergserhasergsergeasrhaserg4</item>
+        <item>SONGNAME5 sd dfgwe sdgfwe sge sdgwr et</item>
+    </string-array>
+
+    <string-array name="temp_songs_lengths">
+        <item>136</item>
+        <item>136</item>
+        <item>121</item>
+        <item>1</item>
+        <item>136</item>
+        <item>136</item>
+        <item>136</item>
+        <item>136</item>
+        <item>136</item>
+        <item>136</item>
+        <item>136</item>
+        <item>136</item>
+        <item>600</item>
+        <item>12335</item>
+        <item>178465</item>
+    </string-array>
+
 </resources>

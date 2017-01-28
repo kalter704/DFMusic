@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
-import com.wiretech.df.dfmusic.Adapters.PlayListAdapter;
+import com.wiretech.df.dfmusic.Adapters.PlayListsAdapter;
 import com.wiretech.df.dfmusic.Classes.PlayList;
 import com.wiretech.df.dfmusic.R;
 
@@ -16,8 +15,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<PlayList> playLists = new ArrayList<>();
-    PlayListAdapter playListAdapter;
+    ArrayList<PlayList> mPlayLists = new ArrayList<>();
+    PlayListsAdapter mPlayListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillDate(){
         for (int i = 0; i < 10; ++i) {
-            playLists.add(new PlayList(i, "PlayList Name", "CRAZY DREAM" + String.valueOf(i)));
+            mPlayLists.add(new PlayList(i, "PlayList Name", "CRAZY DREAM" + String.valueOf(i)));
         }
     }
 
@@ -39,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        playListAdapter = new PlayListAdapter(this, playLists);
+        mPlayListAdapter = new PlayListsAdapter(this, mPlayLists);
 
-        ((ListView) findViewById(R.id.lvMain)).setAdapter(playListAdapter);
+        ((ListView) findViewById(R.id.lvMain)).setAdapter(mPlayListAdapter);
 
         (findViewById(R.id.rlMenu)).setOnClickListener(new View.OnClickListener() {
             @Override
