@@ -11,7 +11,7 @@ public class AboutCrazyDreamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_about_crazy_dream);
 
         findViewById(R.id.rlBack).setOnClickListener(new View.OnClickListener() {
             @Override

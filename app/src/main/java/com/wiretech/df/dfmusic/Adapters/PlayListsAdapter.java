@@ -2,10 +2,12 @@ package com.wiretech.df.dfmusic.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,24 +19,26 @@ import com.wiretech.df.dfmusic.R;
 import java.util.ArrayList;
 
 public class PlayListsAdapter extends BaseAdapter {
-    Context context;
-    LayoutInflater layoutInflater;
-    ArrayList<PlayList> playLists;
+    Context mContext;
+    LayoutInflater mLayoutInflater;
+    ArrayList<PlayList> mPlayLists;
+    PlaylistBackground mPlaylistBackground;
 
     public PlayListsAdapter(Context context, ArrayList<PlayList> playLists) {
-        this.context = context;
-        this.playLists = playLists;
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mContext = context;
+        this.mPlayLists = playLists;
+        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mPlaylistBackground = new PlaylistBackground();
     }
 
     @Override
     public int getCount() {
-        return playLists.size();
+        return mPlayLists.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return playLists.get(i);
+        return mPlayLists.get(i);
     }
 
     @Override
@@ -45,9 +49,9 @@ public class PlayListsAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = layoutInflater.inflate(R.layout.main_item_list, viewGroup, false);
+            view = mLayoutInflater.inflate(R.layout.main_item_list, viewGroup, false);
         }
-        PlayList playList = playLists.get(i);
+        PlayList playList = mPlayLists.get(i);
 
         ((TextView) view.findViewById(R.id.tvSchoolName)).setText(playList.getSchoolName());
         ((TextView) view.findViewById(R.id.tvPlayList)).setText(playList.getName());
@@ -56,21 +60,7 @@ public class PlayListsAdapter extends BaseAdapter {
 
         view.setOnClickListener(onClickListener);
 
-        // Временные фоны
-        int drawableId = 0;
-        switch (i % 3) {
-            case 0:
-                drawableId = R.drawable.tempback2;
-                break;
-            case 1:
-                drawableId = R.drawable.tempback3;
-                break;
-            case 2:
-                drawableId = R.drawable.tempback1;
-                break;
-        }
-
-        view.setBackground(context.getResources().getDrawable(drawableId));
+        view.setBackground(mContext.getResources().getDrawable(mPlaylistBackground.getBackgroundIdRes(i)));
 
         return view;
     }
@@ -78,9 +68,53 @@ public class PlayListsAdapter extends BaseAdapter {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, PlayActivity.class);
+            Intent intent = new Intent(mContext, PlayActivity.class);
             intent.putExtra(PlayListActivity.PLAYLIST_ID_EXTRA, view.getId());
-            context.startActivity(intent);
+            mContext.startActivity(intent);
         }
     };
+
+    private class PlaylistBackground {
+        private static final String BACKGROUND_PREF = "playlists_background_pref";
+        private static final String SAVED_INDEX = "saved_index";
+
+        private int index;
+        private int backgrounds[] = {
+                R.drawable.p_1,
+                R.drawable.p_2,
+                R.drawable.p_3,
+                R.drawable.p_4,
+                R.drawable.p_5,
+                R.drawable.p_6,
+                R.drawable.p_7,
+                R.drawable.p_8,
+                R.drawable.p_9,
+                R.drawable.p_10,
+                R.drawable.p_11,
+                R.drawable.p_12,
+                R.drawable.p_13,
+                R.drawable.p_14,
+                R.drawable.p_15,
+                R.drawable.p_16,
+                R.drawable.p_17
+        };
+
+        public PlaylistBackground() {
+            SharedPreferences sPref = mContext.getSharedPreferences(BACKGROUND_PREF, Context.MODE_PRIVATE);
+
+            index = sPref.getInt(SAVED_INDEX, 0);
+
+            if (index < 0) {
+                index = backgrounds.length - 1;
+            }
+
+            SharedPreferences.Editor editor = sPref.edit();
+            editor.putInt(SAVED_INDEX, index - 1);
+            editor.apply();
+        }
+
+        public int getBackgroundIdRes(int i) {
+            return backgrounds[(index + i) % backgrounds.length];
+        }
+    }
 }

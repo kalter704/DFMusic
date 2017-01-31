@@ -2,10 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainCoordLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/tempbackscreen"
+    android:background="@drawable/background_play_cd"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -94,11 +95,11 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="96dp"
-                android:src="@drawable/tempalbumimg"/>
+                android:src="@drawable/default_album"/>
 
             <TextView
                 style="@style/play_song_text"
@@ -150,8 +151,9 @@
                     android:layout_toStartOf="@+id/tvSongLength"
                     android:paddingEnd="8dip"
                     android:paddingStart="8dip"
-                    android:progress="30"
-                    android:secondaryProgress="70"/>
+                    android:progress="0"
+                    android:secondaryProgress="20"
+                    />
 
 
                 <TextView
