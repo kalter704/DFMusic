@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wiretech.df.dfmusic.Activityes.AboutCrazyDreamActivity;
+import com.wiretech.df.dfmusic.Activityes.About.AboutCrazyDreamActivity;
 import com.wiretech.df.dfmusic.R;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

@@ -29,6 +29,9 @@
     <string name="clubs_toolbar_title">DANCE FAMILY</string>
     <string name="clubs_toolbar_subtitle">CLUBS</string>
 
+    <string name="play_toolbar_title">CRAZY DREAM</string>
+    <string name="play_toolbar_subtitle">NOW PLAYING</string>
+
 
     <string name="admob_app_id">ca-app-pub-6263456605318646~9593782010</string>
 

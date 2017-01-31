@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wiretech.df.dfmusic">
+          package="com.wiretech.df.dfmusic">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -16,18 +16,20 @@
             android:name=".Activityes.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".Activityes.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Activityes.MenuActivity" />
-        <activity android:name=".Activityes.AboutCrazyDreamActivity" />
-        <activity android:name=".Activityes.PlayListActivity" />
-        <activity android:name=".Activityes.DFClubsActivity"></activity>
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Activityes.MenuActivity"/>
+        <activity android:name=".Activityes.About.AboutCrazyDreamActivity"/>
+        <activity android:name=".Activityes.PlayListActivity"/>
+        <activity android:name=".Activityes.DFClubsActivity"/>
+        <activity android:name=".Activityes.PlayActivity">
+        </activity>
     </application>
 
 </manifest>

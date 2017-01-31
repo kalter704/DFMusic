@@ -10,6 +10,10 @@
     <dimen name="text_size_main_list_school_name">16sp</dimen>
     <dimen name="text_size_main_list_playlist">14sp</dimen>
 
-
     <dimen name="space_between_titles_in_toolbar">-7dp</dimen>
+    
+    <dimen name="text_name_song_in_play">20sp</dimen>
+    <dimen name="text_singer_name_in_play">16sp</dimen>
+
+    <dimen name="text_song_time">12sp</dimen>
 </resources>

@@ -1,7 +1,9 @@
 package com.wiretech.df.dfmusic.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +11,21 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wiretech.df.dfmusic.Activityes.PlayListActivity;
-import com.wiretech.df.dfmusic.Classes.PlayList;
+import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.Classes.Song;
 import com.wiretech.df.dfmusic.R;
-
 
 import java.util.ArrayList;
 
 public class SongsAdapter extends BaseAdapter {
 
+    Activity mActivity;
     Context mContext;
     LayoutInflater mLayoutInflater;
     ArrayList<Song> mSongs;
 
-    public SongsAdapter(Context context, ArrayList<Song> songs) {
+    public SongsAdapter(Activity activity, Context context, ArrayList<Song> songs) {
+        mActivity = activity;
         mContext = context;
         mSongs = songs;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -65,7 +67,13 @@ public class SongsAdapter extends BaseAdapter {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(mContext, "Song id = " + String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "Song id = " + String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
+            //mContext.startActivity(new Intent(mContext, PlayActivity.class));
+            Intent intent = new Intent();
+            intent.putExtra(PlayActivity.SONG_ID_EXTRA_RESULT, view.getId());
+            Log.d("SongsAdapter", "Song id = " + view.getId());
+            mActivity.setResult(Activity.RESULT_OK, intent);
+            mActivity.finish();
         }
     };
 }

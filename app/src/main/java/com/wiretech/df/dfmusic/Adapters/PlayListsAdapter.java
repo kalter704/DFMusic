@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.Activityes.PlayListActivity;
 import com.wiretech.df.dfmusic.Classes.PlayList;
 import com.wiretech.df.dfmusic.R;
@@ -77,7 +78,7 @@ public class PlayListsAdapter extends BaseAdapter {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, PlayListActivity.class);
+            Intent intent = new Intent(context, PlayActivity.class);
             intent.putExtra(PlayListActivity.PLAYLIST_ID_EXTRA, view.getId());
             context.startActivity(intent);
         }
