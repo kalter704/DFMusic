@@ -22,4 +22,9 @@
 
     <color name="snackErrorNetworkColor">#d9000000</color>
     <color name="snackLikeColor">#ffffff</color>
+
+    <color name="color_temp_red">#ff0000</color>
+    <color name="color_temp_green">#08ff00</color>
+    <color name="color_temp_blue">#0022ff</color>
+
 </resources>
