@@ -160,7 +160,19 @@
                         />
                     -->
 
+                    <SeekBar
+                        android:id="@+id/seekBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingEnd="8dip"
+                        android:paddingStart="8dip"
+                        android:progress="15"
+                        android:max="100"
+                        android:progressDrawable="@drawable/scrubber_progress"
+                        android:secondaryProgress="30"/>
 
+                    <!--
                     <SeekBar
                         android:id="@+id/seekBar"
                         android:layout_width="match_parent"
@@ -171,6 +183,8 @@
                         android:progress="15"
                         android:max="100"
                         android:secondaryProgress="30"/>
+                    -->
+
 
                 </RelativeLayout>
 
