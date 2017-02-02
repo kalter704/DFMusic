@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillDate(){
-        for (int i = 0; i < 10; ++i) {
-            mPlayLists.add(new PlayList(i, "PlayList Name", "CRAZY DREAM" + String.valueOf(i)));
+        String[] clubs = getResources().getStringArray(R.array.clubs);
+        for (int i = 0; i < clubs.length; ++i) {
+            mPlayLists.add(new PlayList(i, "PlayList Name", clubs[i]));
         }
     }
 

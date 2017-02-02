@@ -39,6 +39,17 @@
         <item>ca-app-pub-6263456605318646/2070515217</item>
     </string-array>
 
+    <string-array name="clubs">
+        <item>BLACK VELVET</item>
+        <item>CRAZY DREAM</item>
+        <item>FLASH LIGHT</item>
+        <item>FREE STEPS</item>
+        <item>JUST DANCE</item>
+        <item>LUCKY JAM</item>
+        <item>MY COMMUNITY</item>
+        <item>UNISTREAM</item>
+    </string-array>
+
 
 
 

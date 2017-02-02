@@ -12,21 +12,14 @@ import java.util.ArrayList;
 
 public class DFClubsActivity extends AppCompatActivity {
 
-    ArrayList<String> mClubs = new ArrayList<String>() {{
-        add("BLACK VELVET");
-        add("CRAZY DREAM");
-        add("FLASH LIGHT");
-        add("FREE STEPS");
-        add("JUST DANCE");
-        add("LUCKY JAM");
-        add("MY COMMUNITY");
-        add("UNISTREAM");
-    }};
+    private String[] mClubs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dfclubs);
+
+        mClubs = getResources().getStringArray(R.array.clubs);
 
         ClubsAdapter clubsAdapter = new ClubsAdapter(this, mClubs);
 

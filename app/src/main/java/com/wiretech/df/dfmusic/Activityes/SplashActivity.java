@@ -8,6 +8,9 @@ import com.wiretech.df.dfmusic.R;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private boolean isEndTime = false;
+    private boolean isAppHasFocus = false;
+
     private int mSecForSplashActivity = 1;
     private int mIterationTime = 100;
 
@@ -24,9 +27,8 @@ public class SplashActivity extends AppCompatActivity {
                         sleep(mIterationTime);
                         splashTimer += mIterationTime;
                     }
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class)
-                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    isEndTime = true;
+                    startMainActivity();
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
@@ -39,6 +41,26 @@ public class SplashActivity extends AppCompatActivity {
 
         splashTimer.start();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isAppHasFocus = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isAppHasFocus = false;
+    }
+
+    private void startMainActivity() {
+
+        // выполнение этого кода происходит после провеки условий
+        startActivity(new Intent(SplashActivity.this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
 }

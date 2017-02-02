@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 public class ClubsAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<String> mClubs;
+    private String[] mClubs;
     private LayoutInflater mLayoutInflater;
 
-    public ClubsAdapter(Context context, ArrayList<String> clubs) {
+    public ClubsAdapter(Context context, String[] clubs) {
         mContext = context;
         mClubs = clubs;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -26,12 +26,12 @@ public class ClubsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mClubs.size();
+        return mClubs.length;
     }
 
     @Override
     public Object getItem(int i) {
-        return mClubs.get(i);
+        return mClubs[i];
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ClubsAdapter extends BaseAdapter {
         }
 
         ((TextView) view.findViewById(R.id.tvPos)).setText(String.valueOf(i + 1));
-        ((TextView) view.findViewById(R.id.tvName)).setText(mClubs.get(i));
+        ((TextView) view.findViewById(R.id.tvName)).setText(mClubs[i]);
         view.setId(i);
         view.setOnClickListener(onClickListener);
 
