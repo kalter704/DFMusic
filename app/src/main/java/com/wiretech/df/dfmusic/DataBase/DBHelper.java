@@ -27,10 +27,10 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private void createPlaylistTable(SQLiteDatabase db) {
-        db.execSQL("create table " + PLAYLIST_TABLE_NAME + "("
+        db.execSQL("create table " + PLAYLIST_TABLE_NAME + " ("
                 + "id integer primary key autoincrement,"
                 + "title text,"
-                + "pos integer,"
+                + "pos integer"
                 + ");");
     }
 
