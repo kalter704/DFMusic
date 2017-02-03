@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.wiretech.df.dfmusic.Adapters.PlayListsAdapter;
-import com.wiretech.df.dfmusic.Classes.PlayList;
+import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;

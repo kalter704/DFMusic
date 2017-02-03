@@ -1,4 +1,4 @@
-package com.wiretech.df.dfmusic.Classes;
+package com.wiretech.df.dfmusic.API.Classes;
 
 public class Song {
 

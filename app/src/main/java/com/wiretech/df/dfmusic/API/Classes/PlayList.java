@@ -1,15 +1,24 @@
-package com.wiretech.df.dfmusic.Classes;
+package com.wiretech.df.dfmusic.API.Classes;
 
 public class PlayList {
     private int mId;
     private String mName;
     private String mSchoolName;
-    private String mLastUpdate;
+    private long mLastUpdate;
+    private int pos;
 
     public PlayList(int id, String name, String schoolName) {
         this.mId = id;
         this.mName = name;
         this.mSchoolName = schoolName;
+    }
+
+    public PlayList(int id, String name, String schoolName, long lastUpdate, int pos) {
+        mId = id;
+        mName = name;
+        mSchoolName = schoolName;
+        mLastUpdate = lastUpdate;
+        this.pos = pos;
     }
 
     public int getId() {
@@ -24,8 +33,12 @@ public class PlayList {
         return mSchoolName;
     }
 
-    public String getLastUpdate() {
+    public long getLastUpdate() {
         return mLastUpdate;
+    }
+
+    public int getPos() {
+        return pos;
     }
 
     public void setId(int mId) {
@@ -40,7 +53,11 @@ public class PlayList {
         this.mSchoolName = mSchool;
     }
 
-    public void setLastUpdate(String mLastUpdate) {
+    public void setLastUpdate(long mLastUpdate) {
         this.mLastUpdate = mLastUpdate;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 }

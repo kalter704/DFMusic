@@ -6,12 +6,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.wiretech.df.dfmusic.API.Classes.PlayList;
+import com.wiretech.df.dfmusic.API.Interfaces.OnResponsePlaylistsListener;
+import com.wiretech.df.dfmusic.API.MusicServiceAPI;
 import com.wiretech.df.dfmusic.Classes.NetworkConnection;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
-public class SplashActivity extends AppCompatActivity {
+import java.util.List;
+
+public class SplashActivity extends AppCompatActivity implements OnResponsePlaylistsListener {
 
     private boolean isEndTime = false;
     private boolean isAppHasFocus = false;
@@ -28,6 +34,7 @@ public class SplashActivity extends AppCompatActivity {
 
         DBManager.with(this);
         NetworkConnection.with(this);
+        MusicServiceAPI.setOnReponsePlaylistsListener(this);
 
         splashTimer.start();
 
@@ -47,6 +54,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void downloadDatas() {
         // !!!!!!!!!!!!!!!!!!!
+        MusicServiceAPI.requestPlaylists();
     }
 
     @Override
@@ -61,10 +69,16 @@ public class SplashActivity extends AppCompatActivity {
         isAppHasFocus = false;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MusicServiceAPI.unsetOnReponsePlaylistsListener(this);
+    }
+
     private void startMainActivity() {
 
         // выполнение этого кода происходит после провеки условий
-        if (!isDBEmpty) {
+        if (isEndDownload) {
             try {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -75,6 +89,14 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onResponse(List<PlayList> playLists) {
+        Log.d("SplashActivity", "onResponse");
+        //  Добавить результат в базу
+        isEndDownload = true;
+        startMainActivity();
     }
 
     Thread splashTimer = new Thread() {

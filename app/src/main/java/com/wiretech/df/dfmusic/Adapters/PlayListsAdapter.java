@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.Activityes.PlayListActivity;
-import com.wiretech.df.dfmusic.Classes.PlayList;
+import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;

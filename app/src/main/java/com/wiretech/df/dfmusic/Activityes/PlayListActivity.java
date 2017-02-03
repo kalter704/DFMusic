@@ -1,17 +1,13 @@
 package com.wiretech.df.dfmusic.Activityes;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.InterstitialAd;
 import com.wiretech.df.dfmusic.Adapters.SongsAdapter;
-import com.wiretech.df.dfmusic.Classes.Song;
+import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
