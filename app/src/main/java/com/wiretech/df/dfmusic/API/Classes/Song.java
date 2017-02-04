@@ -1,7 +1,6 @@
 package com.wiretech.df.dfmusic.API.Classes;
 
 public class Song {
-
     private int mId;
     private int mPos;
     private String mName;
@@ -13,6 +12,15 @@ public class Song {
         mId = id;
         mName = name;
         setLength(length);
+    }
+
+    public Song(int id, String name, String length, int pos, String songURL, String albumURL) {
+        mId = id;
+        mPos = pos;
+        mName = name;
+        mLength = length;
+        mSongURL = songURL;
+        mAlbumURL = albumURL;
     }
 
     public void setId(int id) {

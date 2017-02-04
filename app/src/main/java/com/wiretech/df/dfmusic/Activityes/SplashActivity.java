@@ -8,7 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.wiretech.df.dfmusic.API.Classes.MusicServerResponse;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
+import com.wiretech.df.dfmusic.API.Classes.PlayListResponse;
+import com.wiretech.df.dfmusic.API.Interfaces.OnResponseAPIListener;
 import com.wiretech.df.dfmusic.API.Interfaces.OnResponsePlaylistsListener;
 import com.wiretech.df.dfmusic.API.MusicServiceAPI;
 import com.wiretech.df.dfmusic.Classes.NetworkConnection;
@@ -17,7 +20,9 @@ import com.wiretech.df.dfmusic.R;
 
 import java.util.List;
 
-public class SplashActivity extends AppCompatActivity implements OnResponsePlaylistsListener {
+public class SplashActivity extends AppCompatActivity implements OnResponseAPIListener {
+
+    private final String LOG_TAG = "SplashActivity";
 
     private boolean isEndTime = false;
     private boolean isAppHasFocus = false;
@@ -34,7 +39,8 @@ public class SplashActivity extends AppCompatActivity implements OnResponsePlayl
 
         DBManager.with(this);
         NetworkConnection.with(this);
-        MusicServiceAPI.setOnReponsePlaylistsListener(this);
+        MusicServiceAPI.with(this);
+        MusicServiceAPI.setOnResponseAPIListener(this);
 
         splashTimer.start();
 
@@ -42,19 +48,29 @@ public class SplashActivity extends AppCompatActivity implements OnResponsePlayl
         //isEndDownload = h;
         isDBEmpty = !h;
 
-        if (isDBEmpty && NetworkConnection.hasConnectionToNetwork()) {
-            // cкачивание данных
-            downloadDatas();
+        Log.d(LOG_TAG, "isDBEmpty = " + isDBEmpty);
+
+        if (isDBEmpty) {
+            if (NetworkConnection.hasConnectionToNetwork()) {
+                // cкачивание данных
+                downloadDatas();
+            } else {
+                // диалог об отсутствии интренета
+                showErrorDialog();
+            }
         } else {
-            // диалог об отсутствии интренета
-            showErrorDialog();
+            if (NetworkConnection.hasConnectionToNetwork()) {
+                MusicServiceAPI.requestPlaylists();
+            } else {
+                isEndDownload = true;
+                startMainActivity();
+            }
         }
 
     }
 
     private void downloadDatas() {
-        // !!!!!!!!!!!!!!!!!!!
-        MusicServiceAPI.requestPlaylists();
+        MusicServiceAPI.requestPlaylistsAndSongs();
     }
 
     @Override
@@ -72,7 +88,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponsePlayl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MusicServiceAPI.unsetOnReponsePlaylistsListener(this);
+        MusicServiceAPI.unsetOnResponseAPIListener(this);
     }
 
     private void startMainActivity() {
@@ -92,12 +108,24 @@ public class SplashActivity extends AppCompatActivity implements OnResponsePlayl
     }
 
     @Override
-    public void onResponse(List<PlayList> playLists) {
+    public void onResponse(int action, MusicServerResponse musicServerResponse) {
         Log.d("SplashActivity", "onResponse");
-        //  Добавить результат в базу
-        isEndDownload = true;
-        startMainActivity();
+
+        if (action == MusicServiceAPI.ALL_DATAS) {
+            DBManager.fillDB(musicServerResponse);
+            isEndDownload = true;
+            startMainActivity();
+        } else if (action == MusicServiceAPI.ONLY_PLAYLISTS) {
+            // Сравнить данные по плейлистам с данными БД!!!!!!!!!!!!!!
+            !!!!!!!!!!!!!!!!!!!!!!!
+        }
     }
+
+    @Override
+    public void onError() {
+        Log.d("SplashActivity", "Error");
+    }
+
 
     Thread splashTimer = new Thread() {
         public void run() {
@@ -112,9 +140,6 @@ public class SplashActivity extends AppCompatActivity implements OnResponsePlayl
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
-            }
-            finally {
-                //finish();
             }
         }
     };
