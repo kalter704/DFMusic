@@ -30,7 +30,7 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    private static final String SERVER_DOMAIN = "http://2d149c87.ngrok.io";
+    private static final String SERVER_DOMAIN = "http://534431f5.ngrok.io";
     private static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
@@ -38,6 +38,7 @@ public class MusicServiceAPI {
 
     public static final int ALL_DATAS = 1;
     public static final int ONLY_PLAYLISTS = 2;
+    public static final int UPDATE_PLAYLISTS = 3;
 
     private static Context sContext;
 
@@ -64,8 +65,15 @@ public class MusicServiceAPI {
     public static void requestPlaylists() {
         sMusicServerResponse = new MusicServerResponse();
         currentAction = PLAYLIST_ACTION_ID;
-        globalAction = ALL_DATAS;
+        globalAction = ONLY_PLAYLISTS;
         new BackgroundRequest().execute(SERVER_URL + "getplaylists/");
+    }
+
+    public static void requestForUpdatePlaylists(MusicServerResponse m) {
+        sMusicServerResponse = m;
+        sMusicServerResponse.moveToFirst();
+        globalAction = UPDATE_PLAYLISTS;
+        requestSongs();
     }
 
     public static void requestSongs() {

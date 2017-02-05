@@ -92,9 +92,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
     }
 
     private void startMainActivity() {
-
-        // выполнение этого кода происходит после провеки условий
-        if (isEndDownload) {
+        if (isEndDownload && isEndTime && isAppHasFocus) {
             try {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -110,14 +108,27 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
     @Override
     public void onResponse(int action, MusicServerResponse musicServerResponse) {
         Log.d("SplashActivity", "onResponse");
-
         if (action == MusicServiceAPI.ALL_DATAS) {
             DBManager.fillDB(musicServerResponse);
             isEndDownload = true;
             startMainActivity();
         } else if (action == MusicServiceAPI.ONLY_PLAYLISTS) {
             // Сравнить данные по плейлистам с данными БД!!!!!!!!!!!!!!
-            !!!!!!!!!!!!!!!!!!!!!!!
+            List<Integer> diff = DBManager.getIndexsOfDifferentPlaylists(musicServerResponse);
+            if (diff.size() > 0) {
+                MusicServerResponse m = new MusicServerResponse();
+                for (int i = 0; i < diff.size(); ++i) {
+                    m.addPlaylist(musicServerResponse.getPlaylistByIndex(diff.get(i)));
+                }
+                MusicServiceAPI.requestForUpdatePlaylists(m);
+            } else {
+                isEndDownload = true;
+                startMainActivity();
+            }
+        } else if (action == MusicServiceAPI.UPDATE_PLAYLISTS) {
+            DBManager.updatePlaylists(musicServerResponse);
+            isEndDownload = true;
+            startMainActivity();
         }
     }
 

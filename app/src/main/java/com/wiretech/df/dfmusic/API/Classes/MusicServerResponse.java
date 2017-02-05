@@ -24,8 +24,16 @@ public class MusicServerResponse {
         }
     }
 
+    public void moveToFirst() {
+        index = 0;
+    }
+
     public void nextPlaylist() {
         ++index;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public int getCount() {
@@ -34,6 +42,10 @@ public class MusicServerResponse {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public PlayList getPlaylistByIndex(int i) {
+        return mPlayLists.get(i);
     }
 
     public List<PlayList> getPlayLists() {
