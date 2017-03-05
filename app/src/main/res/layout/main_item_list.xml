@@ -14,9 +14,10 @@
         android:layout_marginBottom="32dp"
         android:layout_marginRight="16dp"
         android:text="CRAZY DREAM"
+        android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
         android:textSize="@dimen/text_size_main_list_school_name"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"/>
 
     <TextView
         android:id="@+id/tvPlayList"
@@ -26,7 +27,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:text="PLAYLIST"
+        android:text="Playlist"
+        android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/text_size_main_list_playlist" />
+        android:textSize="@dimen/text_size_main_list_playlist"/>
 </RelativeLayout>

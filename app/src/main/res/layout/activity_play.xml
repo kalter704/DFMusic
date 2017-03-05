@@ -39,12 +39,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvTitle"
+                android:id="@+id/tvSchoolTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_between_titles_in_toolbar"
                 android:text="@string/play_toolbar_title"
+                android:textAllCaps="true"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_title_toolbar"
                 android:textStyle="normal|bold"/>
@@ -98,9 +99,10 @@
                 android:layout_height="240dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="96dp"
-                android:src="@drawable/default_album"/>
+                android:src="@drawable/default_album_v1"/>
 
             <TextView
+                android:id="@+id/tvSongTitle"
                 style="@style/play_song_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,6 +115,7 @@
                 android:textStyle="normal|bold"/>
 
             <TextView
+                android:id="@+id/tvSinger"
                 style="@style/play_song_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,7 +135,7 @@
                 android:layout_marginTop="12dp">
 
                 <TextView
-                    android:id="@+id/tvPlayNow"
+                    android:id="@+id/tvNowPlay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -144,7 +147,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/tvPlayNow"
+                    android:layout_toEndOf="@+id/tvNowPlay"
                     android:layout_toStartOf="@+id/tvSongLength">
 
 
@@ -165,10 +168,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:max="100"
                         android:paddingEnd="8dip"
                         android:paddingStart="8dip"
                         android:progress="15"
-                        android:max="100"
                         android:progressDrawable="@drawable/scrubber_progress"
                         android:secondaryProgress="30"/>
 
@@ -209,12 +212,11 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/rlSave"
+                    android:id="@+id/rlUnSave"
                     style="@style/play_song_control_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:visibility="gone">
+                    android:layout_marginRight="5dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -226,11 +228,12 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlUnSave"
+                    android:id="@+id/rlSave"
                     style="@style/play_song_control_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -304,12 +307,11 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlRepeatOn"
+                    android:id="@+id/rlRepeatOff"
                     style="@style/play_song_control_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:visibility="gone">
+                    android:layout_marginLeft="5dp">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -321,11 +323,12 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rlRepeatOff"
+                    android:id="@+id/rlRepeatOn"
                     style="@style/play_song_control_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp">
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"

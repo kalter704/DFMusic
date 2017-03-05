@@ -168,9 +168,9 @@ public class DBManager {
         SQLiteDatabase db = sDBHelper.getWritableDatabase();
         Cursor c = db.query(DBHelper.PLAYLIST_TABLE_NAME, null, null, null, null, null, null);
         if (c.moveToFirst()) {
-            int lastUpadatecolIndex = c.getColumnIndex(DBHelper.PLAYLIST_LAST_UPDATE_FIELD);
+            int lastUpadateColIndex = c.getColumnIndex(DBHelper.PLAYLIST_LAST_UPDATE_FIELD);
             do {
-                String dbStr = c.getString(lastUpadatecolIndex);
+                String dbStr = c.getString(lastUpadateColIndex);
                 String reqStr = m.getCurrentPlaylist().getLastUpdate();
                 if (!dbStr.equals(reqStr)) {
                     result.add(m.getIndex());
@@ -179,6 +179,98 @@ public class DBManager {
             } while (c.moveToNext());
         }
         return result;
+    }
+
+    public static List<PlayList> getPlayListsNames() {
+        List<PlayList> playListsNamesAndIds = new ArrayList<>();
+
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        Cursor c = db.query(DBHelper.PLAYLIST_TABLE_NAME, null, null, null, null, null, DBHelper.PLAYLIST_POSITION_FIELD);
+        if (c.moveToFirst()) {
+            int nameIndex = c.getColumnIndex(DBHelper.PLAYLIST_TITLE_FIELD);
+            int idIndex = c.getColumnIndex("id");
+            do {
+                playListsNamesAndIds.add(new PlayList(c.getInt(idIndex), c.getString(nameIndex)));
+            } while (c.moveToNext());
+        }
+
+        return playListsNamesAndIds;
+    }
+
+    public static List<Song> getSongsByPlayListId(int playListId) {
+        List<Song> songs = new ArrayList<>();
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        String selection = DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = ?";
+        String[] selectionArgs = new String[] { String.valueOf(playListId) };
+        Cursor c = db.query(DBHelper.SONG_TABLE_NAME, null, selection, selectionArgs, null, null, DBHelper.SONG_POSITION_FIELD);
+        logCursor(c);
+        if (c.moveToFirst()) {
+            int idIndex = c.getColumnIndex("id");
+            int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
+            int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
+            do {
+                songs.add(new Song(
+                        c.getInt(idIndex),
+                        c.getString(nameIndex),
+                        c.getInt(lengthIndex)
+                ));
+            } while (c.moveToNext());
+        }
+        return songs;
+    }
+
+    public static Song getSongById(int id) {
+        Song song = null;
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        String selection = "id = ?";
+        String[] selectionArgs = new String[] { String.valueOf(id) };
+        Cursor c = db.query(DBHelper.SONG_TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        logCursor(c);
+        if (c.moveToFirst()) {
+            int idIndex = c.getColumnIndex("id");
+            int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
+            int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
+            int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
+            int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
+            int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
+            song = new Song(
+                    c.getInt(idIndex),
+                    c.getString(nameIndex),
+                    c.getString(lengthIndex),
+                    c.getInt(posIndex),
+                    c.getString(songUrlIndex),
+                    c.getString(albumUrlIndex),
+                    Song.INT_FLAG
+            );
+        }
+        return song;
+    }
+
+    public static Song getFirstSongByPlayListId(int playListId) {
+        Song song = null;
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        String selection = DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = ?";
+        String[] selectionArgs = new String[] { String.valueOf(playListId) };
+        Cursor c = db.query(DBHelper.SONG_TABLE_NAME, null, selection, selectionArgs, null, null, DBHelper.SONG_POSITION_FIELD);
+        logCursor(c);
+        if (c.moveToFirst()) {
+            int idIndex = c.getColumnIndex("id");
+            int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
+            int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
+            int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
+            int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
+            int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
+            song = new Song(
+                    c.getInt(idIndex),
+                    c.getString(nameIndex),
+                    c.getString(lengthIndex),
+                    c.getInt(posIndex),
+                    c.getString(songUrlIndex),
+                    c.getString(albumUrlIndex),
+                    Song.INT_FLAG
+            );
+        }
+        return song;
     }
 
     private static void writeDataFromTableToLog(String tableName) {

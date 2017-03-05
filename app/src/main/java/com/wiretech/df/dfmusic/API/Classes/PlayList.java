@@ -12,6 +12,11 @@ public class PlayList {
     private List<Song> mSongs = new ArrayList<>();
     private int numbersOfSongs = 0;
 
+    public PlayList(int id, String name) {
+        this.mId = id;
+        this.mName = name;
+    }
+
     public PlayList(int id, String name, String schoolName) {
         this.mId = id;
         this.mName = name;

@@ -30,7 +30,7 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    private static final String SERVER_DOMAIN = "http://534431f5.ngrok.io";
+    private static final String SERVER_DOMAIN = "http://e4b15f22.ngrok.io";
     private static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
@@ -257,7 +257,8 @@ public class MusicServiceAPI {
                             songJson.getString("length"),
                             songJson.getInt("pos"),
                             songJson.getString("song_url"),
-                            songJson.getString("img_url")
+                            songJson.getString("img_url"),
+                            Song.STRING_FLAG
                     ));
                 }
                 return "OK";

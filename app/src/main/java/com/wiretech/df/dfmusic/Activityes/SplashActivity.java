@@ -77,6 +77,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
     protected void onStart() {
         super.onStart();
         isAppHasFocus = true;
+        startMainActivity();
     }
 
     @Override

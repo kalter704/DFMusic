@@ -8,9 +8,11 @@ import android.widget.Toast;
 
 import com.wiretech.df.dfmusic.Adapters.SongsAdapter;
 import com.wiretech.df.dfmusic.API.Classes.Song;
+import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayListActivity extends AppCompatActivity {
 
@@ -18,7 +20,7 @@ public class PlayListActivity extends AppCompatActivity {
 
     private int mPlayListId;
 
-    private ArrayList<Song> mSongs = new ArrayList<>();
+    private List<Song> mSongs = new ArrayList<>();
     private SongsAdapter mSongsAdapter;
 
 
@@ -38,6 +40,8 @@ public class PlayListActivity extends AppCompatActivity {
     }
 
     private void fillDate() {
+        mSongs = DBManager.getSongsByPlayListId(mPlayListId);
+        /*
         int length = getResources().getStringArray(R.array.temp_songs_ids).length;
         for (int i = 0; i < length; ++i) {
             mSongs.add(new Song(
@@ -46,6 +50,7 @@ public class PlayListActivity extends AppCompatActivity {
                     Integer.valueOf(getResources().getStringArray(R.array.temp_songs_lengths)[i])
             ));
         }
+        */
     }
 
     private void initializeUI() {

@@ -8,17 +8,25 @@ public class Song {
     private String mSongURL;
     private String mAlbumURL;
 
+    public static final int INT_FLAG = 0;
+    public static final int STRING_FLAG = 1;
+
+
     public Song(int id, String name, int length) {
         mId = id;
         mName = name;
         setLength(length);
     }
 
-    public Song(int id, String name, String length, int pos, String songURL, String albumURL) {
+    public Song(int id, String name, String length, int pos, String songURL, String albumURL, int flag) {
         mId = id;
         mPos = pos;
         mName = name;
-        mLength = length;
+        if (flag == INT_FLAG) {
+            setLength(Integer.valueOf(length));
+        } else {
+            mLength = length;
+        }
         mSongURL = songURL;
         mAlbumURL = albumURL;
     }

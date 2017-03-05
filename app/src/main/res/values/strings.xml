@@ -17,6 +17,17 @@
     <string name="menu_donate">Помочь проекту</string>
     <string name="menu_write">Написать разработчикам</string>
 
+    //--- About Black Velvet---------------------------------------------------
+    <string name="info_page_bv">BLACK VELVET</string>
+    <string name="info_page_bv_since">Since 2014</string>
+    <string name="info_page_bv_location">Россия, Москва</string>
+    <string name="info_page_bv_peoples"></string>
+    <string name="info_page_bv_site"></string>
+    <string name="info_page_bv_intagram"></string>
+    <string name="info_page_bv_vk"></string>
+    <string name="info_page_bv_youtube"></string>
+
+    //--- About Crazy Dream----------------------------------------------------
     <string name="info_page_cd">CRAZY DREAM</string>
     <string name="info_page_cd_since">Since 2004</string>
     <string name="info_page_cd_location">Москва, Россия</string>
@@ -25,6 +36,89 @@
     <string name="info_page_cd_intagram">instagram.com/crazydream_msk</string>
     <string name="info_page_cd_vk">vk.com/crazy_dream_official</string>
     <string name="info_page_cd_youtube">youtube.com/qwerty</string>
+
+    //--- About DANCE FAMILY Ladies ---------------------------------------------------
+    <string name="info_page_dfl">DANCE FAMILY LADIES</string>
+    <string name="info_page_dfl_since"></string>
+    <string name="info_page_dfl_location"></string>
+    <string name="info_page_dfl_peoples"></string>
+    <string name="info_page_dfl_site"></string>
+    <string name="info_page_dfl_intagram"></string>
+    <string name="info_page_dfl_vk"></string>
+    <string name="info_page_dfl_youtube"></string>
+
+    //--- About Flash Light ---------------------------------------------------
+    <string name="info_page_fl">FLASH LIGHT</string>
+    <string name="info_page_fl_since"></string>
+    <string name="info_page_fl_location">Россия, Краснодар</string>
+    <string name="info_page_fl_peoples"></string>
+    <string name="info_page_fl_site"></string>
+    <string name="info_page_fl_intagram"></string>
+    <string name="info_page_fl_vk"></string>
+    <string name="info_page_fl_youtube"></string>
+
+    //--- About Free Steps---------------------------------------------------
+    <string name="info_page_fs">Free Steps</string>
+    <string name="info_page_fs_since"></string>
+    <string name="info_page_fs_location">Россия, Москва</string>
+    <string name="info_page_fs_peoples"></string>
+    <string name="info_page_fs_site"></string>
+    <string name="info_page_fs_intagram"></string>
+    <string name="info_page_fs_vk"></string>
+    <string name="info_page_fs_youtube"></string>
+
+    //--- About Just Dance---------------------------------------------------
+    <string name="info_page_jd">Just Dance</string>
+    <string name="info_page_jd_since"></string>
+    <string name="info_page_jd_location">Россия, Ставрополь</string>
+    <string name="info_page_jd_peoples"></string>
+    <string name="info_page_jd_site"></string>
+    <string name="info_page_jd_intagram"></string>
+    <string name="info_page_jd_vk">https://vk.com/jdstav</string>
+    <string name="info_page_jd_youtube"></string>
+
+    //--- About Lucky Jam---------------------------------------------------
+    <string name="info_page_lj">Lucky Jam</string>
+    <string name="info_page_lj_since">Since 2010</string>
+    <string name="info_page_lj_location">Россия, Ставрополь</string>
+    <string name="info_page_lj_peoples">> 70 чел.</string>
+    <string name="info_page_lj_site">http://luckyjam.ru</string>
+    <string name="info_page_lj_intagram">http://instagram.com/lucky_jam_stav</string>
+    <string name="info_page_lj_vk">https://vk.com/club16550057</string>
+    <string name="info_page_lj_youtube"></string>
+
+    //--- About My Community---------------------------------------------------
+    <string name="info_page_mc">My Community</string>
+    <string name="info_page_mc_since"></string>
+    <string name="info_page_mc_location">Россия, Ростов</string>
+    <string name="info_page_mc_peoples"></string>
+    <string name="info_page_mc_site">http://mycom.plp7.ru</string>
+    <string name="info_page_mc_intagram">https://www.instagram.com/mycomdance/</string>
+    <string name="info_page_mc_vk">https://vk.com/mycommunity_dance</string>
+    <string name="info_page_mc_youtube"></string>
+
+    //--- About Unistream---------------------------------------------------
+    <string name="info_page_u">Unistream</string>
+    <string name="info_page_u_since">Since 2006</string>
+    <string name="info_page_u_location">Россия, Ростов</string>
+    <string name="info_page_u_peoples"></string>
+    <string name="info_page_u_site"></string>
+    <string name="info_page_u_intagram"></string>
+    <string name="info_page_u_vk">https://vk.com/club4045399</string>
+    <string name="info_page_u_youtube"></string>
+
+    //--- About ---------------------------------------------------
+    <!--
+    <string name="info_page_b"></string>
+    <string name="info_page_b_since"></string>
+    <string name="info_page_b_location"></string>
+    <string name="info_page_b_peoples"></string>
+    <string name="info_page_b_site"></string>
+    <string name="info_page_b_intagram"></string>
+    <string name="info_page_b_vk"></string>
+    <string name="info_page_b_youtube"></string>
+    -->
+
 
     <string name="clubs_toolbar_title">DANCE FAMILY</string>
     <string name="clubs_toolbar_subtitle">CLUBS</string>
@@ -42,6 +136,7 @@
     <string-array name="clubs">
         <item>BLACK VELVET</item>
         <item>CRAZY DREAM</item>
+        <item>DANCE FAMILY LADIES</item>
         <item>FLASH LIGHT</item>
         <item>FREE STEPS</item>
         <item>JUST DANCE</item>

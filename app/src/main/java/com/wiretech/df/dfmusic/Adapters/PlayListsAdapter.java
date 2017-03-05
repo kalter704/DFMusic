@@ -55,6 +55,7 @@ public class PlayListsAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.tvPlayList)).setText(playList.getName());
 
         view.setId(playList.getId());
+        view.setTag(i);
 
         view.setOnClickListener(onClickListener);
 
@@ -67,7 +68,8 @@ public class PlayListsAdapter extends BaseAdapter {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(mContext, PlayActivity.class);
-            intent.putExtra(PlayListActivity.PLAYLIST_ID_EXTRA, view.getId());
+            intent.putExtra(PlayActivity.PLAYLIST_ID_EXTRA, view.getId());
+            intent.putExtra(PlayActivity.PLAYLIST_NUMBER_EXTRA, Integer.valueOf((int) view.getTag()));
             mContext.startActivity(intent);
         }
     };

@@ -15,15 +15,16 @@ import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SongsAdapter extends BaseAdapter {
 
     Activity mActivity;
     Context mContext;
     LayoutInflater mLayoutInflater;
-    ArrayList<Song> mSongs;
+    List<Song> mSongs;
 
-    public SongsAdapter(Activity activity, Context context, ArrayList<Song> songs) {
+    public SongsAdapter(Activity activity, Context context, List<Song> songs) {
         mActivity = activity;
         mContext = context;
         mSongs = songs;

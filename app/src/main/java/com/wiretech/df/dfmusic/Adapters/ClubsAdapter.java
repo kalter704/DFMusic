@@ -8,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wiretech.df.dfmusic.Activityes.About.AboutCrazyDreamActivity;
+import com.wiretech.df.dfmusic.Activityes.About.AboutActivity;
 import com.wiretech.df.dfmusic.R;
-
-import java.util.ArrayList;
 
 public class ClubsAdapter extends BaseAdapter {
     private Context mContext;
@@ -56,12 +54,15 @@ public class ClubsAdapter extends BaseAdapter {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(mContext, AboutCrazyDreamActivity.class);
+            Intent intent = new Intent(mContext, AboutActivity.class);
+            intent.putExtra("club_name", mClubs[view.getId()]);
+            /*
             switch (view.getId()) {
                 case 0:
 
                     break;
             }
+            */
             mContext.startActivity(intent);
         }
     };

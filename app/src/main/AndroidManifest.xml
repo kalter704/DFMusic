@@ -24,12 +24,21 @@
         <activity
             android:name=".Activityes.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activityes.MenuActivity"/>
-        <activity android:name=".Activityes.About.AboutCrazyDreamActivity"/>
-        <activity android:name=".Activityes.PlayListActivity"/>
-        <activity android:name=".Activityes.DFClubsActivity"/>
-        <activity android:name=".Activityes.PlayActivity">
-        </activity>
+        <activity
+            android:name=".Activityes.MenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activityes.About.AboutActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activityes.PlayListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activityes.DFClubsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Activityes.PlayActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
