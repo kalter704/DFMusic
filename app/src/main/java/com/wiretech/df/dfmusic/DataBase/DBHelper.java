@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "music_db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 9;
 
     public static final String PLAYLIST_TABLE_NAME = "playlist";
     public static final String PLAYLIST_ID_FIELD = "p_id";
@@ -17,6 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static final String SONG_TABLE_NAME = "song";
     public static final String SONG_TITLE_FIELD = "title";
+    public static final String SONG_SINGER_FIELD = "singer";
     public static final String SONG_POSITION_FIELD = "pos";
     public static final String SONG_LENGTH_FIELD = "length";
     public static final String SONG_SONG_URL_FIELD = "song_url";
@@ -60,6 +61,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("create table " + SONG_TABLE_NAME + " ("
                 + "id integer primary key autoincrement, "
                 + SONG_TITLE_FIELD + " text, "
+                + SONG_SINGER_FIELD + " text, "
                 + SONG_POSITION_FIELD + " integer, "
                 + SONG_LENGTH_FIELD + " text, "
                 + SONG_SONG_URL_FIELD + " text, "

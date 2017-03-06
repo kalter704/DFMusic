@@ -30,7 +30,7 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    private static final String SERVER_DOMAIN = "http://e4b15f22.ngrok.io";
+    private static final String SERVER_DOMAIN = "http://efc631cb.ngrok.io";
     private static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
@@ -138,9 +138,9 @@ public class MusicServiceAPI {
 
     private static void nextAction(String s) {
         if (currentAction == PLAYLIST_ACTION_ID) {
-            new parcePlaylistsJsonBackground().execute(s);
+            new parsePlayListsJsonBackground().execute(s);
         } else if (currentAction == SONG_ACTION_ID) {
-            new parceSongsJsonBackground().execute(s);
+            new parseSongsJsonBackground().execute(s);
         }
     }
 
@@ -170,7 +170,7 @@ public class MusicServiceAPI {
     }
     */
 
-    private static class parcePlaylistsJsonBackground extends AsyncTask<String, Void, String> {
+    private static class parsePlayListsJsonBackground extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -208,7 +208,7 @@ public class MusicServiceAPI {
                     notifMusicServerResponse();
                 }
             } else {
-                norifError();
+                notifError();
             }
         }
     }
@@ -240,7 +240,7 @@ public class MusicServiceAPI {
     }
     */
 
-    private static class parceSongsJsonBackground extends AsyncTask<String, Void, String> {
+    private static class parseSongsJsonBackground extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -254,6 +254,7 @@ public class MusicServiceAPI {
                     sMusicServerResponse.getCurrentPlaylist().addSong(new Song(
                             songJson.getInt("id"),
                             songJson.getString("title"),
+                            songJson.getString("singer"),
                             songJson.getString("length"),
                             songJson.getInt("pos"),
                             songJson.getString("song_url"),
@@ -277,7 +278,7 @@ public class MusicServiceAPI {
                 sMusicServerResponse.nextPlaylist();
                 requestSongs();
             } else {
-                norifError();
+                notifError();
             }
         }
     }
@@ -299,8 +300,8 @@ public class MusicServiceAPI {
         }
     }
 
-    private static void norifError() {
-        Log.d(LOG_TAG, "norifError");
+    private static void notifError() {
+        Log.d(LOG_TAG, "notifError");
         for (OnResponseAPIListener l: listeners) {
             l.onError();
         }

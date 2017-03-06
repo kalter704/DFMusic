@@ -86,7 +86,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     public void fillUIWithSong() {
         tvSongTitle.setText(mSong.getName());
-        tvSinger.setText("");
+        tvSinger.setText(mSong.getSinger());
         tvSongLength.setText(mSong.getLength());
         tvNowPlay.setText("0:00");
     }

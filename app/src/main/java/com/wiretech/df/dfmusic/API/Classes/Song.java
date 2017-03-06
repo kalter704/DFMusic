@@ -4,6 +4,7 @@ public class Song {
     private int mId;
     private int mPos;
     private String mName;
+    private String mSinger;
     private String mLength;
     private String mSongURL;
     private String mAlbumURL;
@@ -18,10 +19,11 @@ public class Song {
         setLength(length);
     }
 
-    public Song(int id, String name, String length, int pos, String songURL, String albumURL, int flag) {
+    public Song(int id, String name, String singer, String length, int pos, String songURL, String albumURL, int flag) {
         mId = id;
         mPos = pos;
         mName = name;
+        mSinger = singer;
         if (flag == INT_FLAG) {
             setLength(Integer.valueOf(length));
         } else {
@@ -71,6 +73,10 @@ public class Song {
         mAlbumURL = albumURL;
     }
 
+    public void setSinger(String singer) {
+        mSinger = singer;
+    }
+
     public int getId() {
         return mId;
     }
@@ -93,5 +99,9 @@ public class Song {
 
     public String getAlbumURL() {
         return mAlbumURL;
+    }
+
+    public String getSinger() {
+        return mSinger;
     }
 }

@@ -76,6 +76,7 @@ public class DBManager {
                     cv.clear();
                     for (Song s: p.getSongs()) {
                         cv.put(DBHelper.SONG_TITLE_FIELD, s.getName());
+                        cv.put(DBHelper.SONG_SINGER_FIELD, s.getSinger());
                         cv.put(DBHelper.SONG_POSITION_FIELD, s.getPos());
                         cv.put(DBHelper.SONG_LENGTH_FIELD, s.getLength());
                         cv.put(DBHelper.SONG_SONG_URL_FIELD, s.getSongURL());
@@ -132,6 +133,7 @@ public class DBManager {
                     db.delete(DBHelper.SONG_TABLE_NAME, DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = " + String.valueOf(pId), null);
                     for (Song s: p.getSongs()) {
                         cv.put(DBHelper.SONG_TITLE_FIELD, s.getName());
+                        cv.put(DBHelper.SONG_SINGER_FIELD, s.getSinger());
                         cv.put(DBHelper.SONG_POSITION_FIELD, s.getPos());
                         cv.put(DBHelper.SONG_LENGTH_FIELD, s.getLength());
                         cv.put(DBHelper.SONG_SONG_URL_FIELD, s.getSongURL());
@@ -230,12 +232,14 @@ public class DBManager {
             int idIndex = c.getColumnIndex("id");
             int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
             int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
+            int singerIndex = c.getColumnIndex(DBHelper.SONG_SINGER_FIELD);
             int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
             int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
             int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
             song = new Song(
                     c.getInt(idIndex),
                     c.getString(nameIndex),
+                    c.getString(singerIndex),
                     c.getString(lengthIndex),
                     c.getInt(posIndex),
                     c.getString(songUrlIndex),
@@ -257,12 +261,14 @@ public class DBManager {
             int idIndex = c.getColumnIndex("id");
             int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
             int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
+            int singerIndex = c.getColumnIndex(DBHelper.SONG_SINGER_FIELD);
             int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
             int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
             int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
             song = new Song(
                     c.getInt(idIndex),
                     c.getString(nameIndex),
+                    c.getString(singerIndex),
                     c.getString(lengthIndex),
                     c.getInt(posIndex),
                     c.getString(songUrlIndex),
