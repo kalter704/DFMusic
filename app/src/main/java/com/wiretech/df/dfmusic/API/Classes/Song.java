@@ -1,5 +1,7 @@
 package com.wiretech.df.dfmusic.API.Classes;
 
+import com.wiretech.df.dfmusic.API.MusicServiceAPI;
+
 public class Song {
     private int mId;
     private int mPos;
@@ -95,6 +97,10 @@ public class Song {
 
     public String getSongURL() {
         return mSongURL;
+    }
+
+    public String getFullSongURL() {
+        return MusicServiceAPI.SERVER_DOMAIN + mSongURL;
     }
 
     public String getAlbumURL() {
