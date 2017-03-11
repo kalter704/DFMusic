@@ -15,6 +15,7 @@ import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SongsAdapter extends BaseAdapter {
@@ -23,11 +24,13 @@ public class SongsAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater mLayoutInflater;
     List<Song> mSongs;
+    ArrayList<Integer> mSongsIds;
 
-    public SongsAdapter(Activity activity, Context context, List<Song> songs) {
+    public SongsAdapter(Activity activity, Context context, List<Song> songs, ArrayList<Integer> songsIds) {
         mActivity = activity;
         mContext = context;
         mSongs = songs;
+        mSongsIds = songsIds;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -57,7 +60,7 @@ public class SongsAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.tvName)).setText(song.getName());
         ((TextView) view.findViewById(R.id.tvLength)).setText(song.getLength());
 
-        view.setId(song.getId());
+        view.setId(i);
 
         view.setOnClickListener(onClickListener);
 
@@ -70,8 +73,9 @@ public class SongsAdapter extends BaseAdapter {
             //Toast.makeText(mContext, "Song id = " + String.valueOf(view.getId()), Toast.LENGTH_SHORT).show();
             //mContext.startActivity(new Intent(mContext, PlayActivity.class));
             Intent intent = new Intent();
-            intent.putExtra(PlayActivity.SONG_ID_EXTRA_RESULT, view.getId());
-            Log.d("SongsAdapter", "Song id = " + view.getId());
+            intent.putExtra(PlayActivity.SONG_POS_EXTRA_RESULT, view.getId());
+            intent.putExtra(PlayActivity.SONGS_IDS_EXTRA_RESULT, mSongsIds);
+            //Log.d("SongsAdapter", "Song id = " + view.getId());
             mActivity.setResult(Activity.RESULT_OK, intent);
             mActivity.finish();
         }

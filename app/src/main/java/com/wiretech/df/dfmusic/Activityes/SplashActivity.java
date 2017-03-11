@@ -134,8 +134,11 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
     }
 
     @Override
-    public void onError() {
+    public void onError(int code) {
         Log.d("SplashActivity", "Error");
+        if (code == MusicServiceAPI.ERROR_NOT_RESPONSE) {
+            isEndDownload = true;
+        }
     }
 
 

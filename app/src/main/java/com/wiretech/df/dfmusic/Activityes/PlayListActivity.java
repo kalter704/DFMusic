@@ -11,7 +11,9 @@ import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PlayListActivity extends AppCompatActivity {
@@ -21,6 +23,7 @@ public class PlayListActivity extends AppCompatActivity {
     private int mPlayListId;
 
     private List<Song> mSongs = new ArrayList<>();
+    private ArrayList<Integer> mSongsIds = new ArrayList<>();
     private SongsAdapter mSongsAdapter;
 
 
@@ -31,26 +34,20 @@ public class PlayListActivity extends AppCompatActivity {
 
         mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
 
-        Toast.makeText(this, "PlayListId = " + String.valueOf(mPlayListId), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "PlayListId = " + String.valueOf(mPlayListId), Toast.LENGTH_SHORT).show();
 
         fillDate();
 
         initializeUI();
 
+        showList();
     }
 
     private void fillDate() {
         mSongs = DBManager.getSongsByPlayListId(mPlayListId);
-        /*
-        int length = getResources().getStringArray(R.array.temp_songs_ids).length;
-        for (int i = 0; i < length; ++i) {
-            mSongs.add(new Song(
-                    Integer.valueOf(getResources().getStringArray(R.array.temp_songs_ids)[i]),
-                    getResources().getStringArray(R.array.temp_songs_names)[i],
-                    Integer.valueOf(getResources().getStringArray(R.array.temp_songs_lengths)[i])
-            ));
+        for (int i = 0; i < mSongs.size(); ++i) {
+            mSongsIds.add(mSongs.get(i).getId());
         }
-        */
     }
 
     private void initializeUI() {
@@ -65,13 +62,15 @@ public class PlayListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(PlayListActivity.this, "Share!!!", Toast.LENGTH_SHORT).show();
+                showList();
             }
         });
+    }
 
-        mSongsAdapter = new SongsAdapter(this, this, mSongs);
+    private void showList() {
+        mSongsAdapter = new SongsAdapter(this, this, mSongs, mSongsIds);
 
         ((ListView) findViewById(R.id.listView)).setAdapter(mSongsAdapter);
-
     }
 
 }

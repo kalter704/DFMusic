@@ -15,6 +15,7 @@ import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.API.Interfaces.OnResponsePlaylistsListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class DBManager {
@@ -277,6 +278,22 @@ public class DBManager {
             );
         }
         return song;
+    }
+
+    public static ArrayList<Integer> getSongsIdsByPLayListId(int playListId) {
+        ArrayList<Integer> list = new ArrayList<>();
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        String selection = DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = ?";
+        String[] selectionArgs = new String[] { String.valueOf(playListId) };
+        Cursor c = db.query(DBHelper.SONG_TABLE_NAME, new String[] { "id" }, selection, selectionArgs, null, null, DBHelper.SONG_POSITION_FIELD);
+        logCursor(c);
+        if (c.moveToFirst()) {
+            int idIndex = c.getColumnIndex("id");
+            do {
+                list.add(c.getInt(idIndex));
+            } while (c.moveToNext());
+        }
+        return list;
     }
 
     private static void writeDataFromTableToLog(String tableName) {

@@ -40,6 +40,9 @@ public class MusicServiceAPI {
     public static final int ONLY_PLAYLISTS = 2;
     public static final int UPDATE_PLAYLISTS = 3;
 
+    public static final int ERROR_PARCE = 0;
+    public static final int ERROR_NOT_RESPONSE = 1;
+
     private static Context sContext;
 
     private static String screen = null;
@@ -115,6 +118,8 @@ public class MusicServiceAPI {
                 return (buf.toString());
             } catch (IOException e) {
                 e.printStackTrace();
+                //Log.d(LOG_TAG, "ERROR Request");
+                notifError(ERROR_NOT_RESPONSE);
                 return "Error";
             } finally {
                 if (reader != null) {
@@ -208,7 +213,7 @@ public class MusicServiceAPI {
                     notifMusicServerResponse();
                 }
             } else {
-                notifError();
+                notifError(ERROR_PARCE);
             }
         }
     }
@@ -278,7 +283,7 @@ public class MusicServiceAPI {
                 sMusicServerResponse.nextPlaylist();
                 requestSongs();
             } else {
-                notifError();
+                notifError(ERROR_PARCE);
             }
         }
     }
@@ -300,10 +305,10 @@ public class MusicServiceAPI {
         }
     }
 
-    private static void notifError() {
+    private static void notifError(int code) {
         Log.d(LOG_TAG, "notifError");
         for (OnResponseAPIListener l: listeners) {
-            l.onError();
+            l.onError(code);
         }
     }
 

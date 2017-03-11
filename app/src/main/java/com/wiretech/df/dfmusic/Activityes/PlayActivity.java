@@ -20,18 +20,24 @@ import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, SeekBar.OnSeekBarChangeListener {
 
     private final String LOG_TAG = "PlayActivity";
 
-    public static final String SONG_ID_EXTRA_RESULT = "song_id";
+    public static final String SONG_POS_EXTRA_RESULT = "song_pos";
+    public static final String SONGS_IDS_EXTRA_RESULT = "songs_ids";
     public static final String PLAYLIST_ID_EXTRA = "playlist_id";
     public static final String PLAYLIST_NUMBER_EXTRA = "playlist_number";
 
     private int mPlayListId;
     private Song mSong;
+    private ArrayList<Integer> mSongsIds;
+    private int mCurrentSongIndex = 0;
 
     private TextView tvSchoolTitle;
     private TextView tvSongTitle;
@@ -50,7 +56,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean isLooping = false;
     private boolean isUserChangeSeek = false;
-    //private boolean isPlaying = false;
+    private boolean isPlaying = false;
 
     private Handler mHandler;
 
@@ -63,10 +69,12 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
         int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
-        mSong = DBManager.getFirstSongByPlayListId(mPlayListId);
+        mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
+        //mSong = DBManager.getFirstSongByPlayListId(mPlayListId);
+        mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
         fillUIWithSong();
-        Toast.makeText(this, "PlayListId = " + String.valueOf(mPlayListId), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "TagNum = " + String.valueOf(tagNum), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "PlayListId = " + String.valueOf(mPlayListId), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "TagNum = " + String.valueOf(tagNum), Toast.LENGTH_SHORT).show();
         String[] clubs = getResources().getStringArray(R.array.clubs);
         tvSchoolTitle.setText(clubs[tagNum]);
 
@@ -138,8 +146,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.rlPreviousSong:
+                PreviousSong();
                 break;
             case R.id.rlNextSong:
+                nextSong();
                 break;
 
             case R.id.rlPause:
@@ -147,7 +157,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 if (mMediaPlayer != null) {
                     mMediaPlayer.pause();
                 }
-                //isPlaying = false;
+                isPlaying = false;
                 break;
             case R.id.rlPlay:
                 showPauseBtn();
@@ -155,6 +165,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                     playNewSong();
                 } else {
                     mMediaPlayer.start();
+                    isPlaying = true;
                 }
                 break;
 
@@ -177,9 +188,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Toast.makeText(PlayActivity.this, "Song id = " + data.getIntExtra(SONG_ID_EXTRA_RESULT, -1), Toast.LENGTH_SHORT).show();
-            int songId = data.getIntExtra(SONG_ID_EXTRA_RESULT, -1);
-            mSong = DBManager.getSongById(songId);
+            Toast.makeText(PlayActivity.this, "Song id = " + data.getIntExtra(SONG_POS_EXTRA_RESULT, -1), Toast.LENGTH_SHORT).show();
+            mCurrentSongIndex = data.getIntExtra(SONG_POS_EXTRA_RESULT, -1);
+            mSongsIds = (ArrayList<Integer>) data.getSerializableExtra(SONGS_IDS_EXTRA_RESULT);
+            mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
             fillUIWithSong();
             if (mMediaPlayer != null) {
                 if (mMediaPlayer.isPlaying()) {
@@ -253,23 +265,49 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        Log.d(LOG_TAG, "onPrepared");
+        //Log.d(LOG_TAG, "onPrepared");
         mp.start();
-        //isPlaying = true;
-        Log.d(LOG_TAG, "onPrepared duration = " + mp.getDuration());
+        isPlaying = true;
+        //Log.d(LOG_TAG, "onPrepared duration = " + mp.getDuration());
     }
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        Log.d(LOG_TAG, "onBufferingUpdate percent = " + percent);
+        //Log.d(LOG_TAG, "onBufferingUpdate percent = " + percent);
         mSeekBar.setSecondaryProgress(percent);
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         Log.d(LOG_TAG, "onCompletion");
-        showPlayBtn();
-        tvNowPlay.setText(tvSongLength.getText());
+        /*
+        Log.d(LOG_TAG, "onCompletion mMediaPlayer.getCurrentPosition() = " + mMediaPlayer.getCurrentPosition());
+        Log.d(LOG_TAG, "onCompletion mMediaPlayer.getDuration() = " + mMediaPlayer.getDuration());
+        */
+        if ((mMediaPlayer.getDuration() - mMediaPlayer.getCurrentPosition()) < 1000) {
+            nextSong();
+        }
+
+    }
+
+    public void nextSong() {
+        ++mCurrentSongIndex;
+        if (mCurrentSongIndex >= mSongsIds.size()) {
+            mCurrentSongIndex = 0;
+        }
+        mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
+        fillUIWithSong();
+        playNewSong();
+    }
+
+    public void PreviousSong() {
+        --mCurrentSongIndex;
+        if (mCurrentSongIndex < 0) {
+            mCurrentSongIndex = mSongsIds.size() - 1;
+        }
+        mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
+        fillUIWithSong();
+        playNewSong();
     }
 
     /*
@@ -293,10 +331,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private Thread secTimer = new Thread() {
         public void run() {
             try {
-                sleep(1000);
                 while(true) {
                     if (mMediaPlayer != null) {
-                        if (mMediaPlayer.isPlaying()) {
+                        if (isPlaying) {
                             if (!isUserChangeSeek) {
                                 mHandler.post(updateProcessPlaying);
                             }
@@ -315,10 +352,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         public void run() {
             //Log.d(LOG_TAG, "Thread curpo = " + mMediaPlayer.getCurrentPosition());
             if (!isUserChangeSeek) {
+                if (mMediaPlayer == null) {
+                    return;
+                }
                 mSeekBar.setProgress((int) (((float) mMediaPlayer.getCurrentPosition()) / ((float) mMediaPlayer.getDuration()) * 100));
                 int m = 0;
                 int s = mMediaPlayer.getCurrentPosition() / 1000;
-                while ((s - 60) > 0) {
+                while (s > 59) {
                     ++m;
                     s -= 60;
                 }
