@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.Classes.MusicState;
 import com.wiretech.df.dfmusic.Classes.Player;
 import com.wiretech.df.dfmusic.Const;
@@ -72,24 +73,27 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         boolean isFromNotification = getIntent().getBooleanExtra(EXTRA_FROM_NOTIFICATION_FLAG, false);
 
+        PlayList playList;
         if (!isFromNotification) {
             mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
-            int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
-            mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
-            MusicState.instance.setNewSongDatas(mSongsIds, mCurrentSongIndex);
-            String[] clubs = getResources().getStringArray(R.array.clubs);
-            MusicState.instance.setClubName(clubs[tagNum]);
+            playList = DBManager.getPLayListById(mPlayListId);
         } else {
-            mSongsIds = MusicState.instance.getSongsIds();
-            mCurrentSongIndex = MusicState.instance.getCurrentSongIndex();
+            playList = DBManager.getPlayListBySongId(Player.instance.getPlayingSongId());
+            mPlayListId = playList.getId();
+            mCurrentSongIndex = MusicState.instance.getCurrentPlayingSongIndex();
+            //mSongsIds = MusicState.instance.getSongsIds();
+            //mCurrentSongIndex = MusicState.instance.getCurrentSongIndex();
         }
-        //mSong = DBManager.getFirstSongByPlayListId(mPlayListId);
-        //mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
+        //int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
+        mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
+        MusicState.instance.setNewSongData(mSongsIds, mCurrentSongIndex);
+
+        //String[] clubs = getResources().getStringArray(R.array.clubs);
+
         mHandler = new Handler();
         fillUIWithSong();
-        //Toast.makeText(this, "PlayListId = " + String.valueOf(mPlayListId), Toast.LENGTH_SHORT).show();
-        //Toast.makeText(this, "TagNum = " + String.valueOf(tagNum), Toast.LENGTH_SHORT).show();
-        tvSchoolTitle.setText(MusicState.instance.getClubName());
+
+        tvSchoolTitle.setText(playList.getSchoolName());
 
         secTimer.start();
 
@@ -211,7 +215,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             //Toast.makeText(PlayActivity.this, "Song id = " + data.getIntExtra(SONG_POS_EXTRA_RESULT, -1), Toast.LENGTH_SHORT).show();
             mCurrentSongIndex = data.getIntExtra(SONG_POS_EXTRA_RESULT, -1);
             mSongsIds = (ArrayList<Integer>) data.getSerializableExtra(SONGS_IDS_EXTRA_RESULT);
-            MusicState.instance.setNewSongDatas(mSongsIds, mCurrentSongIndex);
+            MusicState.instance.setNewSongData(mSongsIds, mCurrentSongIndex);
             //mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
             fillUIWithSong();
             if (Player.instance.getIsPlaying()) {

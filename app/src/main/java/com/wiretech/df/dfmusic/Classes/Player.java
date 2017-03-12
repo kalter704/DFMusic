@@ -74,6 +74,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     public void initNewSong() {
         mNewSong = DBManager.getSongById(MusicState.instance.getSongId());
+        MusicState.instance.savePlayingSongIndex();
     }
 
     public int getPlayingSongId() {

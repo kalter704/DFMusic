@@ -31,6 +31,8 @@ public class PlayList {
         this.mPos = pos;
     }
 
+
+
     public void addSong(Song s) {
         mSongs.add(s);
     }

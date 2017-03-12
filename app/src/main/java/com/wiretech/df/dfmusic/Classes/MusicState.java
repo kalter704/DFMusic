@@ -7,11 +7,12 @@ public class MusicState {
 
     private ArrayList<Integer> mSongsIds;
     private int mCurrentSongIndex = 0;
+    private int mCurrentPlayingSongIndex = 0;
     private String mClubName;
 
     private MusicState() {}
 
-    public void setNewSongDatas(ArrayList ss, int currentIndex) {
+    public void setNewSongData(ArrayList ss, int currentIndex) {
         mSongsIds = ss;
         mCurrentSongIndex = currentIndex;
     }
@@ -34,16 +35,16 @@ public class MusicState {
         }
     }
 
+    public void savePlayingSongIndex() {
+        mCurrentPlayingSongIndex = mCurrentSongIndex;
+    }
+
+    public int getCurrentPlayingSongIndex() {
+        return mCurrentPlayingSongIndex;
+    }
+
     public int getCurrentSongIndex() {
         return mCurrentSongIndex;
-    }
-
-    public String getClubName() {
-        return mClubName;
-    }
-
-    public void setClubName(String clubName) {
-        mClubName = clubName;
     }
 
     public ArrayList<Integer> getSongsIds() {

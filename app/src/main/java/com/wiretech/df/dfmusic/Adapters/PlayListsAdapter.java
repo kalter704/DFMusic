@@ -20,13 +20,13 @@ public class PlayListsAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater mLayoutInflater;
     ArrayList<PlayList> mPlayLists;
-    PlaylistBackground mPlaylistBackground;
+    PlayListBackground mPlayListBackground;
 
     public PlayListsAdapter(Context context, ArrayList<PlayList> playLists) {
         this.mContext = context;
         this.mPlayLists = playLists;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mPlaylistBackground = new PlaylistBackground();
+        mPlayListBackground = new PlayListBackground();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class PlayListsAdapter extends BaseAdapter {
 
         view.setOnClickListener(onClickListener);
 
-        view.setBackground(mContext.getResources().getDrawable(mPlaylistBackground.getBackgroundIdRes(i)));
+        view.setBackground(mContext.getResources().getDrawable(mPlayListBackground.getBackgroundIdRes(i)));
 
         return view;
     }
@@ -74,7 +74,7 @@ public class PlayListsAdapter extends BaseAdapter {
         }
     };
 
-    private class PlaylistBackground {
+    private class PlayListBackground {
         private static final String BACKGROUND_PREF = "playlists_background_pref";
         private static final String SAVED_INDEX = "saved_index";
 
@@ -99,7 +99,7 @@ public class PlayListsAdapter extends BaseAdapter {
                 R.drawable.p_17
         };
 
-        public PlaylistBackground() {
+        public PlayListBackground() {
             SharedPreferences sPref = mContext.getSharedPreferences(BACKGROUND_PREF, Context.MODE_PRIVATE);
 
             index = sPref.getInt(SAVED_INDEX, 0);

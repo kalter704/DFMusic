@@ -31,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillDate(){
+        /*
         String[] clubs = getResources().getStringArray(R.array.clubs);
         List<PlayList> playListsNamesAndIds = DBManager.getPlayListsNames();
         for (int i = 0; (i < clubs.length) && (i < playListsNamesAndIds.size()); ++i) {
             mPlayLists.add(new PlayList(playListsNamesAndIds.get(i).getId(), playListsNamesAndIds.get(i).getName(), clubs[i]));
         }
+        */
+        mPlayLists = DBManager.getPlayListsWithNameAndSchool();
     }
 
     private void initializeUI() {
