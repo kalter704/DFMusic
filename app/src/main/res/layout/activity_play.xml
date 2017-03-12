@@ -94,12 +94,24 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="240dp"
                 android:layout_height="240dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="96dp"
-                android:src="@drawable/default_album_v1"/>
+                android:layout_marginTop="96dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/default_album_v1"/>
+
+                <ImageView
+                    android:id="@+id/ivAlbum"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tvSongTitle"
@@ -112,7 +124,8 @@
                 android:singleLine="true"
                 android:text="This Is Love"
                 android:textSize="@dimen/text_name_song_in_play"
-                android:textStyle="normal|bold"/>
+                android:textStyle="normal|bold"
+                android:textColor="@color/textColorRed"/>
 
             <TextView
                 android:id="@+id/tvSinger"
@@ -318,7 +331,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_repeat_off"/>
+                        android:src="@drawable/ic_repeat_off_2"/>
 
                 </RelativeLayout>
 
@@ -335,7 +348,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_repeat_on"/>
+                        android:src="@drawable/ic_repeat_on_2"/>
 
                 </RelativeLayout>
 

@@ -16,4 +16,15 @@
     <dimen name="text_singer_name_in_play">16sp</dimen>
 
     <dimen name="text_song_time">12sp</dimen>
+
+    <!-- Notification -->
+    <dimen name="notification_big_icon_height">64dp</dimen>
+    <dimen name="notification_big_icon_width">64dp</dimen>
+    <dimen name="notification_info_container_padding_left">8dp</dimen>
+    <dimen name="notification_info_container_padding_bottom">4dp</dimen>
+    <dimen name="notification_action_padding">8dp</dimen>
+    <dimen name="notification_action_height">36dp</dimen>
+    <dimen name="notification_action_width">36dp</dimen>
+    <dimen name="notification_close_action_height">36dp</dimen>
+    <dimen name="notification_close_action_width">36dp</dimen>
 </resources>

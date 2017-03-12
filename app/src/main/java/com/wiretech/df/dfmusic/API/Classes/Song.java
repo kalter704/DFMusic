@@ -107,6 +107,10 @@ public class Song {
         return mAlbumURL;
     }
 
+    public String getFullAlbumURL() {
+        return MusicServiceAPI.SERVER_DOMAIN + mAlbumURL;
+    }
+
     public String getSinger() {
         return mSinger;
     }
