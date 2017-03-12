@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.API.Classes.Song;
+import com.wiretech.df.dfmusic.Classes.Player;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
@@ -59,6 +60,12 @@ public class SongsAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.tvPos)).setText(String.valueOf(i + 1));
         ((TextView) view.findViewById(R.id.tvName)).setText(song.getName());
         ((TextView) view.findViewById(R.id.tvLength)).setText(song.getLength());
+
+        if (mSongs.get(i).getId() == Player.instance.getPlayingSongId()) {
+            ((TextView) view.findViewById(R.id.tvPos)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+            ((TextView) view.findViewById(R.id.tvName)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+            ((TextView) view.findViewById(R.id.tvLength)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+        }
 
         view.setId(i);
 

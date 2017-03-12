@@ -25,6 +25,8 @@
     <dimen name="notification_action_padding">8dp</dimen>
     <dimen name="notification_action_height">36dp</dimen>
     <dimen name="notification_action_width">36dp</dimen>
+    <dimen name="notification_big_action_height">46dp</dimen>
+    <dimen name="notification_big_action_width">46dp</dimen>
     <dimen name="notification_close_action_height">36dp</dimen>
     <dimen name="notification_close_action_width">36dp</dimen>
 </resources>

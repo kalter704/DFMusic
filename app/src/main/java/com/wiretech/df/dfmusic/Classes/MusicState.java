@@ -7,6 +7,7 @@ public class MusicState {
 
     private ArrayList<Integer> mSongsIds;
     private int mCurrentSongIndex = 0;
+    private String mClubName;
 
     private MusicState() {}
 
@@ -37,22 +38,19 @@ public class MusicState {
         return mCurrentSongIndex;
     }
 
-    /*
-    public int getPreviousSongId() {
-        --mCurrentSongIndex;
-        if (mCurrentSongIndex < 0) {
-            mCurrentSongIndex = mSongsIds.size() - 1;
-        }
-        return mSongsIds.get(mCurrentSongIndex);
+    public String getClubName() {
+        return mClubName;
     }
 
-    public int getNextSongId() {
-        ++mCurrentSongIndex;
-        if (mCurrentSongIndex >= mSongsIds.size()) {
-            mCurrentSongIndex = 0;
-        }
-        return mSongsIds.get(mCurrentSongIndex);
+    public void setClubName(String clubName) {
+        mClubName = clubName;
     }
-    */
 
+    public ArrayList<Integer> getSongsIds() {
+        return mSongsIds;
+    }
+
+    public void setSongsIds(ArrayList<Integer> songsIds) {
+        mSongsIds = songsIds;
+    }
 }

@@ -34,10 +34,8 @@ public class MusicNotificationService extends Service {
         // надод попроваить!!!!!!!!11
 
         Intent notificationIntent = new Intent(this, PlayActivity.class);
-        //notificationIntent.putExtra(PlayActivity.EXTRA_ID, radioChannels.mPlayRadioWithId);
+        notificationIntent.putExtra(PlayActivity.EXTRA_FROM_NOTIFICATION_FLAG, true);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         views.setOnClickPendingIntent(R.id.notification_base, pendingIntent);

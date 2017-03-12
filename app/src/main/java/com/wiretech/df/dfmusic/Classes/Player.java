@@ -38,6 +38,8 @@ public class Player implements MediaPlayer.OnPreparedListener,
     private boolean isPlaying = false;
     private boolean isLooping = false;
 
+    private int mBufferingPercent = 0;
+
     private Player() {
         mListListeners = new ArrayList<>();
     }
@@ -47,11 +49,25 @@ public class Player implements MediaPlayer.OnPreparedListener,
         if (mMediaPlayer == null) {
             playNewSong();
         } else {
+            /*
             if (isPlaying && (mSong.getId() != mNewSong.getId())) {
                 playNewSong();
             } else {
                 mMediaPlayer.start();
                 isPlaying = true;
+            }
+            */
+            if (isPlaying) {
+                if (mSong.getId() != mNewSong.getId()) {
+                    playNewSong();
+                }
+            } else {
+                if (mSong.getId() != mNewSong.getId()) {
+                    playNewSong();
+                } else {
+                    mMediaPlayer.start();
+                    isPlaying = true;
+                }
             }
         }
     }
@@ -74,6 +90,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
         } else {
             return -1;
         }
+    }
+
+    public int getBufferingPercent() {
+        return mBufferingPercent;
     }
 
     public String getSongName() {
@@ -175,6 +195,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        mBufferingPercent = percent;
         for (OnPlayerListener listener : mListListeners) {
             listener.OnBufferingUpdateListener(percent);
         }

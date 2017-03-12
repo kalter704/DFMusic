@@ -70,7 +70,7 @@
         <ImageView
             android:id="@+id/notification_close"
             style="@style/NotificationAction.Close"
-            android:src="@drawable/ic_close"/>
+            android:src="@drawable/ic_close_3"/>
 
     </LinearLayout>
 

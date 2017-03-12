@@ -236,7 +236,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_save_off"/>
+                        android:src="@drawable/ic_save_on"/>
 
                 </RelativeLayout>
 
@@ -253,7 +253,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_save_on"/>
+                        android:src="@drawable/ic_save_on_2"/>
 
                 </RelativeLayout>
 

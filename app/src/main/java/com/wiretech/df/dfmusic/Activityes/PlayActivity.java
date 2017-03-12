@@ -34,6 +34,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     public static final String SONGS_IDS_EXTRA_RESULT = "songs_ids";
     public static final String PLAYLIST_ID_EXTRA = "playlist_id";
     public static final String PLAYLIST_NUMBER_EXTRA = "playlist_number";
+    public static final String EXTRA_FROM_NOTIFICATION_FLAG = "from_notification";
 
     private int mPlayListId;
     //private Song mSong;
@@ -69,19 +70,26 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         initializeUI();
 
-        mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
-        int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
-        mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
-        MusicState.instance.setNewSongDatas(mSongsIds, mCurrentSongIndex);
+        boolean isFromNotification = getIntent().getBooleanExtra(EXTRA_FROM_NOTIFICATION_FLAG, false);
+
+        if (!isFromNotification) {
+            mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
+            int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
+            mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
+            MusicState.instance.setNewSongDatas(mSongsIds, mCurrentSongIndex);
+            String[] clubs = getResources().getStringArray(R.array.clubs);
+            MusicState.instance.setClubName(clubs[tagNum]);
+        } else {
+            mSongsIds = MusicState.instance.getSongsIds();
+            mCurrentSongIndex = MusicState.instance.getCurrentSongIndex();
+        }
         //mSong = DBManager.getFirstSongByPlayListId(mPlayListId);
         //mSong = DBManager.getSongById(mSongsIds.get(mCurrentSongIndex));
+        mHandler = new Handler();
         fillUIWithSong();
         //Toast.makeText(this, "PlayListId = " + String.valueOf(mPlayListId), Toast.LENGTH_SHORT).show();
         //Toast.makeText(this, "TagNum = " + String.valueOf(tagNum), Toast.LENGTH_SHORT).show();
-        String[] clubs = getResources().getStringArray(R.array.clubs);
-        tvSchoolTitle.setText(clubs[tagNum]);
-
-        mHandler = new Handler();
+        tvSchoolTitle.setText(MusicState.instance.getClubName());
 
         secTimer.start();
 
@@ -134,6 +142,11 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         mSeekBar.setProgress(0);
         mSeekBar.setSecondaryProgress(0);
         Picasso.with(PlayActivity.this).load(Player.instance.getSongFullAlbumURL()).into(mIvAlbum);
+
+        if (Player.instance.getPlayingSongId() == mSongsIds.get(mCurrentSongIndex)) {
+            mHandler.post(updateProcessPlaying);
+            mSeekBar.setSecondaryProgress(Player.instance.getBufferingPercent());
+        }
     }
 
     @Override
@@ -195,7 +208,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            Toast.makeText(PlayActivity.this, "Song id = " + data.getIntExtra(SONG_POS_EXTRA_RESULT, -1), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(PlayActivity.this, "Song id = " + data.getIntExtra(SONG_POS_EXTRA_RESULT, -1), Toast.LENGTH_SHORT).show();
             mCurrentSongIndex = data.getIntExtra(SONG_POS_EXTRA_RESULT, -1);
             mSongsIds = (ArrayList<Integer>) data.getSerializableExtra(SONGS_IDS_EXTRA_RESULT);
             MusicState.instance.setNewSongDatas(mSongsIds, mCurrentSongIndex);
@@ -238,8 +251,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void playNewSong() {
-        mSeekBar.setProgress(0);
-        mSeekBar.setSecondaryProgress(0);
+        //mSeekBar.setProgress(0);
+        //mSeekBar.setSecondaryProgress(0);
         Player.instance.setLooping(isLooping);
 
         Intent serviceIntent = new Intent(PlayActivity.this, MusicNotificationService.class);
@@ -262,6 +275,21 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         fillUIWithSong();
         if (Player.instance.getIsPlaying()) {
             playNewSong();
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            if (Player.instance.getPlayingSongId() != mSongsIds.get(mCurrentSongIndex)) {
+                tvNowPlay.setText("00:00");
+                showPlayBtn();
+                mSeekBar.setProgress(0);
+                mSeekBar.setSecondaryProgress(0);
+            } else if (!Player.instance.getIsPlaying()) {
+                showPlayBtn();
+            }
         }
     }
 
