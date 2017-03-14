@@ -63,7 +63,7 @@
     </style>
 
     <style name="NotificationTextLine1" parent="NotificationText">
-        <item name="android:textColor">@color/textColorRed</item>
+        <!--<item name="android:textColor">@color/textColorRed</item>-->
         <item name="android:textSize">18sp</item>
     </style>
 

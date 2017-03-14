@@ -124,8 +124,10 @@
                 android:singleLine="true"
                 android:text="This Is Love"
                 android:textSize="@dimen/text_name_song_in_play"
-                android:textStyle="normal|bold"
-                android:textColor="@color/textColorRed"/>
+                android:textStyle="normal|bold"/>
+            <!--
+                android:textColor="@color/textColorRed"
+                -->
 
             <TextView
                 android:id="@+id/tvSinger"
@@ -236,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_save_on"/>
+                        android:src="@drawable/ic_save_off"/>
 
                 </RelativeLayout>
 
@@ -253,7 +255,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_save_on_2"/>
+                        android:src="@drawable/ic_save_on"/>
 
                 </RelativeLayout>
 
@@ -331,7 +333,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_repeat_off_2"/>
+                        android:src="@drawable/ic_repeat_off"/>
 
                 </RelativeLayout>
 
@@ -348,7 +350,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_repeat_on_2"/>
+                        android:src="@drawable/ic_repeat_on"/>
 
                 </RelativeLayout>
 

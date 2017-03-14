@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
 
 public class Player implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
@@ -39,10 +40,13 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     private boolean isPlaying = false;
     private boolean isLooping = false;
-
-    private int mBufferingPercent = 0;
+    private boolean isInterrupt = false;
+    private boolean isTransientCanDuck = false;
+    private boolean isHasAudioFocus = false;
 
     private int mCurrentVolume;
+
+    private int mBufferingPercent = 0;
 
     private AudioManager mAudioManager;
 
@@ -71,8 +75,19 @@ public class Player implements MediaPlayer.OnPreparedListener,
                 if (mSong.getId() != mNewSong.getId()) {
                     playNewSong();
                 } else {
-                    mMediaPlayer.start();
-                    isPlaying = true;
+                    if (!isHasAudioFocus) {
+                        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+                        int result = mAudioManager.requestAudioFocus(instance.afChangeListener,
+                                AudioManager.STREAM_MUSIC,
+                                AudioManager.AUDIOFOCUS_GAIN);
+                        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                            mMediaPlayer.start();
+                            isPlaying = true;
+                        }
+                    } else {
+                        mMediaPlayer.start();
+                        isPlaying = true;
+                    }
                 }
             }
         }
@@ -128,6 +143,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
                 AudioManager.AUDIOFOCUS_GAIN);
 
         if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            isHasAudioFocus = true;
             mMediaPlayer = new MediaPlayer();
             mSong = mNewSong;
             try {
@@ -153,6 +169,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     }
 
     public void stop() {
+        isPlaying = false;
         releaseMediaPlayer();
     }
 
@@ -206,6 +223,9 @@ public class Player implements MediaPlayer.OnPreparedListener,
                 e.printStackTrace();
             }
         }
+        if (mAudioManager != null) {
+            mAudioManager.abandonAudioFocus(afChangeListener);
+        }
     }
 
     @Override
@@ -246,52 +266,58 @@ public class Player implements MediaPlayer.OnPreparedListener,
             if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT) {
                 // Pause playback
                 //RadioState.state = RadioState.State.INTERRUPTED;
-                Intent pauseIntent = new Intent(context, NotificationService.class);
+                isInterrupt = true;
+                Intent pauseIntent = new Intent(mContext, MusicNotificationService.class);
                 pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
-                PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pPauseIntent = PendingIntent.getService(mContext, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 try {
-                    ppauseIntent.send();
+                    pPauseIntent.send();
                 } catch (PendingIntent.CanceledException e) {
                     e.printStackTrace();
                 }
-                Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS_TRANSIENT");
-            } else if ( focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
-                mCurrentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                int newVolume = (int) (0.3 * mCurrentVolume);
-                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_PLAY_SOUND);
-                RadioState.isTransientCanDuck = true;
-                Log.d("PlayerTag", "mCurrentVolume = " + String.valueOf(mCurrentVolume));
-                Log.d("PlayerTag", "newVolume = " + String.valueOf(newVolume));
-                Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
+                //Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS_TRANSIENT");
+            } else if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                if (isPlaying) {
+                    mCurrentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                    int newVolume = (int) (0.3 * mCurrentVolume);
+                    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_PLAY_SOUND);
+                    isTransientCanDuck = true;
+                }
+                //Log.d("PlayerTag", "mCurrentVolume = " + String.valueOf(mCurrentVolume));
+                //Log.d("PlayerTag", "newVolume = " + String.valueOf(newVolume));
+                //Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
                 // Resume playback
-                if (RadioState.state == RadioState.State.INTERRUPTED) {
-                    Intent pauseIntent = new Intent(context, NotificationService.class);
-                    pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
-                    PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                if (isInterrupt) {
+                    Intent playIntent = new Intent(mContext, MusicNotificationService.class);
+                    playIntent.setAction(Const.ACTION.PLAY_ACTION);
+                    PendingIntent pPlayIntent = PendingIntent.getService(mContext, 0, playIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     try {
-                        ppauseIntent.send();
+                        pPlayIntent.send();
                     } catch (PendingIntent.CanceledException e) {
                         e.printStackTrace();
                     }
+                    isInterrupt = false;
                 }
-                if (RadioState.isTransientCanDuck) {
-                    RadioState.isTransientCanDuck = false;
+                if (isTransientCanDuck) {
+                    isTransientCanDuck = false;
                     mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mCurrentVolume, AudioManager.FLAG_PLAY_SOUND);
                 }
-                Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_GAIN");
+                //Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_GAIN");
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 //manager.unregisterMediaButtonEventReceiver(RemoteControlReceiver);
-                if (RadioState.state == RadioState.State.PLAY) {
-                    Intent pauseIntent = new Intent(context, NotificationService.class);
-                    pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
-                    PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                if (isPlaying) {
+                    Intent stopIntent = new Intent(mContext, MusicNotificationService.class);
+                    stopIntent.setAction(Const.ACTION.AUDIOFOCUS_LOSS_ACTION);
+                    PendingIntent pStopIntent = PendingIntent.getService(mContext, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     try {
-                        ppauseIntent.send();
+                        pStopIntent.send();
                     } catch (PendingIntent.CanceledException e) {
                         e.printStackTrace();
                     }
+                    isPlaying = false;
                 }
+                isHasAudioFocus = false;
                 mAudioManager.abandonAudioFocus(afChangeListener);
                 //Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS");
             }

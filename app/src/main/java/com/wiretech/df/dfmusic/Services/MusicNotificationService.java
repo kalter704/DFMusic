@@ -77,11 +77,6 @@ public class MusicNotificationService extends Service {
             views.setImageViewResource(R.id.notification_play, R.drawable.ic_play);
             bigViews.setImageViewResource(R.id.notification_play, R.drawable.ic_play);
         }
-        /*
-        if (pos == 1) {
-            views.setImageViewResource(R.id.notification_play, R.drawable.ic_pause);
-        }
-        */
         if (pos == PLAY_ACTION) {
             views.setImageViewResource(R.id.notification_play, R.drawable.ic_pause);
             bigViews.setImageViewResource(R.id.notification_play, R.drawable.ic_pause);
@@ -91,7 +86,7 @@ public class MusicNotificationService extends Service {
             bigViews.setImageViewResource(R.id.notification_play, R.drawable.ic_play);
         }
         notification = new Notification.Builder(this)
-                .setPriority(Notification.PRIORITY_HIGH)
+                .setPriority(Notification.PRIORITY_MAX)
                 .build();
         notification.contentView = views;
         notification.bigContentView = bigViews;
@@ -125,6 +120,9 @@ public class MusicNotificationService extends Service {
             Player.instance.stop();
             stopForeground(true);
             stopSelf();
+        } else if (intent.getAction().equals(Const.ACTION.AUDIOFOCUS_LOSS_ACTION)) {
+            Player.instance.pause();
+            showNotification(PAUSE_ACTION);
         } else if (intent.getAction().equals(Const.ACTION.UPDATE_NOTIFICATION_ACTION)) {
             showNotification(UPDATE_ACTION);
         } else if (intent.getAction().equals(Const.ACTION.PREVIOUSFOREGROUND_ACTION)) {

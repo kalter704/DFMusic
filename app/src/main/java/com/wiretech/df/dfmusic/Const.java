@@ -10,6 +10,7 @@ public class Const {
         String PREVIOUSFOREGROUND_ACTION = "com.wiretech.df.dfmusic.action.previousforeground";
         String NEXTFOREGROUND_ACTION = "com.wiretech.df.dfmusic.action.nextforeground";
         String UPDATE_NOTIFICATION_ACTION = "com.wiretech.df.dfmusic.action.updatenotification";
+        String AUDIOFOCUS_LOSS_ACTION = "com.wiretech.df.dfmusic.action.audiofocuslost";
     }
 
     public static int FOREGROUND_SERVICE = 101;

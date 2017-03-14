@@ -5,10 +5,9 @@ import java.util.ArrayList;
 public class MusicState {
     public static  MusicState instance = new MusicState();
 
-    private ArrayList<Integer> mSongsIds;
-    private int mCurrentSongIndex = 0;
-    private int mCurrentPlayingSongIndex = 0;
-    private String mClubName;
+    private static ArrayList<Integer> mSongsIds;
+    private static int mCurrentSongIndex = 0;
+    private static int mCurrentPlayingSongIndex = 0;
 
     private MusicState() {}
 

@@ -69,20 +69,20 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+        DBManager.with(this);
+
         initializeUI();
 
         boolean isFromNotification = getIntent().getBooleanExtra(EXTRA_FROM_NOTIFICATION_FLAG, false);
 
         PlayList playList;
-        if (!isFromNotification) {
-            mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
-            playList = DBManager.getPLayListById(mPlayListId);
-        } else {
+        if (isFromNotification) {
             playList = DBManager.getPlayListBySongId(Player.instance.getPlayingSongId());
             mPlayListId = playList.getId();
             mCurrentSongIndex = MusicState.instance.getCurrentPlayingSongIndex();
-            //mSongsIds = MusicState.instance.getSongsIds();
-            //mCurrentSongIndex = MusicState.instance.getCurrentSongIndex();
+        } else {
+            mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
+            playList = DBManager.getPLayListById(mPlayListId);
         }
         //int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
         mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
