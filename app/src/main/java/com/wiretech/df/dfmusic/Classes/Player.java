@@ -147,6 +147,17 @@ public class Player implements MediaPlayer.OnPreparedListener,
             mMediaPlayer = new MediaPlayer();
             mSong = mNewSong;
             try {
+
+                /*
+                if ((mSong.getId() % 3) == 0) {
+                    mMediaPlayer.setDataSource("http://ol1.mp3party.net/online/4/4323.mp3");
+                } else if ((mSong.getId() % 3) == 1) {
+                    mMediaPlayer.setDataSource("http://ol2.mp3party.net/online/1214/1214291.mp3");
+                } else {
+                    mMediaPlayer.setDataSource("http://ol1.mp3party.net/online/2/2807.mp3");
+                }
+                */
+
                 mMediaPlayer.setDataSource(mSong.getFullSongURL());
             } catch (IOException e) {
                 e.printStackTrace();

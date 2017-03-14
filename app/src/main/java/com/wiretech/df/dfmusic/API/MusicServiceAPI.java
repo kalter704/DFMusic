@@ -30,8 +30,8 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    public static final String SERVER_DOMAIN = "http://192.168.1.5/";
-    public static final String SERVER_URL = SERVER_DOMAIN + "musicapi/";
+    public static final String SERVER_DOMAIN = "http://702d7d1f.ngrok.io";
+    public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
     private static final int SONG_ACTION_ID = 2;
