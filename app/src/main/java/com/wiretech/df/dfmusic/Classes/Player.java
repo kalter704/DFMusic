@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+
 public class Player implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
     public static Player instance = new Player();
@@ -39,6 +41,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
     private boolean isLooping = false;
 
     private int mBufferingPercent = 0;
+
+    private int mCurrentVolume;
+
+    private AudioManager mAudioManager;
 
     private Player() {
         mListListeners = new ArrayList<>();
@@ -115,20 +121,28 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     private void playNewSong() {
         releaseMediaPlayer();
-        mMediaPlayer = new MediaPlayer();
-        mSong = mNewSong;
-        try {
-            mMediaPlayer.setDataSource(mSong.getFullSongURL());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        int result = mAudioManager.requestAudioFocus(instance.afChangeListener,
+                AudioManager.STREAM_MUSIC,
+                AudioManager.AUDIOFOCUS_GAIN);
+
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            mMediaPlayer = new MediaPlayer();
+            mSong = mNewSong;
+            try {
+                mMediaPlayer.setDataSource(mSong.getFullSongURL());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mMediaPlayer.setLooping(isLooping);
+            //Log.d(LOG_TAG, "prepareAsync");
+            mMediaPlayer.setOnCompletionListener(this);
+            mMediaPlayer.setOnBufferingUpdateListener(this);
+            mMediaPlayer.setOnPreparedListener(this);
+            mMediaPlayer.prepareAsync();
         }
-        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mMediaPlayer.setLooping(isLooping);
-        //Log.d(LOG_TAG, "prepareAsync");
-        mMediaPlayer.setOnCompletionListener(this);
-        mMediaPlayer.setOnBufferingUpdateListener(this);
-        mMediaPlayer.setOnPreparedListener(this);
-        mMediaPlayer.prepareAsync();
     }
 
     public void pause() {
@@ -225,4 +239,63 @@ public class Player implements MediaPlayer.OnPreparedListener,
         mp.start();
         isPlaying = true;
     }
+
+    AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        public void onAudioFocusChange(int focusChange) {
+            //Log.d("PlayerTag", "focusChange = " + String.valueOf(focusChange));
+            if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT) {
+                // Pause playback
+                //RadioState.state = RadioState.State.INTERRUPTED;
+                Intent pauseIntent = new Intent(context, NotificationService.class);
+                pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
+                PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                try {
+                    ppauseIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
+                Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS_TRANSIENT");
+            } else if ( focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                mCurrentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                int newVolume = (int) (0.3 * mCurrentVolume);
+                mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_PLAY_SOUND);
+                RadioState.isTransientCanDuck = true;
+                Log.d("PlayerTag", "mCurrentVolume = " + String.valueOf(mCurrentVolume));
+                Log.d("PlayerTag", "newVolume = " + String.valueOf(newVolume));
+                Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK");
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                // Resume playback
+                if (RadioState.state == RadioState.State.INTERRUPTED) {
+                    Intent pauseIntent = new Intent(context, NotificationService.class);
+                    pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
+                    PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    try {
+                        ppauseIntent.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (RadioState.isTransientCanDuck) {
+                    RadioState.isTransientCanDuck = false;
+                    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mCurrentVolume, AudioManager.FLAG_PLAY_SOUND);
+                }
+                Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_GAIN");
+            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                //manager.unregisterMediaButtonEventReceiver(RemoteControlReceiver);
+                if (RadioState.state == RadioState.State.PLAY) {
+                    Intent pauseIntent = new Intent(context, NotificationService.class);
+                    pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
+                    PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    try {
+                        ppauseIntent.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mAudioManager.abandonAudioFocus(afChangeListener);
+                //Log.d("PlayerTag", "AudioFocusChange AUDIOFOCUS_LOSS");
+            }
+        }
+    };
+
 }
