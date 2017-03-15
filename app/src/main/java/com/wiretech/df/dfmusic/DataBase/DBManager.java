@@ -73,6 +73,7 @@ public class DBManager {
                     long pId = db.insert(DBHelper.PLAYLIST_TABLE_NAME, null, cv);
                     cv.clear();
                     for (Song s : p.getSongs()) {
+                        cv.put(DBHelper.SONG_ID_FIELD, s.getRealId());
                         cv.put(DBHelper.SONG_TITLE_FIELD, s.getName());
                         cv.put(DBHelper.SONG_SINGER_FIELD, s.getSinger());
                         cv.put(DBHelper.SONG_POSITION_FIELD, s.getPos());
@@ -80,6 +81,7 @@ public class DBManager {
                         cv.put(DBHelper.SONG_SONG_URL_FIELD, s.getSongURL());
                         cv.put(DBHelper.SONG_ALBUM_URL_FIELD, s.getAlbumURL());
                         cv.put(DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD, pId);
+                        cv.put(DBHelper.SONG_IS_SAVED, s.getIsSaved());
                         db.insert(DBHelper.SONG_TABLE_NAME, null, cv);
                     }
                     cv.clear();
@@ -116,9 +118,19 @@ public class DBManager {
             ContentValues cv = new ContentValues();
             SQLiteDatabase db = sDBHelper.getWritableDatabase();
             try {
+
+                List<Integer> idsList= new ArrayList<>();
+                Cursor c = db.query(DBHelper.SAVED_SONG_TABLE_NAME, new String[]{DBHelper.SAVED_SONG_ID_FIELD}, null, null, null, null, null);
+                logCursor(c);
+                if (c.moveToFirst()) {
+                    do {
+                        idsList.add(c.getInt(c.getColumnIndex(DBHelper.SAVED_SONG_ID_FIELD)));
+                    } while (c.moveToNext());
+                }
+
                 for (PlayList p : musicServerResponses[0].getPlayLists()) {
                     String selection = DBHelper.PLAYLIST_ID_FIELD + " = ?";
-                    Cursor c = db.query(DBHelper.PLAYLIST_TABLE_NAME, null, selection, new String[]{String.valueOf(p.getId())}, null, null, null);
+                    c = db.query(DBHelper.PLAYLIST_TABLE_NAME, null, selection, new String[]{String.valueOf(p.getId())}, null, null, null);
                     logCursor(c);
                     c.moveToFirst();
                     long pId = c.getLong(c.getColumnIndex("id"));
@@ -131,12 +143,18 @@ public class DBManager {
                     cv.clear();
                     db.delete(DBHelper.SONG_TABLE_NAME, DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = " + String.valueOf(pId), null);
                     for (Song s : p.getSongs()) {
+                        cv.put(DBHelper.SONG_ID_FIELD, s.getRealId());
                         cv.put(DBHelper.SONG_TITLE_FIELD, s.getName());
                         cv.put(DBHelper.SONG_SINGER_FIELD, s.getSinger());
                         cv.put(DBHelper.SONG_POSITION_FIELD, s.getPos());
                         cv.put(DBHelper.SONG_LENGTH_FIELD, s.getLength());
                         cv.put(DBHelper.SONG_SONG_URL_FIELD, s.getSongURL());
                         cv.put(DBHelper.SONG_ALBUM_URL_FIELD, s.getAlbumURL());
+                        if (idsList.contains(s.getRealId())) {
+                            cv.put(DBHelper.SONG_IS_SAVED, 1);
+                        } else {
+                            cv.put(DBHelper.SONG_IS_SAVED, 0);
+                        }
                         cv.put(DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD, pId);
                         db.insert(DBHelper.SONG_TABLE_NAME, null, cv);
                     }
@@ -246,20 +264,39 @@ public class DBManager {
         logCursor(c);
         if (c.moveToFirst()) {
             int idIndex = c.getColumnIndex("id");
+            int realIdIndex = c.getColumnIndex(DBHelper.SONG_ID_FIELD);
             int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
             int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
             int singerIndex = c.getColumnIndex(DBHelper.SONG_SINGER_FIELD);
             int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
             int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
             int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
+            int isSavedIndex = c.getColumnIndex(DBHelper.SONG_IS_SAVED);
+
+            int realId = c.getInt(realIdIndex);
+            int isSaved = c.getInt(isSavedIndex);
+
+            String selection2 = DBHelper.SAVED_SONG_ID_FIELD + " = ?";
+            String[] selectionArgs2 = new String[]{String.valueOf(realId)};
+            Cursor c2 = db.query(DBHelper.SAVED_SONG_TABLE_NAME, null, selection2, selectionArgs2, null, null, null);
+            logCursor(c2);
+            String path;
+            if (c2.moveToFirst() && (isSaved == 1)) {
+                path = c2.getString(c2.getColumnIndex(DBHelper.SAVED_SONG_PATH_FIELD));
+            } else {
+                path = c.getString(songUrlIndex);
+            }
+
             song = new Song(
                     c.getInt(idIndex),
+                    c.getInt(realIdIndex),
                     c.getString(nameIndex),
                     c.getString(singerIndex),
                     c.getString(lengthIndex),
                     c.getInt(posIndex),
-                    c.getString(songUrlIndex),
+                    path,
                     c.getString(albumUrlIndex),
+                    isSaved,
                     Song.INT_FLAG
             );
         }
@@ -275,20 +312,24 @@ public class DBManager {
         logCursor(c);
         if (c.moveToFirst()) {
             int idIndex = c.getColumnIndex("id");
+            int realIdIndex = c.getColumnIndex(DBHelper.SONG_ID_FIELD);
             int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
             int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
             int singerIndex = c.getColumnIndex(DBHelper.SONG_SINGER_FIELD);
             int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
             int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
             int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
+            int isSavedIndex = c.getColumnIndex(DBHelper.SONG_IS_SAVED);
             song = new Song(
                     c.getInt(idIndex),
+                    c.getInt(realIdIndex),
                     c.getString(nameIndex),
                     c.getString(singerIndex),
                     c.getString(lengthIndex),
                     c.getInt(posIndex),
                     c.getString(songUrlIndex),
                     c.getString(albumUrlIndex),
+                    c.getInt(isSavedIndex),
                     Song.INT_FLAG
             );
         }
@@ -353,10 +394,38 @@ public class DBManager {
         return playList;
     }
 
+    public static void setSaveSongBySong(Song song) {
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        cv.put(DBHelper.SAVED_SONG_ID_FIELD, song.getRealId());
+        cv.put(DBHelper.SAVED_SONG_PATH_FIELD, song.getSongURL());
+        db.insert(DBHelper.SAVED_SONG_TABLE_NAME, null, cv);
+        cv.clear();
+
+        cv.put(DBHelper.SONG_IS_SAVED, 1);
+        db.update(DBHelper.SONG_TABLE_NAME, cv, "id = ?", new String[]{String.valueOf(song.getId())});
+        cv.clear();
+        writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);
+        writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
+    }
+    public static void setUnSaveSongBySong(Song song) {
+        ContentValues cv = new ContentValues();
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        cv.put(DBHelper.SONG_IS_SAVED, 0);
+        db.update(DBHelper.SONG_TABLE_NAME, cv, "id = ?", new String[]{String.valueOf(song.getId())});
+        cv.clear();
+
+        db.delete(DBHelper.SAVED_SONG_TABLE_NAME, DBHelper.SAVED_SONG_ID_FIELD + " = " + String.valueOf(song.getRealId()), null);
+
+        writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);
+        writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
+    }
+
     private static void writeDataFromTableToLog(String tableName) {
         if (isDebug) {
             SQLiteDatabase db = sDBHelper.getWritableDatabase();
             Cursor c = db.query(tableName, null, null, null, null, null, null);
+            Log.d(LOG_TAG, "Table name = " + tableName);
             logCursor(c);
         }
     }

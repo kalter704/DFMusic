@@ -4,12 +4,14 @@ import com.wiretech.df.dfmusic.API.MusicServiceAPI;
 
 public class Song {
     private int mId;
+    private int mRealId;
     private int mPos;
     private String mName;
     private String mSinger;
     private String mLength;
     private String mSongURL;
     private String mAlbumURL;
+    private boolean mIsSaved;
 
     public static final int INT_FLAG = 0;
     public static final int STRING_FLAG = 1;
@@ -21,8 +23,9 @@ public class Song {
         setLength(length);
     }
 
-    public Song(int id, String name, String singer, String length, int pos, String songURL, String albumURL, int flag) {
+    public Song(int id, int realId, String name, String singer, String length, int pos, String songURL, String albumURL, int isSaved, int flag) {
         mId = id;
+        mRealId = realId;
         mPos = pos;
         mName = name;
         mSinger = singer;
@@ -33,10 +36,15 @@ public class Song {
         }
         mSongURL = songURL;
         mAlbumURL = albumURL;
+        mIsSaved = (isSaved != 0);
     }
 
     public void setId(int id) {
         mId = id;
+    }
+
+    public void setRealId(int realId) {
+        mRealId = realId;
     }
 
     public void setPos(int pos) {
@@ -79,8 +87,16 @@ public class Song {
         mSinger = singer;
     }
 
+    public void setSaved(boolean saved) {
+        mIsSaved = saved;
+    }
+
     public int getId() {
         return mId;
+    }
+
+    public int getRealId() {
+        return mRealId;
     }
 
     public int getPos() {
@@ -100,7 +116,11 @@ public class Song {
     }
 
     public String getFullSongURL() {
-        return MusicServiceAPI.SERVER_DOMAIN + mSongURL;
+        if (!mIsSaved) {
+            return MusicServiceAPI.SERVER_DOMAIN + mSongURL;
+        } else {
+            return mSongURL;
+        }
     }
 
     public String getAlbumURL() {
@@ -113,5 +133,9 @@ public class Song {
 
     public String getSinger() {
         return mSinger;
+    }
+
+    public boolean getIsSaved() {
+        return mIsSaved;
     }
 }

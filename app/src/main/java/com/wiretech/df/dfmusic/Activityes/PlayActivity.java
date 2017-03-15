@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
+import com.wiretech.df.dfmusic.Classes.MusicDownloadManager;
 import com.wiretech.df.dfmusic.Classes.MusicState;
 import com.wiretech.df.dfmusic.Classes.Player;
 import com.wiretech.df.dfmusic.Const;
@@ -70,6 +71,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_play);
 
         DBManager.with(this);
+        MusicDownloadManager.instance.with(this);
 
         initializeUI();
 
@@ -100,12 +102,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         Player.instance.setOnPlayerListener(this);
     }
 
-
-
     private void initializeUI() {
         mSeekBar = (SeekBar) findViewById(R.id.seekBar);
-        mSeekBar.setProgress(0);
-        mSeekBar.setSecondaryProgress(0);
+        //mSeekBar.setProgress(0);
+        //mSeekBar.setSecondaryProgress(0);
         mSeekBar.setOnSeekBarChangeListener(this);
 
         tvSchoolTitle = (TextView) findViewById(R.id.tvSchoolTitle);
@@ -151,6 +151,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             mHandler.post(updateProcessPlaying);
             mSeekBar.setSecondaryProgress(Player.instance.getBufferingPercent());
         }
+
+        if (Player.instance.getIsSaved()) {
+            showSaveBtn();
+            mSeekBar.setSecondaryProgress(100);
+        } else {
+            showUnSaveBtn();
+        }
     }
 
     @Override
@@ -167,9 +174,11 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.rlSave:
                 showUnSaveBtn();
+                MusicDownloadManager.instance.deleteSong(mSongsIds.get(mCurrentSongIndex));
                 break;
             case R.id.rlUnSave:
                 showSaveBtn();
+                MusicDownloadManager.instance.downloadSong(mSongsIds.get(mCurrentSongIndex));
                 break;
 
             case R.id.rlPreviousSong:
@@ -257,7 +266,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private void playNewSong() {
         //mSeekBar.setProgress(0);
         //mSeekBar.setSecondaryProgress(0);
+        MusicState.instance.setNewSongData(mSongsIds, mCurrentSongIndex);
         Player.instance.setLooping(isLooping);
+        Player.instance.initNewSong();
 
         Intent serviceIntent = new Intent(PlayActivity.this, MusicNotificationService.class);
         serviceIntent.setAction(Const.ACTION.PLAYNEWFOREGROUND_ACTION);
@@ -290,7 +301,11 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 tvNowPlay.setText("00:00");
                 showPlayBtn();
                 mSeekBar.setProgress(0);
-                mSeekBar.setSecondaryProgress(0);
+                if (Player.instance.getIsSaved()) {
+                    mSeekBar.setSecondaryProgress(100);
+                } else {
+                    mSeekBar.setSecondaryProgress(0);
+                }
             } else if (!Player.instance.getIsPlaying()) {
                 showPlayBtn();
             }
@@ -313,6 +328,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                                 mHandler.post(updateProcessPlaying);
                             }
                         }
+                    } else {
+                        mHandler.post(updatePlayBtn);
                     }
                     sleep(1000);
                 }
@@ -356,29 +373,37 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    private Runnable updatePlayBtn = new Runnable() {
+        @Override
+        public void run() {
+            showPlayBtn();
+        }
+    };
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (fromUser) {
-            int m = 0;
-            int s = (int) (((float) progress) * Player.instance.getDuration() / 100000);
-            while ((s - 60) > 0) {
-                ++m;
-                s -= 60;
+        if (Player.instance.getPlayingSongId() == mSongsIds.get(mCurrentSongIndex)) {
+            if (fromUser) {
+                int m = 0;
+                int s = (int) (((float) progress) * Player.instance.getDuration() / 100000);
+                while ((s - 60) > 0) {
+                    ++m;
+                    s -= 60;
+                }
+                String time = "";
+                if (m < 10) {
+                    time += "0" + String.valueOf(m);
+                } else {
+                    time += String.valueOf(m);
+                }
+                time += ":";
+                if (s > 9) {
+                    time += String.valueOf(s);
+                } else {
+                    time += "0" + String.valueOf(s);
+                }
+                tvNowPlay.setText(time);
             }
-            String time = "";
-            if (m < 10) {
-                time += "0" + String.valueOf(m);
-            } else {
-                time += String.valueOf(m);
-            }
-            time += ":";
-            if (s > 9) {
-                time += String.valueOf(s);
-            } else {
-                time += "0" + String.valueOf(s);
-            }
-            tvNowPlay.setText(time);
-
         }
     }
 
@@ -389,12 +414,14 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-        int to = (int) (((float) seekBar.getProgress()) * Player.instance.getDuration() / 100);
-        //Log.d(LOG_TAG, "onProgressChanged to = " + to);
-        //Log.d(LOG_TAG, "onProgressChanged seekBar.getProgress() = " + seekBar.getProgress());
-        //Log.d(LOG_TAG, "onProgressChanged mMediaPlayer.getDuration() = " + mMediaPlayer.getDuration());
-        Player.instance.seekTo(to);
-        mHandler.post(updateProcessPlaying);
+        if (Player.instance.getPlayingSongId() == mSongsIds.get(mCurrentSongIndex)) {
+            int to = (int) (((float) seekBar.getProgress()) * Player.instance.getDuration() / 100);
+            //Log.d(LOG_TAG, "onProgressChanged to = " + to);
+            //Log.d(LOG_TAG, "onProgressChanged seekBar.getProgress() = " + seekBar.getProgress());
+            //Log.d(LOG_TAG, "onProgressChanged mMediaPlayer.getDuration() = " + mMediaPlayer.getDuration());
+            Player.instance.seekTo(to);
+            mHandler.post(updateProcessPlaying);
+        }
         isUserChangeSeek = false;
     }
 

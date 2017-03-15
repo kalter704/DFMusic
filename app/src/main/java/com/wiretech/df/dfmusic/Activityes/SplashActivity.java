@@ -25,6 +25,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
     private final String LOG_TAG = "SplashActivity";
 
     private boolean isEndTime = false;
+    private boolean isEndTime2 = true;
     private boolean isAppHasFocus = false;
     private boolean isDBEmpty = true;
     private boolean isEndDownload = false;
@@ -93,7 +94,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
     }
 
     private void startMainActivity() {
-        if (isEndDownload && isEndTime && isAppHasFocus) {
+        if (isEndDownload && isEndTime && isAppHasFocus && isEndTime2) {
             try {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -111,8 +112,9 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
         Log.d("SplashActivity", "onResponse");
         if (action == MusicServiceAPI.ALL_DATAS) {
             DBManager.fillDB(musicServerResponse);
+            isEndTime2 = false;
             isEndDownload = true;
-            startMainActivity();
+            splashTimer2.start();
         } else if (action == MusicServiceAPI.ONLY_PLAYLISTS) {
             // Сравнить данные по плейлистам с данными БД!!!!!!!!!!!!!!
             List<Integer> diff = DBManager.getIndexsOfDifferentPlaylists(musicServerResponse);
@@ -142,7 +144,6 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
         }
     }
 
-
     Thread splashTimer = new Thread() {
         public void run() {
             try {
@@ -152,6 +153,23 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
                     splashTimer += mIterationTime;
                 }
                 isEndTime = true;
+                startMainActivity();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    Thread splashTimer2 = new Thread() {
+        public void run() {
+            try {
+                int splashTimer = 0;
+                while(splashTimer < (mSecForSplashActivity * 1000)) {
+                    sleep(mIterationTime);
+                    splashTimer += mIterationTime;
+                }
+                isEndTime2 = true;
                 startMainActivity();
             }
             catch (InterruptedException e) {

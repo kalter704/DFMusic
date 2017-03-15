@@ -25,8 +25,8 @@ public class Player implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
     public static Player instance = new Player();
 
-    private NoisyAudioStreamReceiver mNoisyAudioStreamReceiver = new NoisyAudioStreamReceiver();
-    private IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+    //private NoisyAudioStreamReceiver mNoisyAudioStreamReceiver = new NoisyAudioStreamReceiver();
+    //private IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 
     private Context mContext = null;
 
@@ -98,7 +98,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
         MusicState.instance.savePlayingSongIndex();
     }
 
-    public int getPlayingSongId() {
+    public int  getPlayingSongId() {
         if (mSong != null) {
             return mSong.getId();
         } else {
@@ -132,6 +132,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     public String getSongFullAlbumURL() {
         return mNewSong.getFullAlbumURL();
+    }
+
+    public boolean getIsSaved() {
+        return mNewSong.getIsSaved();
     }
 
     private void playNewSong() {
