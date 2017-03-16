@@ -119,7 +119,7 @@ public class DBManager {
             SQLiteDatabase db = sDBHelper.getWritableDatabase();
             try {
 
-                List<Integer> idsList= new ArrayList<>();
+                List<Integer> idsList = new ArrayList<>();
                 Cursor c = db.query(DBHelper.SAVED_SONG_TABLE_NAME, new String[]{DBHelper.SAVED_SONG_ID_FIELD}, null, null, null, null, null);
                 logCursor(c);
                 if (c.moveToFirst()) {
@@ -408,6 +408,7 @@ public class DBManager {
         writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);
         writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
     }
+
     public static void setUnSaveSongBySong(Song song) {
         ContentValues cv = new ContentValues();
         SQLiteDatabase db = sDBHelper.getWritableDatabase();
@@ -418,6 +419,133 @@ public class DBManager {
         db.delete(DBHelper.SAVED_SONG_TABLE_NAME, DBHelper.SAVED_SONG_ID_FIELD + " = " + String.valueOf(song.getRealId()), null);
 
         writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);
+        writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
+    }
+
+    public static void setUnSaveSongBySong(SQLiteDatabase db, Song song) {
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.SONG_IS_SAVED, 0);
+        db.update(DBHelper.SONG_TABLE_NAME, cv, "id = ?", new String[]{String.valueOf(song.getId())});
+        cv.clear();
+
+        db.delete(DBHelper.SAVED_SONG_TABLE_NAME, DBHelper.SAVED_SONG_ID_FIELD + " = " + String.valueOf(song.getRealId()), null);
+
+        //writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);
+        //writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
+    }
+
+    public static List<Song> getAllSavedSongs(SQLiteDatabase db) {
+        List<Song> songs = new ArrayList<>();
+        /*
+        Cursor c = db.query(DBHelper.SAVED_SONG_TABLE_NAME, null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            c.getColumnIndex(DBHelper.SAVED_SONG_ID_FIELD);
+            c.getColumnIndex(DBHelper.SAVED_SONG_PATH_FIELD);
+            do {
+
+            } while (c.moveToNext());
+        }
+        */
+        String sqlQuery = "select "
+                + " SONG.id"
+                + ", SONG." + DBHelper.SONG_ID_FIELD
+                + ", SONG." + DBHelper.SONG_TITLE_FIELD
+                + ", SONG." + DBHelper.SONG_SINGER_FIELD
+                + ", SONG." + DBHelper.SONG_POSITION_FIELD
+                + ", SONG." + DBHelper.SONG_LENGTH_FIELD
+                + ", SONG." + DBHelper.SONG_ALBUM_URL_FIELD
+                + ", SONG." + DBHelper.SONG_IS_SAVED
+                + ", SAVED_SONG." + DBHelper.SAVED_SONG_PATH_FIELD
+                + " from " + DBHelper.SONG_TABLE_NAME + " as SONG "
+                + "inner join " + DBHelper.SAVED_SONG_TABLE_NAME + " as SAVED_SONG "
+                + "on SONG." + DBHelper.SONG_ID_FIELD + " = SAVED_SONG." + DBHelper.SAVED_SONG_ID_FIELD + " ";
+        Cursor c = db.rawQuery(sqlQuery, null);
+        Log.d(LOG_TAG, "Request result!!!");
+        logCursor(c);
+        if (c.moveToFirst()) {
+            do {
+                songs.add(new Song(
+                        c.getInt(c.getColumnIndex("id")),
+                        c.getInt(c.getColumnIndex(DBHelper.SONG_ID_FIELD)),
+                        c.getString(c.getColumnIndex(DBHelper.SONG_TITLE_FIELD)),
+                        c.getString(c.getColumnIndex(DBHelper.SONG_SINGER_FIELD)),
+                        c.getString(c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD)),
+                        c.getInt(c.getColumnIndex(DBHelper.SONG_POSITION_FIELD)),
+                        c.getString(c.getColumnIndex(DBHelper.SAVED_SONG_PATH_FIELD)),
+                        c.getString(c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD)),
+                        c.getInt(c.getColumnIndex(DBHelper.SONG_IS_SAVED)),
+                        Song.INT_FLAG
+                ));
+            } while (c.moveToNext());
+        }
+        return songs;
+    }
+
+    public static void deleteDataFromSavedTable(SQLiteDatabase db) {
+        db.delete(DBHelper.SAVED_SONG_TABLE_NAME, null, null);
+
+        ContentValues cv = new ContentValues();
+        cv.put(DBHelper.SONG_IS_SAVED, "0");
+        db.update(DBHelper.SONG_TABLE_NAME, cv, DBHelper.SONG_IS_SAVED + " = ?", new String[]{String.valueOf("1")});
+
+        //writeDataFromTableToLog(DBHelper.PLAYLIST_TABLE_NAME);
+        //writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);
+        //writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
+    }
+
+    public static ArrayList<Integer> getSavedSongsIds() {
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sqlQuery = "select "
+                + "SONG.id "
+                + "from " + DBHelper.SAVED_SONG_TABLE_NAME + " as SAVED_SONG "
+                + "inner join " + DBHelper.SONG_TABLE_NAME + " as SONG "
+                + "on SONG." + DBHelper.SONG_ID_FIELD + " = SAVED_SONG." + DBHelper.SAVED_SONG_ID_FIELD + " ";
+        Cursor c = db.rawQuery(sqlQuery, null);
+        logCursor(c);
+        if (c.moveToFirst()) {
+            do {
+                ids.add(c.getInt(c.getColumnIndex("id")));
+            } while (c.moveToNext());
+        }
+        return ids;
+    }
+
+    public static List<Song> getSongsBySongsIds(ArrayList<Integer> ids) {
+        List<Song> songs = new ArrayList<>();
+        SQLiteDatabase db = sDBHelper.getWritableDatabase();
+
+        String idsStr = "(";
+        for (Integer id : ids) {
+            idsStr += "\"" + String.valueOf(id) + "\",";
+        }
+        idsStr += "\"-1\")";
+
+        String sqlQuery = "select "
+                + "SONG.id"
+                + ", SONG." + DBHelper.SONG_TITLE_FIELD
+                + ", SONG." + DBHelper.SONG_LENGTH_FIELD
+                + " from " + DBHelper.SONG_TABLE_NAME + " as SONG "
+                + "where id in " + idsStr;
+        Cursor c = db.rawQuery(sqlQuery, null);
+        logCursor(c);
+        if (c.moveToFirst()) {
+            int idIndex = c.getColumnIndex("id");
+            int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
+            int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
+            do {
+                songs.add(new Song(
+                        c.getInt(idIndex),
+                        c.getString(nameIndex),
+                        c.getInt(lengthIndex)
+                ));
+            } while (c.moveToNext());
+        }
+
+        return songs;
+    }
+
+    public static void writeToLogDataFromTables() {
         writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
     }
 

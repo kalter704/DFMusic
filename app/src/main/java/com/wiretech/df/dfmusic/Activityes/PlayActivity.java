@@ -1,10 +1,13 @@
 package com.wiretech.df.dfmusic.Activityes;
 
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +40,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     public static final String PLAYLIST_ID_EXTRA = "playlist_id";
     public static final String PLAYLIST_NUMBER_EXTRA = "playlist_number";
     public static final String EXTRA_FROM_NOTIFICATION_FLAG = "from_notification";
+    public static final String SAVED_SONG_EXTRA = "saved_song";
 
     private int mPlayListId;
     //private Song mSong;
@@ -82,15 +86,41 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             playList = DBManager.getPlayListBySongId(Player.instance.getPlayingSongId());
             mPlayListId = playList.getId();
             mCurrentSongIndex = MusicState.instance.getCurrentPlayingSongIndex();
+            mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
         } else {
-            mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
-            playList = DBManager.getPLayListById(mPlayListId);
-        }
-        //int tagNum = getIntent().getIntExtra(PLAYLIST_NUMBER_EXTRA, -1);
-        mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
-        MusicState.instance.setNewSongData(mSongsIds, mCurrentSongIndex);
+            boolean isSavedSongs = getIntent().getBooleanExtra(SAVED_SONG_EXTRA, false);
+            if (isSavedSongs) {
+                mPlayListId = -1;
+                playList = new PlayList(-1, null, "Saved songs");
+                mSongsIds = DBManager.getSavedSongsIds();
+                if (mSongsIds.size() == 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PlayActivity.this);
+                    builder.setTitle("Предупреждение!")
+                            .setMessage("Вы не сохранили ни одной песни!")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setCancelable(false)
+                            .setNegativeButton("ОК", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
 
-        //String[] clubs = getResources().getStringArray(R.array.clubs);
+                    alert.show();
+
+                    alert.getButton(DialogInterface.BUTTON_NEGATIVE).setBackgroundColor(Color.parseColor("#D4D4D4"));
+                    return;
+                }
+            } else {
+                mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
+                playList = DBManager.getPLayListById(mPlayListId);
+                mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
+            }
+        }
+
+
+        MusicState.instance.setNewSongData(mSongsIds, mCurrentSongIndex);
 
         mHandler = new Handler();
         fillUIWithSong();
@@ -169,6 +199,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rlPlaylist:
                 Intent intent = new Intent(PlayActivity.this, PlayListActivity.class);
                 intent.putExtra(PlayListActivity.PLAYLIST_ID_EXTRA, mPlayListId);
+                intent.putExtra(PlayListActivity.SONGS_IDS_EXTRA, mSongsIds);
                 startActivityForResult(intent, 0);
                 break;
 

@@ -4,10 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wiretech.df.dfmusic.Classes.MusicDownloadManager;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "music_db";
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 18;
 
     public static final String PLAYLIST_TABLE_NAME = "playlist";
     public static final String PLAYLIST_ID_FIELD = "p_id";
@@ -31,8 +33,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SAVED_SONG_ID_FIELD = "song_id";
     public static final String SAVED_SONG_PATH_FIELD = "path";
 
+    private Context mContext;
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        mContext = context;
     }
 
     @Override
@@ -46,6 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.beginTransaction();
         try {
+            MusicDownloadManager.instance.deleteAllSavedSongs(db);
             db.execSQL("drop table if exists " + PLAYLIST_TABLE_NAME + ";");
             db.execSQL("drop table if exists " + SONG_TABLE_NAME + ";");
             db.execSQL("drop table if exists " + SAVED_SONG_TABLE_NAME + ";");

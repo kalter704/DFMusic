@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
@@ -21,6 +22,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.rlRating).setOnClickListener(this);
         findViewById(R.id.rlDonate).setOnClickListener(this);
         findViewById(R.id.rlWrite).setOnClickListener(this);
+
+        DBManager.writeToLogDataFromTables();
     }
 
     @Override
@@ -36,7 +39,9 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MenuActivity.this, DFClubsActivity.class));
                 break;
             case R.id.rlSavedAudio:
-
+                Intent intent = new Intent(MenuActivity.this, PlayActivity.class);
+                intent.putExtra(PlayActivity.SAVED_SONG_EXTRA, true);
+                startActivity(intent);
                 break;
             case R.id.rlRating:
 

@@ -29,7 +29,7 @@
             android:name=".Activityes.MenuActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".Activityes.About.AboutActivity"
+            android:name=".Activityes.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".Activityes.PlayListActivity"

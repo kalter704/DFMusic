@@ -1,6 +1,7 @@
 package com.wiretech.df.dfmusic.Classes;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -31,7 +32,6 @@ public class MusicDownloadManager {
     }
 
     private Context mContext;
-    //private BackgroundDownload mBackgroundDownload;
     private List<DoAction> mDoActions  = new ArrayList<>();
 
     private boolean isDo = false;
@@ -91,7 +91,7 @@ public class MusicDownloadManager {
                     if (!f1.exists()) {
                         f1.mkdir();
                     }
-                    path += "/" + song.getName() + ".mp3";
+                    path += "/" + song.getName() + String.valueOf(song.getRealId())+ ".mp3";
                     Log.d(LOG_TAG, "Path = " + path);
 
                     try {
@@ -138,6 +138,15 @@ public class MusicDownloadManager {
             super.onPostExecute(aVoid);
             isDo = false;
         }
+    }
 
+    public void deleteAllSavedSongs(SQLiteDatabase db) {
+        List<Song> songs = DBManager.getAllSavedSongs(db);
+        for (Song song : songs) {
+            File fd = new File(song.getSongURL());
+            fd.delete();
+            DBManager.setUnSaveSongBySong(db, song);
+        }
+        DBManager.deleteDataFromSavedTable(db);
     }
 }

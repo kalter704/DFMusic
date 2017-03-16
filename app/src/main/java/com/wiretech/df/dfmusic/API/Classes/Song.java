@@ -23,6 +23,11 @@ public class Song {
         setLength(length);
     }
 
+    public Song(int realId, String songURL) {
+        mRealId = realId;
+        mSongURL = songURL;
+    }
+
     public Song(int id, int realId, String name, String singer, String length, int pos, String songURL, String albumURL, int isSaved, int flag) {
         mId = id;
         mRealId = realId;

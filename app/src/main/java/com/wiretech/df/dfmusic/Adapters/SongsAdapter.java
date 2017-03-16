@@ -21,11 +21,11 @@ import java.util.List;
 
 public class SongsAdapter extends BaseAdapter {
 
-    Activity mActivity;
-    Context mContext;
-    LayoutInflater mLayoutInflater;
-    List<Song> mSongs;
-    ArrayList<Integer> mSongsIds;
+    private Activity mActivity;
+    private Context mContext;
+    private LayoutInflater mLayoutInflater;
+    private List<Song> mSongs;
+    private ArrayList<Integer> mSongsIds;
 
     public SongsAdapter(Activity activity, Context context, List<Song> songs, ArrayList<Integer> songsIds) {
         mActivity = activity;

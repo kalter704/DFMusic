@@ -1,4 +1,4 @@
-package com.wiretech.df.dfmusic.Activityes.About;
+package com.wiretech.df.dfmusic.Activityes;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -126,6 +126,7 @@ public class AboutActivity extends AppCompatActivity {
             youtube = getString(R.string.info_page_u_youtube);
         }
 
+        ((TextView) findViewById(R.id.tvTitle)).setText(clubName);
         ((TextView) findViewById(R.id.tvName)).setText(name);
         ((TextView) findViewById(R.id.tvSince)).setText(since);
         ((TextView) findViewById(R.id.tvLocation)).setText(location);

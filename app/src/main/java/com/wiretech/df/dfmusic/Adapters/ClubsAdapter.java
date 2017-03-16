@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wiretech.df.dfmusic.Activityes.About.AboutActivity;
+import com.wiretech.df.dfmusic.Activityes.AboutActivity;
 import com.wiretech.df.dfmusic.R;
 
 public class ClubsAdapter extends BaseAdapter {
