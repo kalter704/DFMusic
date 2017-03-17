@@ -197,6 +197,7 @@ public class DBManager {
                 m.nextPlaylist();
             } while (c.moveToNext());
         }
+
         return result;
     }
 
@@ -515,6 +516,7 @@ public class DBManager {
         List<Song> songs = new ArrayList<>();
         SQLiteDatabase db = sDBHelper.getWritableDatabase();
 
+        // Этот вариант работает быстрее, но порядок песен получается как в БД
         String idsStr = "(";
         for (Integer id : ids) {
             idsStr += "\"" + String.valueOf(id) + "\",";
@@ -541,6 +543,35 @@ public class DBManager {
                 ));
             } while (c.moveToNext());
         }
+
+        /*
+        String tempStr = "ids: ";
+        for (Integer id : ids) {
+            tempStr += id + " ";
+        }
+        Log.d(LOG_TAG, tempStr);
+        tempStr = "before sort: ";
+        for (Song s : songs) {
+            tempStr += s.getId() + " ";
+        }
+        Log.d(LOG_TAG, tempStr);
+        */
+        // Алгоритм изменения порядка
+        for (int i = 0; i < ids.size(); ++i) {
+            int id = ids.get(i);
+            for (int j = i; j < songs.size(); ++j) {
+                if (songs.get(j).getId() == id) {
+                    songs.add(i, songs.remove(j));
+                }
+            }
+        }
+        /*
+        tempStr = "after sort: ";
+        for (Song s : songs) {
+            tempStr += s.getId() + " ";
+        }
+        Log.d(LOG_TAG, tempStr);
+        */
 
         return songs;
     }
