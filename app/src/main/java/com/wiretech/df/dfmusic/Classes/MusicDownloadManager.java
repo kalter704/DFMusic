@@ -144,8 +144,9 @@ public class MusicDownloadManager {
         List<Song> songs = DBManager.getAllSavedSongs(db);
         for (Song song : songs) {
             File fd = new File(song.getSongURL());
-            fd.delete();
-            DBManager.setUnSaveSongBySong(db, song);
+            if (fd.delete()) {
+                DBManager.setUnSaveSongBySong(db, song);
+            }
         }
         DBManager.deleteDataFromSavedTable(db);
     }

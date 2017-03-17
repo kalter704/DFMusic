@@ -6,14 +6,13 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.wiretech.df.dfmusic.Adapters.SongsAdapter;
 import com.wiretech.df.dfmusic.API.Classes.Song;
+import com.wiretech.df.dfmusic.Adapters.SongsAdapter;
+import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PlayListActivity extends AppCompatActivity {
@@ -83,4 +82,15 @@ public class PlayListActivity extends AppCompatActivity {
         ((ListView) findViewById(R.id.listView)).setAdapter(mSongsAdapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AdControl.getInstance().intoActivity();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AdControl.getInstance().outOfActivity();
+    }
 }

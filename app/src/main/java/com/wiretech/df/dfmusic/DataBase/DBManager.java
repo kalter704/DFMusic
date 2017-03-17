@@ -460,34 +460,44 @@ public class DBManager {
                 + " from " + DBHelper.SONG_TABLE_NAME + " as SONG "
                 + "inner join " + DBHelper.SAVED_SONG_TABLE_NAME + " as SAVED_SONG "
                 + "on SONG." + DBHelper.SONG_ID_FIELD + " = SAVED_SONG." + DBHelper.SAVED_SONG_ID_FIELD + " ";
-        Cursor c = db.rawQuery(sqlQuery, null);
+        Cursor c = null;
+        try {
+            c = db.rawQuery(sqlQuery, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d(LOG_TAG, "Request result!!!");
         logCursor(c);
-        if (c.moveToFirst()) {
-            do {
-                songs.add(new Song(
-                        c.getInt(c.getColumnIndex("id")),
-                        c.getInt(c.getColumnIndex(DBHelper.SONG_ID_FIELD)),
-                        c.getString(c.getColumnIndex(DBHelper.SONG_TITLE_FIELD)),
-                        c.getString(c.getColumnIndex(DBHelper.SONG_SINGER_FIELD)),
-                        c.getString(c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD)),
-                        c.getInt(c.getColumnIndex(DBHelper.SONG_POSITION_FIELD)),
-                        c.getString(c.getColumnIndex(DBHelper.SAVED_SONG_PATH_FIELD)),
-                        c.getString(c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD)),
-                        c.getInt(c.getColumnIndex(DBHelper.SONG_IS_SAVED)),
-                        Song.INT_FLAG
-                ));
-            } while (c.moveToNext());
+        if (c != null) {
+            if (c.moveToFirst()) {
+                do {
+                    songs.add(new Song(
+                            c.getInt(c.getColumnIndex("id")),
+                            c.getInt(c.getColumnIndex(DBHelper.SONG_ID_FIELD)),
+                            c.getString(c.getColumnIndex(DBHelper.SONG_TITLE_FIELD)),
+                            c.getString(c.getColumnIndex(DBHelper.SONG_SINGER_FIELD)),
+                            c.getString(c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD)),
+                            c.getInt(c.getColumnIndex(DBHelper.SONG_POSITION_FIELD)),
+                            c.getString(c.getColumnIndex(DBHelper.SAVED_SONG_PATH_FIELD)),
+                            c.getString(c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD)),
+                            c.getInt(c.getColumnIndex(DBHelper.SONG_IS_SAVED)),
+                            Song.INT_FLAG
+                    ));
+                } while (c.moveToNext());
+            }
         }
         return songs;
     }
 
     public static void deleteDataFromSavedTable(SQLiteDatabase db) {
-        db.delete(DBHelper.SAVED_SONG_TABLE_NAME, null, null);
-
-        ContentValues cv = new ContentValues();
-        cv.put(DBHelper.SONG_IS_SAVED, "0");
-        db.update(DBHelper.SONG_TABLE_NAME, cv, DBHelper.SONG_IS_SAVED + " = ?", new String[]{String.valueOf("1")});
+        try {
+            db.delete(DBHelper.SAVED_SONG_TABLE_NAME, null, null);
+            ContentValues cv = new ContentValues();
+            cv.put(DBHelper.SONG_IS_SAVED, "0");
+            db.update(DBHelper.SONG_TABLE_NAME, cv, DBHelper.SONG_IS_SAVED + " = ?", new String[]{String.valueOf("1")});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //writeDataFromTableToLog(DBHelper.PLAYLIST_TABLE_NAME);
         //writeDataFromTableToLog(DBHelper.SONG_TABLE_NAME);

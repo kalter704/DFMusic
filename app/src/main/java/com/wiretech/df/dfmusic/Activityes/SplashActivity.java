@@ -9,11 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.wiretech.df.dfmusic.API.Classes.MusicServerResponse;
-import com.wiretech.df.dfmusic.API.Classes.PlayList;
-import com.wiretech.df.dfmusic.API.Classes.PlayListResponse;
 import com.wiretech.df.dfmusic.API.Interfaces.OnResponseAPIListener;
-import com.wiretech.df.dfmusic.API.Interfaces.OnResponsePlaylistsListener;
 import com.wiretech.df.dfmusic.API.MusicServiceAPI;
+import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.Classes.NetworkConnection;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
@@ -42,6 +40,10 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
         NetworkConnection.with(this);
         MusicServiceAPI.with(this);
         MusicServiceAPI.setOnResponseAPIListener(this);
+
+        AdControl.newAdControlInstance();
+        AdControl.getInstance().setContext(this);
+        AdControl.getInstance().enableAds();
 
         splashTimer.start();
 
@@ -165,7 +167,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
         public void run() {
             try {
                 int splashTimer = 0;
-                while(splashTimer < (mSecForSplashActivity * 1000)) {
+                while(splashTimer < (3 * mSecForSplashActivity * 1000)) {
                     sleep(mIterationTime);
                     splashTimer += mIterationTime;
                 }

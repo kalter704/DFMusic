@@ -14,8 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
+import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.Classes.MusicDownloadManager;
 import com.wiretech.df.dfmusic.Classes.MusicState;
 import com.wiretech.df.dfmusic.Classes.Player;
@@ -65,6 +68,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isPlaying = false;
 
     private Handler mHandler;
+
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +131,22 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         secTimer.start();
 
         Player.instance.setOnPlayerListener(this);
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AdControl.getInstance().intoActivity();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AdControl.getInstance().outOfActivity();
     }
 
     private void initializeUI() {

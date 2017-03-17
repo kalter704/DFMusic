@@ -1,10 +1,11 @@
 package com.wiretech.df.dfmusic.Activityes;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -135,6 +136,17 @@ public class AboutActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tvInst)).setText(instagram);
         ((TextView) findViewById(R.id.tvVK)).setText(vk);
         ((TextView) findViewById(R.id.tvYoutube)).setText(youtube);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AdControl.getInstance().intoActivity();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AdControl.getInstance().outOfActivity();
     }
 }

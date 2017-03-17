@@ -13,5 +13,5 @@ public class Const {
         String AUDIOFOCUS_LOSS_ACTION = "com.wiretech.df.dfmusic.action.audiofocuslost";
     }
 
-    public static int FOREGROUND_SERVICE = 101;
+    public static int FOREGROUND_SERVICE = 102;
 }

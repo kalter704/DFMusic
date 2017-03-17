@@ -1,19 +1,19 @@
 package com.wiretech.df.dfmusic.Activityes;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 
-import com.wiretech.df.dfmusic.Adapters.PlayListsAdapter;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
+import com.wiretech.df.dfmusic.Adapters.PlayListsAdapter;
+import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,5 +55,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, MenuActivity.class));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AdControl.getInstance().intoActivity();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AdControl.getInstance().outOfActivity();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AdControl.getInstance().disableAds();
     }
 }

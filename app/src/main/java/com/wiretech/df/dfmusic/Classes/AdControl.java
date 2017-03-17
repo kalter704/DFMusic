@@ -113,7 +113,6 @@ public class AdControl {
                         request();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    } finally {
                     }
                 }
             }.start();

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainCoordLayout"
     android:layout_width="match_parent"
@@ -94,11 +95,22 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id">
+            </com.google.android.gms.ads.AdView>
+
             <RelativeLayout
                 android:layout_width="240dp"
                 android:layout_height="240dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="96dp">
+                android:layout_marginTop="46dp">
+                <!-- android:layout_marginTop="96dp" -->
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -112,7 +124,6 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/tvSongTitle"
                 style="@style/play_song_text"
@@ -125,9 +136,6 @@
                 android:text=""
                 android:textSize="@dimen/text_name_song_in_play"
                 android:textStyle="normal|bold"/>
-            <!--
-                android:textColor="@color/textColorRed"
-                -->
 
             <TextView
                 android:id="@+id/tvSinger"

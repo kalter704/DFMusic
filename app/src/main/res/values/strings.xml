@@ -127,11 +127,21 @@
     <string name="play_toolbar_subtitle">NOW PLAYING</string>
 
 
+    //---AdMob-----------------------------------------------------------------
     <string name="admob_app_id">ca-app-pub-6263456605318646~9593782010</string>
 
     <string-array name="interstitial_ad_unit_id_array">
-        <item>ca-app-pub-6263456605318646/2070515217</item>
+        <item>ca-app-pub-6263456605318646/5730694015</item>
+        <item>ca-app-pub-6263456605318646/7207427218</item>
+        <item>ca-app-pub-6263456605318646/8684160410</item>
+        <item>ca-app-pub-6263456605318646/1160893616</item>
+        <item>ca-app-pub-6263456605318646/2637626812</item>
+        <item>ca-app-pub-6263456605318646/4114360016</item>
+        <item>ca-app-pub-6263456605318646/7067826414</item>
     </string-array>
+
+    <string name="banner_ad_unit_id">ca-app-pub-6263456605318646/9602490410</string>
+    //-------------------------------------------------------------------------
 
     <string-array name="clubs">
         <item>BLACK VELVET</item>

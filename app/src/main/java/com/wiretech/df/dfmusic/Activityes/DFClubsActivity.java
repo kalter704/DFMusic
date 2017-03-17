@@ -1,14 +1,13 @@
 package com.wiretech.df.dfmusic.Activityes;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 
 import com.wiretech.df.dfmusic.Adapters.ClubsAdapter;
+import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.R;
-
-import java.util.ArrayList;
 
 public class DFClubsActivity extends AppCompatActivity {
 
@@ -31,6 +30,17 @@ public class DFClubsActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AdControl.getInstance().intoActivity();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AdControl.getInstance().outOfActivity();
     }
 }
