@@ -4,18 +4,15 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
@@ -118,7 +115,6 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
             }
         }
-
 
         MusicState.instance.setNewSongData(mSongsIds, mCurrentSongIndex);
 
