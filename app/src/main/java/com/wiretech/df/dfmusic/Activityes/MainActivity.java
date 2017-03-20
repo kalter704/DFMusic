@@ -1,5 +1,6 @@
 package com.wiretech.df.dfmusic.Activityes;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,10 @@ import android.widget.ListView;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.Adapters.PlayListsAdapter;
 import com.wiretech.df.dfmusic.Classes.AdControl;
+import com.wiretech.df.dfmusic.Const;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
+import com.wiretech.df.dfmusic.Services.MusicNotificationService;
 
 import java.util.ArrayList;
 
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         initializeUI();
     }
 
-    private void fillDate(){
+    private void fillDate() {
         /*
         String[] clubs = getResources().getStringArray(R.array.clubs);
         List<PlayList> playListsNamesAndIds = DBManager.getPlayListsNames();
@@ -72,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Intent stopIntent = new Intent(this, MusicNotificationService.class);
+        stopIntent.setAction(Const.ACTION.STOPFOREGROUND_ACTION);
+        PendingIntent pStopIntent = PendingIntent.getService(this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            pStopIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
         AdControl.getInstance().disableAds();
     }
 }

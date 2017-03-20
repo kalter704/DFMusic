@@ -6,24 +6,28 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 
+import com.wiretech.df.dfmusic.Classes.Player;
+import com.wiretech.df.dfmusic.Const;
+import com.wiretech.df.dfmusic.Services.MusicNotificationService;
+
 public class NoisyAudioStreamReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(intent.getAction())) {
-            /*
-            if ((RadioState.state == RadioState.State.LOADING) || RadioState.state == RadioState.State.PLAY) {
-                Intent pauseIntent = new Intent(context, NotificationService.class);
+
+            if (Player.instance.getIsPlaying()) {
+                Intent pauseIntent = new Intent(context, MusicNotificationService.class);
                 pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
-                PendingIntent ppauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pPauseIntent = PendingIntent.getService(context, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 try {
-                    ppauseIntent.send();
+                    pPauseIntent.send();
                 } catch (PendingIntent.CanceledException e) {
                     e.printStackTrace();
                 }
-            } else if (RadioState.state == RadioState.State.INTERRUPTED) {
-                RadioState.state = RadioState.State.STOP;
+            } else if (Player.instance.getIsInterrupt()) {
+                Player.instance.setUnInterrupt();
             }
-            */
+
         }
     }
 }

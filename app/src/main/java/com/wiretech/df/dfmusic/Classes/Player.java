@@ -25,8 +25,8 @@ public class Player implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
     public static Player instance = new Player();
 
-    //private NoisyAudioStreamReceiver mNoisyAudioStreamReceiver = new NoisyAudioStreamReceiver();
-    //private IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+    private NoisyAudioStreamReceiver mNoisyAudioStreamReceiver = new NoisyAudioStreamReceiver();
+    private IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 
     private Context mContext = null;
 
@@ -186,6 +186,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     public void stop() {
         isPlaying = false;
         releaseMediaPlayer();
+        mContext.unregisterReceiver(mNoisyAudioStreamReceiver);
     }
 
     public void seekTo(int to) {
@@ -196,6 +197,14 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     public boolean getIsPlaying() {
         return isPlaying;
+    }
+
+    public boolean getIsInterrupt() {
+        return isInterrupt;
+    }
+
+    public void setUnInterrupt() {
+        isInterrupt = false;
     }
 
     public void setLooping(boolean l) {
@@ -273,6 +282,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     public void onPrepared(MediaPlayer mp) {
         mp.start();
         isPlaying = true;
+        mContext.registerReceiver(mNoisyAudioStreamReceiver, intentFilter);
     }
 
     AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
@@ -282,6 +292,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
                 // Pause playback
                 //RadioState.state = RadioState.State.INTERRUPTED;
                 isInterrupt = true;
+                isPlaying = false;
                 Intent pauseIntent = new Intent(mContext, MusicNotificationService.class);
                 pauseIntent.setAction(Const.ACTION.PLAY_ACTION);
                 PendingIntent pPauseIntent = PendingIntent.getService(mContext, 0, pauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -313,6 +324,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
                         e.printStackTrace();
                     }
                     isInterrupt = false;
+                    isPlaying = true;
                 }
                 if (isTransientCanDuck) {
                     isTransientCanDuck = false;
