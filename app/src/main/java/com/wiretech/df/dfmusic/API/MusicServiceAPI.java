@@ -8,10 +8,8 @@ import android.util.Log;
 
 import com.wiretech.df.dfmusic.API.Classes.MusicServerResponse;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
-import com.wiretech.df.dfmusic.API.Classes.PlayListResponse;
 import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.API.Interfaces.OnResponseAPIListener;
-import com.wiretech.df.dfmusic.API.Interfaces.OnResponsePlaylistsListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +28,7 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    public static final String SERVER_DOMAIN = "http://192.168.1.5";
+    public static final String SERVER_DOMAIN = "http://194.87.102.161";
     public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;

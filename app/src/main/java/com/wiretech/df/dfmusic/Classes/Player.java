@@ -186,7 +186,9 @@ public class Player implements MediaPlayer.OnPreparedListener,
     public void stop() {
         isPlaying = false;
         releaseMediaPlayer();
-        mContext.unregisterReceiver(mNoisyAudioStreamReceiver);
+        if (mContext != null) {
+            mContext.unregisterReceiver(mNoisyAudioStreamReceiver);
+        }
     }
 
     public void seekTo(int to) {
