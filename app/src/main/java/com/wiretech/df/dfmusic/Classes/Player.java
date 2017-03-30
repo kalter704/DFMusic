@@ -39,6 +39,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     private Song mNewSong;
 
     private boolean isPlaying = false;
+    private boolean isPreparing = false;
     private boolean isLooping = false;
     private boolean isInterrupt = false;
     private boolean isTransientCanDuck = false;
@@ -139,6 +140,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     }
 
     private void playNewSong() {
+        isPreparing = true;
         releaseMediaPlayer();
 
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
@@ -184,6 +186,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     }
 
     public void stop() {
+        isPreparing = false;
         isPlaying = false;
         releaseMediaPlayer();
         if (mContext != null) {
@@ -203,6 +206,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     public boolean getIsInterrupt() {
         return isInterrupt;
+    }
+
+    public boolean getIsPreparing() {
+        return isPreparing;
     }
 
     public void setUnInterrupt() {
@@ -284,6 +291,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     public void onPrepared(MediaPlayer mp) {
         mp.start();
         isPlaying = true;
+        isPreparing = false;
         mContext.registerReceiver(mNoisyAudioStreamReceiver, intentFilter);
     }
 

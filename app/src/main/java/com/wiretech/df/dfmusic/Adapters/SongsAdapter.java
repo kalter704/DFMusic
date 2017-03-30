@@ -10,16 +10,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.API.Classes.Song;
+import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.Classes.Player;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class SongsAdapter extends BaseAdapter {
+
+    private String LOG_TAG = "song_adapter";
 
     private Activity mActivity;
     private Context mContext;
@@ -57,14 +58,24 @@ public class SongsAdapter extends BaseAdapter {
         }
         Song song = mSongs.get(i);
 
-        ((TextView) view.findViewById(R.id.tvPos)).setText(String.valueOf(i + 1));
-        ((TextView) view.findViewById(R.id.tvName)).setText(song.getName());
-        ((TextView) view.findViewById(R.id.tvLength)).setText(song.getLength());
+        TextView tvPos = (TextView) view.findViewById(R.id.tvPos);
+        TextView tvName = (TextView) view.findViewById(R.id.tvName);
+        TextView tvLength = (TextView) view.findViewById(R.id.tvLength);
 
-        if (mSongs.get(i).getId() == Player.instance.getPlayingSongId()) {
-            ((TextView) view.findViewById(R.id.tvPos)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
-            ((TextView) view.findViewById(R.id.tvName)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
-            ((TextView) view.findViewById(R.id.tvLength)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+        tvPos.setText(String.valueOf(i + 1));
+        tvName.setText(song.getName());
+        tvLength.setText(song.getLength());
+
+        if (song.getId() != Player.instance.getPlayingSongId()) {
+            tvPos.setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
+            tvName.setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
+            tvLength.setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
+        } else {
+            Log.d(LOG_TAG, "song.getId() = " + song.getId());
+            Log.d(LOG_TAG, "Player.instance.getPlayingSongId() = " + Player.instance.getPlayingSongId());
+            tvPos.setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+            tvName.setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+            tvLength.setTextColor(mContext.getResources().getColor(R.color.textColorRed));
         }
 
         view.setId(i);
@@ -82,7 +93,7 @@ public class SongsAdapter extends BaseAdapter {
             Intent intent = new Intent();
             intent.putExtra(PlayActivity.SONG_POS_EXTRA_RESULT, view.getId());
             intent.putExtra(PlayActivity.SONGS_IDS_EXTRA_RESULT, mSongsIds);
-            //Log.d("SongsAdapter", "Song id = " + view.getId());
+            Log.d(LOG_TAG, "Song id = " + view.getId());
             mActivity.setResult(Activity.RESULT_OK, intent);
             mActivity.finish();
         }

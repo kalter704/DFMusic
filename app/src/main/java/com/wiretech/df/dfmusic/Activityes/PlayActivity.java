@@ -375,6 +375,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                             if (!isUserChangeSeek) {
                                 mHandler.post(updateProcessPlaying);
                             }
+                        } else if (Player.instance.getIsPreparing()) {
+                            mHandler.post(updatePauseBtn);
                         }
                     } else {
                         mHandler.post(updatePlayBtn);
@@ -425,6 +427,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void run() {
             showPlayBtn();
+        }
+    };
+
+    private Runnable updatePauseBtn = new Runnable() {
+        @Override
+        public void run() {
+            showPauseBtn();
         }
     };
 
