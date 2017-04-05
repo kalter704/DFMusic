@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.wiretech.df.dfmusic.Activityes.PlayActivity;
@@ -21,7 +20,6 @@ public class MusicNotificationService extends Service {
     private static int PAUSE_ACTION = 0;
     private static int PLAY_ACTION = 1;
     private static int UPDATE_ACTION = 2;
-
 
     public static Context context;
     Notification notification;
@@ -110,8 +108,13 @@ public class MusicNotificationService extends Service {
                 showNotification(PAUSE_ACTION);
                 Player.instance.pause();
             } else {
-                showNotification(PLAY_ACTION);
-                Player.instance.play(this);
+                if (Player.instance.getIsPreparing()) {
+                    showNotification(PAUSE_ACTION);
+                    Player.instance.pause();
+                } else {
+                    showNotification(PLAY_ACTION);
+                    Player.instance.play(this);
+                }
             }
         } else if (intent.getAction().equals(Const.ACTION.PLAYNEWFOREGROUND_ACTION)) {
             showNotification(PLAY_ACTION);

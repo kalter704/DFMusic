@@ -39,11 +39,13 @@ public class Player implements MediaPlayer.OnPreparedListener,
     private Song mNewSong;
 
     private boolean isPlaying = false;
+    private boolean isPause = false;
     private boolean isPreparing = false;
     private boolean isLooping = false;
     private boolean isInterrupt = false;
     private boolean isTransientCanDuck = false;
     private boolean isHasAudioFocus = false;
+    private boolean isRegisterReceiver =false;
 
     private int mCurrentVolume;
 
@@ -56,6 +58,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     }
 
     public void play(Context context) {
+        isPause = false;
         mContext = context;
         if (mMediaPlayer == null) {
             playNewSong();
@@ -86,8 +89,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
                             isPlaying = true;
                         }
                     } else {
-                        mMediaPlayer.start();
-                        isPlaying = true;
+                        if (!isPreparing) {
+                            mMediaPlayer.start();
+                            isPlaying = true;
+                        }
                     }
                 }
             }
@@ -179,8 +184,15 @@ public class Player implements MediaPlayer.OnPreparedListener,
     }
 
     public void pause() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.pause();
+        isPause = true;
+        if (!isPreparing) {
+            if (mMediaPlayer != null) {
+                mMediaPlayer.pause();
+            }
+        } else {
+            releaseMediaPlayer();
+            isPause = false;
+            isPreparing = false;
         }
         isPlaying = false;
     }
@@ -189,8 +201,9 @@ public class Player implements MediaPlayer.OnPreparedListener,
         isPreparing = false;
         isPlaying = false;
         releaseMediaPlayer();
-        if (mContext != null) {
+        if ((mContext != null) && isRegisterReceiver) {
             mContext.unregisterReceiver(mNoisyAudioStreamReceiver);
+            isRegisterReceiver = false;
         }
     }
 
@@ -210,6 +223,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     public boolean getIsPreparing() {
         return isPreparing;
+    }
+
+    public boolean getIsPause() {
+        return isPause;
     }
 
     public void setUnInterrupt() {
@@ -289,10 +306,13 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        mp.start();
-        isPlaying = true;
+        if (!isPause) {
+            mp.start();
+            isPlaying = true;
+            mContext.registerReceiver(mNoisyAudioStreamReceiver, intentFilter);
+            isRegisterReceiver = true;
+        }
         isPreparing = false;
-        mContext.registerReceiver(mNoisyAudioStreamReceiver, intentFilter);
     }
 
     AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
