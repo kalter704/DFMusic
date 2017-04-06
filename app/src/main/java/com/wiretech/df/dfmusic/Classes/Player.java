@@ -288,7 +288,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if ((mp.getDuration() - mp.getCurrentPosition()) < 1000) {
+        if ((mp.getDuration() - mp.getCurrentPosition()) < 1000 && !isPreparing) {
             mOldSong = mSong;
             Intent nextIntent = new Intent(mContext, MusicNotificationService.class);
             nextIntent.setAction(Const.ACTION.NEXTFOREGROUND_ACTION);
