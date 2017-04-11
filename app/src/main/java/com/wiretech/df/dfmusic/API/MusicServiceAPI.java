@@ -6,9 +6,11 @@ import android.os.AsyncTask;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.wiretech.df.dfmusic.API.Classes.AdResponse;
 import com.wiretech.df.dfmusic.API.Classes.MusicServerResponse;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.API.Classes.Song;
+import com.wiretech.df.dfmusic.API.Interfaces.AdsMusicServerService;
 import com.wiretech.df.dfmusic.API.Interfaces.OnResponseAPIListener;
 
 import org.json.JSONArray;
@@ -23,12 +25,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MusicServiceAPI {
 
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    public static final String SERVER_DOMAIN = "http://194.87.102.161";
+    public static final String SERVER_DOMAIN = "http://192.168.1.2";
+    //public static final String SERVER_DOMAIN = "http://194.87.102.161";
     public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
@@ -341,6 +350,15 @@ public class MusicServiceAPI {
             default:
                 screen = "mdpi";
         }
+    }
+
+    public static Observable<Response<AdResponse>> interstitialAds() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(AdsMusicServerService.class).getInterstitialAds();
     }
 
 }

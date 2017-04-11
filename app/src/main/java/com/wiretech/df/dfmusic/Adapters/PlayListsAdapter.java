@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.wiretech.df.dfmusic.Activityes.PlayActivity;
-import com.wiretech.df.dfmusic.Activityes.PlayListActivity;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
+import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
@@ -52,7 +51,7 @@ public class PlayListsAdapter extends BaseAdapter {
         PlayList playList = mPlayLists.get(i);
 
         ((TextView) view.findViewById(R.id.tvSchoolName)).setText(playList.getSchoolName());
-        ((TextView) view.findViewById(R.id.tvPlayList)).setText(playList.getName());
+        //((TextView) view.findViewById(R.id.tvPlayList)).setText(playList.getName());
 
         view.setId(playList.getId());
         view.setTag(i);

@@ -46,6 +46,9 @@
             android:enabled="true"
             android:exported="false">
         </service>
+
+        <activity android:name=".API.AdActivity">
+        </activity>
     </application>
 
 </manifest>

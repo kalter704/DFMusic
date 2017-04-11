@@ -9,7 +9,7 @@ import com.wiretech.df.dfmusic.Classes.MusicDownloadManager;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "music_db";
-    private static final int DATABASE_VERSION = 18;
+    private static final int DATABASE_VERSION = 19;
 
     public static final String PLAYLIST_TABLE_NAME = "playlist";
     public static final String PLAYLIST_ID_FIELD = "p_id";

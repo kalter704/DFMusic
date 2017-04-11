@@ -1,6 +1,7 @@
 package com.wiretech.df.dfmusic.Classes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -10,12 +11,25 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.wiretech.df.dfmusic.API.AdActivity;
+import com.wiretech.df.dfmusic.API.Classes.AdResponse;
+import com.wiretech.df.dfmusic.API.MusicServiceAPI;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
+
 public class AdControl {
+
+    private int mAdCount = 0;
+
+    private boolean isOwnAd = true;
+
+    private boolean isAdmobEnd = false;
 
     private boolean isShowAd = false;
 
@@ -23,7 +37,7 @@ public class AdControl {
 
     private int mCurrentAd = 0;
 
-    private int mSecondsForSplashActivity = 30; // 60 = 1 minute,  replace to 600 = 10 minute
+    private int mSecondsForSplashActivity = 10; // 60 = 1 minute,  replace to 600 = 10 minute
 
     private int mIterationTime = 100;
 
@@ -56,6 +70,7 @@ public class AdControl {
             public void onAdClosed() {
                 Log.d("IntersAds", "onAdClosed");
                 startNewAd();
+                isOwnAd = true;
             }
 
             @Override
@@ -101,7 +116,7 @@ public class AdControl {
     }
 
     public void startNewAd() {
-        if (isShowAd && (mInterstAdList.size() > 0)) {
+        if (isShowAd) {
             new Thread() {
                 public void run() {
                     try {
@@ -130,32 +145,62 @@ public class AdControl {
     }
 
     private void request() {
-        if (mInterstAdList.size() == 0) {
-            return;
-        }
-        if (mCurrentAd >= mInterstAdList.size()) {
-            mCurrentAd = 0;
-        }
-        Log.d("IntersAds", "interstitial_ad_unit_id = " + mInterstAdList.get(mCurrentAd).getAdUnitId());
-        Log.d("IntersAds", "request, mCurrentAd = " + String.valueOf(mCurrentAd));
-        Log.d("IntersAds", "request, mAdList.size() = " + String.valueOf(mInterstAdList.size()));
-        //requestNewInterstitial();
+        if (!isOwnAd) {
+            if (mInterstAdList.size() == 0) {
+                isOwnAd = true;
+                isAdmobEnd = true;
+                request();
+                return;
+            }
+            if (mCurrentAd >= mInterstAdList.size()) {
+                mCurrentAd = 0;
+            }
+            Log.d("IntersAds", "interstitial_ad_unit_id = " + mInterstAdList.get(mCurrentAd).getAdUnitId());
+            Log.d("IntersAds", "request, mCurrentAd = " + String.valueOf(mCurrentAd));
+            Log.d("IntersAds", "request, mAdList.size() = " + String.valueOf(mInterstAdList.size()));
+            //requestNewInterstitial();
         /*
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         */
 
-        final AdRequest adRequest = new AdRequest.Builder().build();
+            final AdRequest adRequest = new AdRequest.Builder().build();
 
-        Handler mHandler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message message) {
-                mInterstAdList.get(mCurrentAd).loadAd(adRequest);
-            }
-        };
-        Message message = mHandler.obtainMessage();
-        message.sendToTarget();
+            Handler mHandler = new Handler(Looper.getMainLooper()) {
+                @Override
+                public void handleMessage(Message message) {
+                    mInterstAdList.get(mCurrentAd).loadAd(adRequest);
+                }
+            };
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+        } else {
+            MusicServiceAPI.interstitialAds()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::handleResponse, this::handleError);
+        }
+    }
+
+    private void handleResponse(Response<AdResponse> response) {
+        AdResponse adResponse = response.body();
+        Intent intent = new Intent(mContext, AdActivity.class);
+        intent.putExtra(AdActivity.IMG_URL_EXTRA, MusicServiceAPI.SERVER_DOMAIN + adResponse.getAds().get(mAdCount % adResponse.getCount()).getImg());
+        intent.putExtra(AdActivity.URL_URL_EXTRA, adResponse.getAds().get(mAdCount % adResponse.getCount()).getUrl());
+        mContext.startActivity(intent);
+        mAdCount++;
+    }
+
+    private void handleError(Throwable error) {
+        error.printStackTrace();
+        if (!isAdmobEnd) {
+            isOwnAd = false;
+            request();
+        } else {
+            isOwnAd = true;
+            startNewAd();
+        }
     }
 
     private void showAd() {
