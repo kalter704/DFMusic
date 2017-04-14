@@ -354,7 +354,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
                         e.printStackTrace();
                     }
                     isInterrupt = false;
-                    isPlaying = true;
+                    //isPlaying = true;
                 }
                 if (isTransientCanDuck) {
                     isTransientCanDuck = false;

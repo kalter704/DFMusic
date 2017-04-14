@@ -108,12 +108,17 @@ public class MusicNotificationService extends Service {
                 showNotification(PAUSE_ACTION);
                 Player.instance.pause();
             } else {
-                if (Player.instance.getIsPreparing()) {
+                if (Player.instance.getIsInterrupt()) {
                     showNotification(PAUSE_ACTION);
                     Player.instance.pause();
                 } else {
-                    showNotification(PLAY_ACTION);
-                    Player.instance.play(this);
+                    if (Player.instance.getIsPreparing()) {
+                        showNotification(PAUSE_ACTION);
+                        Player.instance.pause();
+                    } else {
+                        showNotification(PLAY_ACTION);
+                        Player.instance.play(this);
+                    }
                 }
             }
         } else if (intent.getAction().equals(Const.ACTION.PLAYNEWFOREGROUND_ACTION)) {
