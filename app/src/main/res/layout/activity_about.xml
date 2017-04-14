@@ -187,6 +187,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="-2dp"
                     android:text="@string/info_page_cd_site"
+                    android:textAllCaps="false"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/text_size_main_list_playlist" />
 

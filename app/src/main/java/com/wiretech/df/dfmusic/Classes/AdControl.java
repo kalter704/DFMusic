@@ -2,16 +2,20 @@ package com.wiretech.df.dfmusic.Classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.squareup.picasso.Picasso;
 import com.wiretech.df.dfmusic.API.AdActivity;
+import com.wiretech.df.dfmusic.API.Classes.Ad;
 import com.wiretech.df.dfmusic.API.Classes.AdResponse;
 import com.wiretech.df.dfmusic.API.MusicServiceAPI;
 import com.wiretech.df.dfmusic.R;
@@ -25,7 +29,17 @@ import retrofit2.Response;
 
 public class AdControl {
 
+    private static int mWaitTimeForLoadBanner = 30000; // 60000 = 1min
+
     private int mAdCount = 0;
+
+    static private int mBannerAdCount = 0;
+
+    private Ad mCurrentBannerAd;
+
+    private ImageView imageView = null;
+
+    private long mLastLoadingTime = 0;
 
     private boolean isOwnAd = true;
 
@@ -35,9 +49,11 @@ public class AdControl {
 
     private boolean isInApp = false;
 
+    private static boolean isWait = false;
+
     private int mCurrentAd = 0;
 
-    private int mSecondsForSplashActivity = 10; // 60 = 1 minute,  replace to 600 = 10 minute
+    private int mSecondsForSplashActivity = 600; // 60 = 1 minute,  replace to 600 = 10 minute
 
     private int mIterationTime = 100;
 
@@ -116,7 +132,8 @@ public class AdControl {
     }
 
     public void startNewAd() {
-        if (isShowAd) {
+        if (isShowAd && !isWait) {
+            isWait = true;
             new Thread() {
                 public void run() {
                     try {
@@ -131,6 +148,7 @@ public class AdControl {
                     }
                 }
             }.start();
+            isWait = false;
         }
     }
 
@@ -145,6 +163,9 @@ public class AdControl {
     }
 
     private void request() {
+        if (!isShowAd) {
+            return;
+        }
         if (!isOwnAd) {
             if (mInterstAdList.size() == 0) {
                 isOwnAd = true;
@@ -186,10 +207,15 @@ public class AdControl {
     private void handleResponse(Response<AdResponse> response) {
         AdResponse adResponse = response.body();
         Intent intent = new Intent(mContext, AdActivity.class);
-        intent.putExtra(AdActivity.IMG_URL_EXTRA, MusicServiceAPI.SERVER_DOMAIN + adResponse.getAds().get(mAdCount % adResponse.getCount()).getImg());
-        intent.putExtra(AdActivity.URL_URL_EXTRA, adResponse.getAds().get(mAdCount % adResponse.getCount()).getUrl());
+        try {
+            intent.putExtra(AdActivity.IMG_URL_EXTRA, MusicServiceAPI.SERVER_DOMAIN + adResponse.getAds().get(mAdCount % adResponse.getCount()).getImg());
+            intent.putExtra(AdActivity.URL_URL_EXTRA, adResponse.getAds().get(mAdCount % adResponse.getCount()).getUrl());
+        } catch (Exception e) {
+            throw e;
+        }
         mContext.startActivity(intent);
         mAdCount++;
+        isOwnAd = false;
     }
 
     private void handleError(Throwable error) {
@@ -220,5 +246,55 @@ public class AdControl {
 
     public void outOfActivity() {
         isInApp = false;
+    }
+
+    public void bannerInto(Context context, ImageView img) {
+        mContext = context;
+        imageView = img;
+    }
+
+    public void loadBanner() {
+        if (imageView != null) {
+            if ((System.currentTimeMillis() - mLastLoadingTime) > mWaitTimeForLoadBanner) {
+                mLastLoadingTime = System.currentTimeMillis();
+                MusicServiceAPI.bannerAds()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::handleBannerResponse, this::handleBannerError);
+            } else {
+                if (mCurrentBannerAd != null) {
+                    Picasso.with(mContext)
+                            .load(MusicServiceAPI.SERVER_DOMAIN + mCurrentBannerAd.getImg())
+                            .into(imageView);
+                    imageView.setOnClickListener(
+                            v -> mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mCurrentBannerAd.getUrl())))
+                    );
+                }
+            }
+        }
+    }
+
+    private void handleBannerResponse(Response<AdResponse> response) {
+        AdResponse adResponse = response.body();
+        if (imageView != null) {
+            try {
+                mCurrentBannerAd = adResponse.getAds().get(mBannerAdCount % adResponse.getCount());
+            } catch (Exception e) {
+                throw e;
+            }
+            Picasso.with(mContext)
+                    .load(MusicServiceAPI.SERVER_DOMAIN + mCurrentBannerAd.getImg())
+                    .into(imageView);
+            imageView.setOnClickListener(
+                    v -> mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mCurrentBannerAd.getUrl())))
+            );
+            mBannerAdCount++;
+        }
+
+        //intent.putExtra(AdActivity.IMG_URL_EXTRA, MusicServiceAPI.SERVER_DOMAIN + adResponse.getAds().get(mAdCount % adResponse.getCount()).getImg());
+    }
+
+    private void handleBannerError(Throwable error) {
+        error.printStackTrace();
     }
 }

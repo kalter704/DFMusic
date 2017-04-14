@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         fillDate();
 
         initializeUI();
+
+        AdControl.getInstance().enableAds();
     }
 
     private void fillDate() {

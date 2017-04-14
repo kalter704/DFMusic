@@ -1,8 +1,11 @@
 package com.wiretech.df.dfmusic.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.Activityes.PlayActivity;
+import com.wiretech.df.dfmusic.Classes.NetworkConnection;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
@@ -66,10 +70,26 @@ public class PlayListsAdapter extends BaseAdapter {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(mContext, PlayActivity.class);
-            intent.putExtra(PlayActivity.PLAYLIST_ID_EXTRA, view.getId());
-            intent.putExtra(PlayActivity.PLAYLIST_NUMBER_EXTRA, Integer.valueOf((int) view.getTag()));
-            mContext.startActivity(intent);
+            if (NetworkConnection.hasConnectionToNetwork()) {
+                Intent intent = new Intent(mContext, PlayActivity.class);
+                intent.putExtra(PlayActivity.PLAYLIST_ID_EXTRA, view.getId());
+                intent.putExtra(PlayActivity.PLAYLIST_NUMBER_EXTRA, Integer.valueOf((int) view.getTag()));
+                mContext.startActivity(intent);
+            } else {
+                Snackbar snackbar = Snackbar.make(
+                        ((Activity) mContext).findViewById(R.id.mainCoordLayout),
+                        mContext.getString(R.string.snack_error_network),
+                        Snackbar.LENGTH_SHORT);
+                View snackView = snackbar.getView();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    snackView.setBackgroundColor(mContext.getColor(R.color.snackErrorNetworkColor));
+                } else {
+                    snackView.setBackgroundColor(mContext.getResources().getColor(R.color.snackErrorNetworkColor));
+                }
+                TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
+                snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                snackbar.show();
+            }
         }
     };
 

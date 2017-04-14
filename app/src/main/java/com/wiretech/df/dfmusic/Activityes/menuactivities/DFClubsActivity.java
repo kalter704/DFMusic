@@ -1,4 +1,4 @@
-package com.wiretech.df.dfmusic.Activityes;
+package com.wiretech.df.dfmusic.Activityes.menuactivities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

@@ -1,5 +1,7 @@
-package com.wiretech.df.dfmusic.Activityes;
+package com.wiretech.df.dfmusic.Activityes.menuactivities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +11,12 @@ import com.wiretech.df.dfmusic.Classes.AdControl;
 import com.wiretech.df.dfmusic.R;
 
 public class AboutActivity extends AppCompatActivity {
+
+    private TextView mTvSite;
+    private TextView mTvIns;
+    private TextView mTvVK;
+    private TextView mTvYoutube;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +106,15 @@ public class AboutActivity extends AppCompatActivity {
             instagram = getString(R.string.info_page_jd_intagram);
             vk = getString(R.string.info_page_jd_vk);
             youtube = getString(R.string.info_page_jd_youtube);
+        } else if ("Leader Dance".equals(clubName)) {
+            name = getString(R.string.info_page_ld);
+            since = getString(R.string.info_page_ld_since);
+            location = getString(R.string.info_page_ld_location);
+            peoples = getString(R.string.info_page_ld_peoples);
+            site = getString(R.string.info_page_ld_site);
+            instagram = getString(R.string.info_page_ld_intagram);
+            vk = getString(R.string.info_page_ld_vk);
+            youtube = getString(R.string.info_page_ld_youtube);
         } else if ("LUCKY JAM".equals(clubName)) {
             name = getString(R.string.info_page_lj);
             since = getString(R.string.info_page_lj_since);
@@ -132,10 +149,44 @@ public class AboutActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tvSince)).setText(since);
         ((TextView) findViewById(R.id.tvLocation)).setText(location);
         ((TextView) findViewById(R.id.tvPeople)).setText(peoples);
-        ((TextView) findViewById(R.id.tvSite)).setText(site);
-        ((TextView) findViewById(R.id.tvInst)).setText(instagram);
-        ((TextView) findViewById(R.id.tvVK)).setText(vk);
-        ((TextView) findViewById(R.id.tvYoutube)).setText(youtube);
+
+        mTvSite = (TextView) findViewById(R.id.tvSite);
+        mTvIns = (TextView) findViewById(R.id.tvInst);
+        mTvVK = (TextView) findViewById(R.id.tvVK);
+        mTvYoutube = (TextView) findViewById(R.id.tvYoutube);
+
+        mTvSite.setText(site);
+        mTvIns.setText(instagram);
+        mTvVK.setText(vk);
+        mTvYoutube.setText(youtube);
+
+        mTvSite.setOnClickListener(v -> {
+            if (!"".equals(((TextView) v).getText())) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http:/" + ((TextView) v).getText())));
+            }
+        });
+
+        mTvIns.setOnClickListener(v -> {
+            if (!"".equals(((TextView) v).getText())) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com" + ((TextView) v).getText())));
+            }
+        });
+
+        mTvVK.setOnClickListener(v -> {
+            if (!"".equals(((TextView) v).getText())) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com" + ((TextView) v).getText())));
+            }
+        });
+
+        mTvYoutube.setOnClickListener(v -> {
+            if (!"".equals(((TextView) v).getText())) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com" + ((TextView) v).getText())));
+            }
+        });
+
+
+
+
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.wiretech.df.dfmusic.Activityes;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -69,7 +72,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     private Handler mHandler;
 
-    private AdView mAdView;
+    private ImageView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,15 +135,15 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         Player.instance.setOnPlayerListener(this);
 
-        mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        mAdView = (ImageView) findViewById(R.id.adView);
+        AdControl.getInstance().bannerInto(this, mAdView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         AdControl.getInstance().intoActivity();
+        AdControl.getInstance().loadBanner();
     }
 
     @Override
@@ -223,16 +226,20 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rlSave:
                 showUnSaveBtn();
                 MusicDownloadManager.instance.deleteSong(mSongsIds.get(mCurrentSongIndex));
+                showSnackBar(getString(R.string.snack_unsave));
                 break;
             case R.id.rlUnSave:
                 showSaveBtn();
                 MusicDownloadManager.instance.downloadSong(mSongsIds.get(mCurrentSongIndex));
+                showSnackBar(getString(R.string.snack_save));
                 break;
 
             case R.id.rlPreviousSong:
+                AdControl.getInstance().loadBanner();
                 previousSong();
                 break;
             case R.id.rlNextSong:
+                AdControl.getInstance().loadBanner();
                 nextSong();
                 break;
 
@@ -255,10 +262,12 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.rlRepeatOn:
                 showRepeatOffBtn();
                 isLooping = false;
+                showSnackBar(getString(R.string.snack_repeat_off));
                 break;
             case R.id.rlRepeatOff:
                 showRepeatOnBtn();
                 isLooping = true;
+                showSnackBar(getString(R.string.snack_repeat_on));
                 break;
         }
 
@@ -487,6 +496,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         if (Player.instance.getFinishSongId() == mSongsIds.get(mCurrentSongIndex)) {
             fillUIWithSong();
             mCurrentSongIndex = MusicState.instance.getCurrentSongIndex();
+            AdControl.getInstance().loadBanner();
         }
     }
 
@@ -495,5 +505,21 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         if (Player.instance.getPlayingSongId() == mSongsIds.get(mCurrentSongIndex)) {
             mSeekBar.setSecondaryProgress(percent);
         }
+    }
+
+    private void showSnackBar(String message) {
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.mainCoordLayout),
+                message,
+                Snackbar.LENGTH_SHORT);
+        View snackView = snackbar.getView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            snackView.setBackgroundColor(getColor(R.color.snackNotificationColor));
+        } else {
+            snackView.setBackgroundColor(getResources().getColor(R.color.snackNotificationColor));
+        }
+        TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
+        snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        snackbar.show();
     }
 }

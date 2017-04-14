@@ -11,6 +11,10 @@
         <item name="colorAccent">@color/colorBlackBackground</item>
     </style>
 
+    <style name="AdTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+    </style>
+
     <style name="menu_item">
         <item name="android:background">@drawable/button_background</item>
         <item name="android:layout_width">match_parent</item>
@@ -123,6 +127,40 @@
         <item name="android:layout_height">@dimen/notification_close_action_height</item>
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="studio_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="studio_first_text" parent="studio_text">
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="studio_second_text" parent="studio_text">
+        <item name="android:layout_marginBottom">28dp</item>
+        <item name="android:textIsSelectable">true</item>
+    </style>
+
+    <style name="support_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="support_first_text" parent="support_text">
+        <item name="android:layout_marginBottom">6dp</item>
+    </style>
+
+    <style name="support_second_text" parent="support_text">
+        <item name="android:layout_marginBottom">28dp</item>
+        <item name="android:textIsSelectable">true</item>
     </style>
 
 </resources>

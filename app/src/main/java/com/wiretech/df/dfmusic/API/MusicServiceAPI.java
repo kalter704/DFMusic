@@ -36,8 +36,8 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    public static final String SERVER_DOMAIN = "http://192.168.1.2";
-    //public static final String SERVER_DOMAIN = "http://194.87.102.161";
+    //public static final String SERVER_DOMAIN = "http://192.168.43.193";
+    public static final String SERVER_DOMAIN = "http://194.87.102.161";
     public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
@@ -359,6 +359,15 @@ public class MusicServiceAPI {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit.create(AdsMusicServerService.class).getInterstitialAds();
+    }
+
+    public static Observable<Response<AdResponse>> bannerAds() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(AdsMusicServerService.class).getBannerAds();
     }
 
 }

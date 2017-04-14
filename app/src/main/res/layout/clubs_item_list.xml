@@ -36,7 +36,8 @@
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="TextView"/>
+            android:text="TextView"
+            android:textAllCaps="true" />
 
     </LinearLayout>
 

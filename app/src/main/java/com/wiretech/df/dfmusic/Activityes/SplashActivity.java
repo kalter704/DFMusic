@@ -43,7 +43,6 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
 
         AdControl.newAdControlInstance();
         AdControl.getInstance().setContext(this);
-        AdControl.getInstance().enableAds();
 
         splashTimer.start();
 
