@@ -197,6 +197,12 @@
         <item>UNISTREAM</item>
     </string-array>
 
+    <string name="text_description_action">Поделиться</string>
+    <string name="text_for_share">
+        Включай быстрее Dance Family music, ждем только тебя!\n
+        http://yandex.ru
+    </string>
+
 
     <!--  Временные данные для тестирования  -->
 

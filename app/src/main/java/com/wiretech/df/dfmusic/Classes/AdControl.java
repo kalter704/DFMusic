@@ -33,6 +33,8 @@ public class AdControl {
 
     private int mAdCount = 0;
 
+    private AdResponse mInterAdResponse = null;
+
     static private int mBannerAdCount = 0;
 
     private Ad mCurrentBannerAd;
@@ -53,7 +55,7 @@ public class AdControl {
 
     private int mCurrentAd = 0;
 
-    private int mSecondsForSplashActivity = 600; // 60 = 1 minute,  replace to 600 = 10 minute
+    private int mSecondsForSplashActivity = 10; // 60 = 1 minute,  replace to 600 = 10 minute
 
     private int mIterationTime = 100;
 
@@ -204,18 +206,23 @@ public class AdControl {
         }
     }
 
-    private void handleResponse(Response<AdResponse> response) {
-        AdResponse adResponse = response.body();
+    private void showOwnAd() {
         Intent intent = new Intent(mContext, AdActivity.class);
         try {
-            intent.putExtra(AdActivity.IMG_URL_EXTRA, MusicServiceAPI.SERVER_DOMAIN + adResponse.getAds().get(mAdCount % adResponse.getCount()).getImg());
-            intent.putExtra(AdActivity.URL_URL_EXTRA, adResponse.getAds().get(mAdCount % adResponse.getCount()).getUrl());
+            intent.putExtra(AdActivity.IMG_URL_EXTRA, MusicServiceAPI.SERVER_DOMAIN + mInterAdResponse.getAds().get(mAdCount % mInterAdResponse.getCount()).getImg());
+            intent.putExtra(AdActivity.URL_URL_EXTRA, mInterAdResponse.getAds().get(mAdCount % mInterAdResponse.getCount()).getUrl());
         } catch (Exception e) {
             throw e;
         }
         mContext.startActivity(intent);
         mAdCount++;
         isOwnAd = false;
+        mInterAdResponse = null;
+    }
+
+    private void handleResponse(Response<AdResponse> response) {
+        mInterAdResponse = response.body();
+        showAd();
     }
 
     private void handleError(Throwable error) {
@@ -230,12 +237,18 @@ public class AdControl {
     }
 
     private void showAd() {
-        if (mCurrentAd >= mInterstAdList.size()) {
-            return;
-        }
-        if (isInApp && mInterstAdList.get(mCurrentAd).isLoaded()) {
-            mInterstAdList.get(mCurrentAd).show();
-            mCurrentAd++;
+        if (isOwnAd) {
+            if (isInApp && (mInterAdResponse != null)) {
+                showOwnAd();
+            }
+        } else {
+            if (mCurrentAd >= mInterstAdList.size()) {
+                return;
+            }
+            if (isInApp && mInterstAdList.get(mCurrentAd).isLoaded()) {
+                mInterstAdList.get(mCurrentAd).show();
+                mCurrentAd++;
+            }
         }
     }
 

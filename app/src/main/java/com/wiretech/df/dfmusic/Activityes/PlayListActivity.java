@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.wiretech.df.dfmusic.API.Classes.Song;
 import com.wiretech.df.dfmusic.Adapters.SongsAdapter;
 import com.wiretech.df.dfmusic.Classes.AdControl;
+import com.wiretech.df.dfmusic.Classes.Share;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
@@ -74,6 +75,8 @@ public class PlayListActivity extends AppCompatActivity {
                 showList();
             }
         });
+
+        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(PlayListActivity.this));
     }
 
     private void showList() {

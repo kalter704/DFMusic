@@ -12,6 +12,7 @@ import com.wiretech.df.dfmusic.Activityes.menuactivities.DFClubsActivity;
 import com.wiretech.df.dfmusic.Activityes.menuactivities.StudioActivity;
 import com.wiretech.df.dfmusic.Activityes.menuactivities.SupportProjectActivity;
 import com.wiretech.df.dfmusic.Classes.AdControl;
+import com.wiretech.df.dfmusic.Classes.Share;
 import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
@@ -64,7 +65,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.rlShare:
-                finish();
+                Share.share(MenuActivity.this);
                 break;
             case R.id.tlAbout:
                 startActivity(new Intent(MenuActivity.this, DFClubsActivity.class));

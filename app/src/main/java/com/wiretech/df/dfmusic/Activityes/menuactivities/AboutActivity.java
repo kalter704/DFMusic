@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wiretech.df.dfmusic.Classes.AdControl;
+import com.wiretech.df.dfmusic.Classes.Share;
 import com.wiretech.df.dfmusic.R;
 
 public class AboutActivity extends AppCompatActivity {
@@ -34,12 +35,7 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.rlShare).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(AboutActivity.this));
 
     }
 

@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import com.wiretech.df.dfmusic.Adapters.ClubsAdapter;
 import com.wiretech.df.dfmusic.Classes.AdControl;
+import com.wiretech.df.dfmusic.Classes.Share;
 import com.wiretech.df.dfmusic.R;
 
 public class DFClubsActivity extends AppCompatActivity {
@@ -24,12 +25,9 @@ public class DFClubsActivity extends AppCompatActivity {
 
         ((ListView) findViewById(R.id.listView)).setAdapter(clubsAdapter);
 
-        findViewById(R.id.rlBack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        findViewById(R.id.rlBack).setOnClickListener(v -> finish());
+
+        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(DFClubsActivity.this));
     }
 
     @Override
