@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.wiretech.df.dfmusic.API.Classes.Song;
@@ -14,9 +15,11 @@ import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
-public class PlayListActivity extends AppCompatActivity {
+public class PlayListActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String PLAYLIST_ID_EXTRA = "playlist_id_extra";
     public static final String SONGS_IDS_EXTRA = "songs_ids_extra";
@@ -24,8 +27,15 @@ public class PlayListActivity extends AppCompatActivity {
     //private int mPlayListId;
 
     private List<Song> mSongs;
+    private List<Song> mShuffleSongs = new ArrayList<Song>();
     private ArrayList<Integer> mSongsIds;
+    private ArrayList<Integer> mShuffleSongsIds = new ArrayList<Integer>();
     private SongsAdapter mSongsAdapter;
+
+    private ListView mListView;
+
+    private RelativeLayout mRlShuffleOn;
+    private RelativeLayout mRlShuffleOff;
 
 
     @Override
@@ -48,41 +58,29 @@ public class PlayListActivity extends AppCompatActivity {
         initializeUI();
 
         showList();
+
+        resetOrderSongs();
     }
 
     private void fillDate() {
         mSongs = DBManager.getSongsBySongsIds(mSongsIds);
-        /*
-        mSongs = DBManager.getSongsByPlayListId(mPlayListId);
-        for (int i = 0; i < mSongs.size(); ++i) {
-            mSongsIds.add(mSongs.get(i).getId());
-        }
-        */
     }
 
     private void initializeUI() {
-        findViewById(R.id.rlBack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        findViewById(R.id.rlBack).setOnClickListener(view -> finish());
 
-        findViewById(R.id.rlShare).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(PlayListActivity.this, "Share!!!", Toast.LENGTH_SHORT).show();
-                showList();
-            }
-        });
+        //findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(PlayListActivity.this));
+        mRlShuffleOn = (RelativeLayout) findViewById(R.id.rlShuffleOn);
+        mRlShuffleOn.setOnClickListener(this);
+        mRlShuffleOff = (RelativeLayout) findViewById(R.id.rlShuffleOff);
+        mRlShuffleOff.setOnClickListener(this);
 
-        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(PlayListActivity.this));
+        mListView = (ListView) findViewById(R.id.listView);
     }
 
     private void showList() {
         mSongsAdapter = new SongsAdapter(this, this, mSongs, mSongsIds);
-
-        ((ListView) findViewById(R.id.listView)).setAdapter(mSongsAdapter);
+        mListView.setAdapter(mSongsAdapter);
     }
 
     @Override
@@ -96,4 +94,55 @@ public class PlayListActivity extends AppCompatActivity {
         super.onPause();
         AdControl.getInstance().outOfActivity();
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.rlShuffleOff:
+                showShuffleOn();
+                shuffleSongs();
+                break;
+            case R.id.rlShuffleOn:
+                showShuffleOff();
+                resetOrderSongs();
+                break;
+        }
+        updateListView();
+    }
+
+    private void showShuffleOn() {
+        mRlShuffleOff.setVisibility(View.GONE);
+        mRlShuffleOn.setVisibility(View.VISIBLE);
+    }
+
+    private void showShuffleOff() {
+        mRlShuffleOff.setVisibility(View.VISIBLE);
+        mRlShuffleOn.setVisibility(View.GONE);
+    }
+
+    private void shuffleSongs() {
+        Random random = new Random(System.currentTimeMillis());
+        /*
+        mShuffleSongsIds = new ArrayList<Integer>();
+        mShuffleSongs = new ArrayList<Song>();
+        */
+        for (int i = mSongs.size() - 1; i > 0 ; --i) {
+            int ranIndex = random.nextInt(i);
+            Collections.swap(mShuffleSongs, ranIndex, i);
+            Collections.swap(mShuffleSongsIds, ranIndex, i);
+        }
+    }
+
+    private void resetOrderSongs() {
+        mShuffleSongsIds.clear();
+        mShuffleSongsIds.addAll(mSongsIds);
+        mShuffleSongs.clear();
+        mShuffleSongs.addAll(mSongs);
+    }
+
+    private void updateListView() {
+        mSongsAdapter = new SongsAdapter(this, this, mShuffleSongs, mShuffleSongsIds);
+        mListView.setAdapter(mSongsAdapter);
+    }
+
 }

@@ -62,7 +62,7 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/rlShare"
+            android:id="@+id/rlShuffleOff"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -71,11 +71,28 @@
             android:paddingRight="@dimen/activity_horizontal_margin">
 
             <ImageView
-                android:id="@+id/ivShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_share_all"/>
+                app:srcCompat="@drawable/ic_shuffle_off_2_toolbar"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlShuffleOn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_background"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_shuffle_on_2_toolbar"/>
 
         </RelativeLayout>
 
