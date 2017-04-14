@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.wiretech.df.dfmusic.API.Classes.PlayList;
 import com.wiretech.df.dfmusic.Activityes.PlayActivity;
 import com.wiretech.df.dfmusic.Classes.NetworkConnection;
+import com.wiretech.df.dfmusic.Classes.Player;
+import com.wiretech.df.dfmusic.DataBase.DBManager;
 import com.wiretech.df.dfmusic.R;
 
 import java.util.ArrayList;
@@ -56,6 +58,14 @@ public class PlayListsAdapter extends BaseAdapter {
 
         ((TextView) view.findViewById(R.id.tvSchoolName)).setText(playList.getSchoolName());
         //((TextView) view.findViewById(R.id.tvPlayList)).setText(playList.getName());
+
+        if (Player.instance.getIsPlaying() && (playList.getId() == DBManager.getPlayListBySongId(Player.instance.getPlayingSongId()).getId())) {
+            ((TextView) view.findViewById(R.id.tvSchoolName)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+            ((TextView) view.findViewById(R.id.tvPlayList)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+        } else {
+            ((TextView) view.findViewById(R.id.tvSchoolName)).setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
+            ((TextView) view.findViewById(R.id.tvPlayList)).setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
+        }
 
         view.setId(playList.getId());
         view.setTag(i);

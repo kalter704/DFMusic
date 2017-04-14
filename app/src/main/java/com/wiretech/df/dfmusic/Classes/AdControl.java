@@ -55,7 +55,7 @@ public class AdControl {
 
     private int mCurrentAd = 0;
 
-    private int mSecondsForSplashActivity = 10; // 60 = 1 minute,  replace to 600 = 10 minute
+    private int mSecondsForSplashActivity = 600; // 60 = 1 minute,  replace to 600 = 10 minute
 
     private int mIterationTime = 100;
 

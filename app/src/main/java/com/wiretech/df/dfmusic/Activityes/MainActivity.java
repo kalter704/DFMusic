@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<PlayList> mPlayLists = new ArrayList<>();
     PlayListsAdapter mPlayListAdapter;
+    ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +55,17 @@ public class MainActivity extends AppCompatActivity {
 
         mPlayListAdapter = new PlayListsAdapter(this, mPlayLists);
 
-        ((ListView) findViewById(R.id.lvMain)).setAdapter(mPlayListAdapter);
+        mListView = (ListView) findViewById(R.id.lvMain);
+        mListView.setAdapter(mPlayListAdapter);
 
-        (findViewById(R.id.rlMenu)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, MenuActivity.class));
-            }
-        });
+        (findViewById(R.id.rlMenu)).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MenuActivity.class)));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         AdControl.getInstance().intoActivity();
+        mPlayListAdapter.notifyDataSetChanged();
     }
 
     @Override
