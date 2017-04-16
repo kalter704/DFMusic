@@ -17,7 +17,7 @@
         android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
         android:textSize="@dimen/text_size_main_list_school_name"
-        android:textStyle="normal|bold"/>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tvPlayList"
@@ -30,5 +30,6 @@
         android:text="Playlist"
         android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
-        android:textSize="@dimen/text_size_main_list_playlist"/>
+        android:textSize="@dimen/text_size_main_list_playlist"
+        android:textStyle="bold" />
 </RelativeLayout>

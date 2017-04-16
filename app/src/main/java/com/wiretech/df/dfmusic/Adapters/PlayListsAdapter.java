@@ -60,10 +60,10 @@ public class PlayListsAdapter extends BaseAdapter {
         //((TextView) view.findViewById(R.id.tvPlayList)).setText(playList.getName());
 
         if (Player.instance.getIsPlaying() && (playList.getId() == DBManager.getPlayListBySongId(Player.instance.getPlayingSongId()).getId())) {
-            ((TextView) view.findViewById(R.id.tvSchoolName)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
+            //((TextView) view.findViewById(R.id.tvSchoolName)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
             ((TextView) view.findViewById(R.id.tvPlayList)).setTextColor(mContext.getResources().getColor(R.color.textColorRed));
         } else {
-            ((TextView) view.findViewById(R.id.tvSchoolName)).setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
+            //((TextView) view.findViewById(R.id.tvSchoolName)).setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
             ((TextView) view.findViewById(R.id.tvPlayList)).setTextColor(mContext.getResources().getColor(R.color.textColorPrimary));
         }
 
