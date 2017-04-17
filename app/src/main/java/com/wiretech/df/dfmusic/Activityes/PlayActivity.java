@@ -121,6 +121,11 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 mPlayListId = getIntent().getIntExtra(PLAYLIST_ID_EXTRA, -1);
                 playList = DBManager.getPLayListById(mPlayListId);
                 mSongsIds = DBManager.getSongsIdsByPLayListId(mPlayListId);
+                if (Player.instance.getIsPlaying()) {
+                    if (mPlayListId == DBManager.getPlayListBySongId(Player.instance.getPlayingSongId()).getId()) {
+                        mCurrentSongIndex = MusicState.instance.getCurrentPlayingSongIndex();
+                    }
+                }
             }
         }
 

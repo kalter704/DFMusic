@@ -60,6 +60,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     public void play(Context context) {
         isPause = false;
         mContext = context;
+        MusicState.instance.savePlayingSongIndex();
         if (mMediaPlayer == null) {
             playNewSong();
         } else {
@@ -101,7 +102,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
 
     public void initNewSong() {
         mNewSong = DBManager.getSongById(MusicState.instance.getSongId());
-        MusicState.instance.savePlayingSongIndex();
+        //MusicState.instance.savePlayingSongIndex();
     }
 
     public int  getPlayingSongId() {
