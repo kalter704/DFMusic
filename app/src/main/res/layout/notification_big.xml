@@ -16,7 +16,7 @@
             android:layout_width="@dimen/notification_big_icon_width"
             android:layout_height="@dimen/notification_big_icon_height"
             android:gravity="center"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/default_album_v1"/>
 
         <LinearLayout
             android:id="@+id/layoutTexts"

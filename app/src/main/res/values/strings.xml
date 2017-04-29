@@ -11,7 +11,7 @@
     <string name="playlist_toolbar_subtitle">PLAYLIST</string>
 
     <string name="menu_share">Рассказать друзьям</string>
-    <string name="menu_about">О Dance Family</string>
+    <string name="menu_about">Dance Family</string>
     <string name="menu_save_audio">Сохраненные аудиозаписи</string>
     <string name="menu_star">Оценить приложение</string>
     <string name="menu_donate">Поддержать проект</string>
@@ -28,7 +28,7 @@
     <string name="info_page_bv">BLACK VELVET</string>
     <string name="info_page_bv_since">Since 2014</string>
     <string name="info_page_bv_location">Россия, Москва</string>
-    <string name="info_page_bv_peoples">> 80</string>
+    <string name="info_page_bv_peoples">> 80 чел.</string>
     <string name="info_page_bv_site">скоро</string>
     <string name="info_page_bv_intagram">/blackvelvetteam</string>
     <string name="info_page_bv_vk">/blackvelvetteam</string>
@@ -198,9 +198,25 @@
     </string-array>
 
     <string name="text_description_action">Поделиться</string>
-    <string name="text_for_share">
+    <string name="text_for_share_1">
         Включай быстрее Dance Family music, ждем только тебя!\n
         http://yandex.ru
+    </string>
+    <string name="text_for_share_studio">
+        Мне нравится HILK STUDIO!\n\nHILK В VK\nhttps://vk.com/hilk_studio\n\nСОТРУДНИЧЕСТВО C HILK\nhilk.commerce@gmail.com\n\nСЛУЖБА ПОДДЕРЖКИ HILK\nhilk.helpdesk@gmail.com\n\nСкачай DF Music прямо сейчас\n
+        И ССЫЛКА!!!
+    </string>
+    <string name="text_for_share_support">
+        Я поддерживаю проект DF Music от HILK Studio, поддержи и ты!\n\nКарта Сбербанка\n4276 4000 6194 2877\n\nЯндекс.Деньги\nhttps://money.yandex.ru/to/410015079982251\n\nPayPal\npaypal.me/HILKstudio\n\nQIWI Кошелек\n+79169016017\n\nСкачай DF Music прямо сейчас\n
+        И ССЫЛКА!!!
+    </string>
+    <string name="text_for_share_for_clubs">
+        Все клубы Dance Family в одном приложении!\nСкачай DF Music прямо сейчас\n
+        И ССЫЛКА!!!
+    </string>
+    <string name="text_for_share_for_friends">
+        Включай быстрее Dance Family Music, ждем только тебя!\nТеперь все клубы DF всегда с тобой!\nСкачай DF Music прямо сейчас\n
+        И ССЫЛКА!!!
     </string>
 
 

@@ -65,7 +65,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.rlShare:
-                Share.share(MenuActivity.this);
+                Share.share(MenuActivity.this, getString(R.string.text_for_share_for_friends));
                 break;
             case R.id.tlAbout:
                 startActivity(new Intent(MenuActivity.this, DFClubsActivity.class));
