@@ -149,7 +149,7 @@
     <string name="studio_support_title">МЫ ВСЕГДА НА СВЯЗИ!</string>
     <string name="studio_support">СЛУЖБА ПОДДЕРЖКИ</string>
     <string name="studio_support_url">hilk.helpdesk@gmail.com</string>
-    <string name="studio_support2">СОТРУДНЕЧЕСТВО</string>
+    <string name="studio_support2">СОТРУДНИЧЕСТВО</string>
     <string name="studio_support2_url">hilk.commerce@gmail.com</string>
     <string name="studio_support_vk">СООБЩЕСТВО VK</string>
     <string name="studio_support_vk_url">vk.com/hilk_studio</string>
@@ -157,7 +157,7 @@
     <string name="support_project_toolbar_title">PROJECT</string>
     <string name="support_project_toolbar_subtitle">SUPPORT</string>
 
-    <string name="support_project_main_text">ДРУЗЬЯ, ПОЖАЛЙЯСТА,\nПОДДЕРЖИТЕ НАШИ ПРОЕКТЫ!\nВМЕСТЕ МЫ СДЕЛАЕМ МИР\nЧУТОЧКУ ЛУЧШЕ И ИНТЕРЕСНЕЕ!</string>
+    <string name="support_project_main_text">ДРУЗЬЯ, ПОЖАЛУЙСТА,\nПОДДЕРЖИТЕ НАШИ ПРОЕКТЫ!\nВМЕСТЕ МЫ СДЕЛАЕМ МИР\nЧУТОЧКУ ЛУЧШЕ И ИНТЕРЕСНЕЕ!</string>
     <string name="support_project_card_sber">КАРТА СБЕРБАНК</string>
     <string name="support_project_card_sber_number">4276 4000 6194 2877</string>
     <string name="support_project_yandex_money">ЯНДЕКС.ДЕНЬГИ</string>
