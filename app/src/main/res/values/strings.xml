@@ -29,15 +29,15 @@
     <string name="info_page_bv_since">Since 2014</string>
     <string name="info_page_bv_location">Россия, Москва</string>
     <string name="info_page_bv_peoples">> 80</string>
-    <string name="info_page_bv_site"></string>
-    <string name="info_page_bv_intagram"></string>
+    <string name="info_page_bv_site">скоро</string>
+    <string name="info_page_bv_intagram">/blackvelvetteam</string>
     <string name="info_page_bv_vk">/blackvelvetteam</string>
     <string name="info_page_bv_youtube">/blackvelvetteam</string>
 
     //--- About Crazy Dream----------------------------------------------------
     <string name="info_page_cd">CRAZY DREAM</string>
     <string name="info_page_cd_since">Since 2004</string>
-    <string name="info_page_cd_location">Москва, Россия</string>
+    <string name="info_page_cd_location">Россия, Москва</string>
     <string name="info_page_cd_peoples">> 500 чел.</string>
     <string name="info_page_cd_site">/crazydreamdancefamily.com</string>
     <string name="info_page_cd_intagram">/crazydream_msk</string>
@@ -46,12 +46,12 @@
 
     //--- About DANCE FAMILY Ladies ---------------------------------------------------
     <string name="info_page_dfl">DANCE FAMILY LADIES</string>
-    <string name="info_page_dfl_since"></string>
-    <string name="info_page_dfl_location"></string>
-    <string name="info_page_dfl_peoples"></string>
-    <string name="info_page_dfl_site"></string>
-    <string name="info_page_dfl_intagram"></string>
-    <string name="info_page_dfl_vk"></string>
+    <string name="info_page_dfl_since">Since 2009</string>
+    <string name="info_page_dfl_location">Россия, Москва</string>
+    <string name="info_page_dfl_peoples">> 10 чел.</string>
+    <string name="info_page_dfl_site">скоро</string>
+    <string name="info_page_dfl_intagram">скоро</string>
+    <string name="info_page_dfl_vk">/df_ladystyle</string>
     <string name="info_page_dfl_youtube"></string>
 
     //--- About Flash Light ---------------------------------------------------
@@ -59,7 +59,7 @@
     <string name="info_page_fl_since">Since 2010</string>
     <string name="info_page_fl_location">Россия, Горячий Ключ</string>
     <string name="info_page_fl_peoples">> 50 чел.</string>
-    <string name="info_page_fl_site"></string>
+    <string name="info_page_fl_site">скоро</string>
     <string name="info_page_fl_intagram">/flash_light_fam</string>
     <string name="info_page_fl_vk">/flashlightfam</string>
     <string name="info_page_fl_youtube"></string>
@@ -69,7 +69,7 @@
     <string name="info_page_fs_since">Since 2008</string>
     <string name="info_page_fs_location">Россия, Москва</string>
     <string name="info_page_fs_peoples">> 60 чел.</string>
-    <string name="info_page_fs_site"></string>
+    <string name="info_page_fs_site">скоро</string>
     <string name="info_page_fs_intagram">/ds_freesteps</string>
     <string name="info_page_fs_vk">/freestepskids</string>
     <string name="info_page_fs_youtube"></string>
@@ -79,7 +79,7 @@
     <string name="info_page_jd_since">Since 2013</string>
     <string name="info_page_jd_location">Россия, Ставрополь</string>
     <string name="info_page_jd_peoples">> 60 чел.</string>
-    <string name="info_page_jd_site"></string>
+    <string name="info_page_jd_site">скоро</string>
     <string name="info_page_jd_intagram">/justdancestav</string>
     <string name="info_page_jd_vk">/jdstav</string>
     <string name="info_page_jd_youtube"></string>
@@ -99,16 +99,16 @@
     <string name="info_page_lj_since">Since 2010</string>
     <string name="info_page_lj_location">Россия, Ставрополь</string>
     <string name="info_page_lj_peoples">> 70 чел.</string>
-    <string name="info_page_lj_site">luckyjam.ru</string>
+    <string name="info_page_lj_site">/luckyjam.ru</string>
     <string name="info_page_lj_intagram">/lucky_jam_stav</string>
     <string name="info_page_lj_vk">/club16550057</string>
     <string name="info_page_lj_youtube"></string>
 
     //--- About My Community---------------------------------------------------
     <string name="info_page_mc">My Community</string>
-    <string name="info_page_mc_since"></string>
+    <string name="info_page_mc_since">Since 2005</string>
     <string name="info_page_mc_location">Россия, Ростов</string>
-    <string name="info_page_mc_peoples"></string>
+    <string name="info_page_mc_peoples">> 100 чел.</string>
     <string name="info_page_mc_site">/mycom.plp7.ru</string>
     <string name="info_page_mc_intagram">/mycomdance/</string>
     <string name="info_page_mc_vk">/mycommunity_dance</string>
@@ -119,7 +119,7 @@
     <string name="info_page_u_since">Since 2006</string>
     <string name="info_page_u_location">Россия, Ростов-на-Дону</string>
     <string name="info_page_u_peoples">> 170 чел.</string>
-    <string name="info_page_u_site"></string>
+    <string name="info_page_u_site">скоро</string>
     <string name="info_page_u_intagram">/unistream_dance</string>
     <string name="info_page_u_vk">/usmdance</string>
     <string name="info_page_u_youtube">/JT5fyTQ_wos</string>

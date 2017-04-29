@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="8dp"
-                    android:src="@drawable/ic_logo_cd" />
+                    android:src="@drawable/ic_logo_df" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -233,6 +233,7 @@
 
             </LinearLayout>
 
+            <!--
             <LinearLayout style="@style/info_page_item">
 
                 <ImageView
@@ -252,6 +253,8 @@
                     android:textSize="@dimen/text_size_main_list_playlist" />
 
             </LinearLayout>
+
+            -->
 
         </LinearLayout>
 

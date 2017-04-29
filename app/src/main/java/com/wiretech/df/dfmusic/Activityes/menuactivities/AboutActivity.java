@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.wiretech.df.dfmusic.Classes.AdControl;
@@ -16,7 +15,7 @@ public class AboutActivity extends AppCompatActivity {
     private TextView mTvSite;
     private TextView mTvIns;
     private TextView mTvVK;
-    private TextView mTvYoutube;
+    //private TextView mTvYoutube;
 
 
     @Override
@@ -28,12 +27,7 @@ public class AboutActivity extends AppCompatActivity {
 
         initializeUI(clubName);
 
-        findViewById(R.id.rlBack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        findViewById(R.id.rlBack).setOnClickListener(view -> finish());
 
         findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(AboutActivity.this));
 
@@ -47,7 +41,7 @@ public class AboutActivity extends AppCompatActivity {
         String site = "";
         String instagram = "";
         String vk = "";
-        String youtube = "";
+        //String youtube = "";
         if ("BLACK VELVET".equals(clubName)) {
             name = getString(R.string.info_page_bv);
             since = getString(R.string.info_page_bv_since);
@@ -56,7 +50,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_bv_site);
             instagram = getString(R.string.info_page_bv_intagram);
             vk = getString(R.string.info_page_bv_vk);
-            youtube = getString(R.string.info_page_bv_youtube);
+            //youtube = getString(R.string.info_page_bv_youtube);
         } else if ("CRAZY DREAM".equals(clubName)) {
             name = getString(R.string.info_page_cd);
             since = getString(R.string.info_page_cd_since);
@@ -65,7 +59,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_cd_site);
             instagram = getString(R.string.info_page_cd_intagram);
             vk = getString(R.string.info_page_cd_vk);
-            youtube = getString(R.string.info_page_cd_youtube);
+            //youtube = getString(R.string.info_page_cd_youtube);
         } else if ("DANCE FAMILY LADIES".equals(clubName)) {
             name = getString(R.string.info_page_dfl);
             since = getString(R.string.info_page_dfl_since);
@@ -74,7 +68,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_dfl_site);
             instagram = getString(R.string.info_page_dfl_intagram);
             vk = getString(R.string.info_page_dfl_vk);
-            youtube = getString(R.string.info_page_dfl_youtube);
+            //youtube = getString(R.string.info_page_dfl_youtube);
         } else if ("FLASH LIGHT".equals(clubName)) {
             name = getString(R.string.info_page_fl);
             since = getString(R.string.info_page_fl_since);
@@ -83,7 +77,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_fl_site);
             instagram = getString(R.string.info_page_fl_intagram);
             vk = getString(R.string.info_page_fl_vk);
-            youtube = getString(R.string.info_page_fl_youtube);
+            //youtube = getString(R.string.info_page_fl_youtube);
         } else if ("FREE STEPS".equals(clubName)) {
             name = getString(R.string.info_page_fs);
             since = getString(R.string.info_page_fs_since);
@@ -92,7 +86,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_fs_site);
             instagram = getString(R.string.info_page_fs_intagram);
             vk = getString(R.string.info_page_fs_vk);
-            youtube = getString(R.string.info_page_fs_youtube);
+            //youtube = getString(R.string.info_page_fs_youtube);
         } else if ("JUST DANCE".equals(clubName)) {
             name = getString(R.string.info_page_jd);
             since = getString(R.string.info_page_jd_since);
@@ -101,7 +95,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_jd_site);
             instagram = getString(R.string.info_page_jd_intagram);
             vk = getString(R.string.info_page_jd_vk);
-            youtube = getString(R.string.info_page_jd_youtube);
+            //youtube = getString(R.string.info_page_jd_youtube);
         } else if ("Leader Dance".equals(clubName)) {
             name = getString(R.string.info_page_ld);
             since = getString(R.string.info_page_ld_since);
@@ -110,7 +104,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_ld_site);
             instagram = getString(R.string.info_page_ld_intagram);
             vk = getString(R.string.info_page_ld_vk);
-            youtube = getString(R.string.info_page_ld_youtube);
+            //youtube = getString(R.string.info_page_ld_youtube);
         } else if ("LUCKY JAM".equals(clubName)) {
             name = getString(R.string.info_page_lj);
             since = getString(R.string.info_page_lj_since);
@@ -119,7 +113,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_lj_site);
             instagram = getString(R.string.info_page_lj_intagram);
             vk = getString(R.string.info_page_lj_vk);
-            youtube = getString(R.string.info_page_lj_youtube);
+            //youtube = getString(R.string.info_page_lj_youtube);
         } else if ("MY COMMUNITY".equals(clubName)) {
             name = getString(R.string.info_page_mc);
             since = getString(R.string.info_page_mc_since);
@@ -128,7 +122,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_mc_site);
             instagram = getString(R.string.info_page_mc_intagram);
             vk = getString(R.string.info_page_mc_vk);
-            youtube = getString(R.string.info_page_mc_youtube);
+            //youtube = getString(R.string.info_page_mc_youtube);
         } else if ("UNISTREAM".equals(clubName)) {
             name = getString(R.string.info_page_u);
             since = getString(R.string.info_page_u_since);
@@ -137,7 +131,7 @@ public class AboutActivity extends AppCompatActivity {
             site = getString(R.string.info_page_u_site);
             instagram = getString(R.string.info_page_u_intagram);
             vk = getString(R.string.info_page_u_vk);
-            youtube = getString(R.string.info_page_u_youtube);
+            //youtube = getString(R.string.info_page_u_youtube);
         }
 
         ((TextView) findViewById(R.id.tvTitle)).setText(clubName);
@@ -149,12 +143,12 @@ public class AboutActivity extends AppCompatActivity {
         mTvSite = (TextView) findViewById(R.id.tvSite);
         mTvIns = (TextView) findViewById(R.id.tvInst);
         mTvVK = (TextView) findViewById(R.id.tvVK);
-        mTvYoutube = (TextView) findViewById(R.id.tvYoutube);
+        //mTvYoutube = (TextView) findViewById(R.id.tvYoutube);
 
         mTvSite.setText(site);
         mTvIns.setText(instagram);
         mTvVK.setText(vk);
-        mTvYoutube.setText(youtube);
+        //mTvYoutube.setText(youtube);
 
         mTvSite.setOnClickListener(v -> {
             if (!"".equals(((TextView) v).getText())) {
@@ -174,11 +168,13 @@ public class AboutActivity extends AppCompatActivity {
             }
         });
 
+        /*
         mTvYoutube.setOnClickListener(v -> {
             if (!"".equals(((TextView) v).getText())) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com" + ((TextView) v).getText())));
             }
         });
+        */
 
 
 
