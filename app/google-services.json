@@ -19,7 +19,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.wiretech.df.dfmusic",
-            "certificate_hash": "E6737334664019B26A70A4EA8785145821E495FC"
+            "certificate_hash": "e6737334664019b26a70a4ea8785145821e495fc"
           }
         },
         {
@@ -44,6 +44,37 @@
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837895031191:android:2183116e29de35bd",
+        "android_client_info": {
+          "package_name": "com.wiretech.df.dfmusicbeta2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837895031191-tk3hruvou8vtal0lns618j33thn5fse6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzV6Lj0EU9pEr48fj1I8srQAi5DudLOfE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

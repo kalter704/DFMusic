@@ -26,7 +26,7 @@ public class DFClubsActivity extends AppCompatActivity {
 
         findViewById(R.id.rlBack).setOnClickListener(v -> finish());
 
-        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(DFClubsActivity.this, getString(R.string.text_for_share_for_clubs)));
+        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(DFClubsActivity.this, getString(R.string.text_for_share_for_clubs) + "\n" + getString(R.string.link_to_app)));
     }
 
     @Override

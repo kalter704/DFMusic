@@ -1,6 +1,7 @@
 package com.wiretech.df.dfmusicbeta.Activityes;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -65,13 +66,13 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
             case R.id.rlShare:
-                Share.share(MenuActivity.this, getString(R.string.text_for_share_for_friends));
+                Share.share(MenuActivity.this, getString(R.string.text_for_share_for_friends) + "\n" + getString(R.string.link_to_app));
                 break;
             case R.id.tlAbout:
                 startActivity(new Intent(MenuActivity.this, DFClubsActivity.class));
                 break;
             case R.id.rlRating:
-
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.link_to_app))));
                 break;
             case R.id.rlDonate:
                 startActivity(new Intent(MenuActivity.this, SupportProjectActivity.class));

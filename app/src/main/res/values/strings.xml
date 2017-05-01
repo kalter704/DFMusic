@@ -197,26 +197,23 @@
         <item>UNISTREAM</item>
     </string-array>
 
+    <string name="link_to_app">https://play.google.com/store/apps/details?id=com.wiretech.df.dfmusic</string>
+
     <string name="text_description_action">Поделиться</string>
     <string name="text_for_share_1">
-        Включай быстрее Dance Family music, ждем только тебя!\n
-        http://yandex.ru
+        Включай быстрее Dance Family music, ждем только тебя!
     </string>
     <string name="text_for_share_studio">
-        Мне нравится HILK STUDIO!\n\nHILK В VK\nhttps://vk.com/hilk_studio\n\nСОТРУДНИЧЕСТВО C HILK\nhilk.commerce@gmail.com\n\nСЛУЖБА ПОДДЕРЖКИ HILK\nhilk.helpdesk@gmail.com\n\nСкачай DF Music прямо сейчас\n
-        И ССЫЛКА!!!
+        Мне нравится HILK STUDIO!\n\nHILK В VK\nhttps://vk.com/hilk_studio\n\nСОТРУДНИЧЕСТВО C HILK\nhilk.commerce@gmail.com\n\nСЛУЖБА ПОДДЕРЖКИ HILK\nhilk.helpdesk@gmail.com\n\nСкачай DF Music прямо сейчас
     </string>
     <string name="text_for_share_support">
-        Я поддерживаю проект DF Music от HILK Studio, поддержи и ты!\n\nКарта Сбербанка\n4276 4000 6194 2877\n\nЯндекс.Деньги\nhttps://money.yandex.ru/to/410015079982251\n\nPayPal\npaypal.me/HILKstudio\n\nQIWI Кошелек\n+79169016017\n\nСкачай DF Music прямо сейчас\n
-        И ССЫЛКА!!!
+        Я поддерживаю проект DF Music от HILK Studio, поддержи и ты!\n\nКарта Сбербанка\n4276 4000 6194 2877\n\nЯндекс.Деньги\nhttps://money.yandex.ru/to/410015079982251\n\nPayPal\npaypal.me/HILKstudio\n\nQIWI Кошелек\n+79169016017\n\nСкачай DF Music прямо сейчас
     </string>
     <string name="text_for_share_for_clubs">
-        Все клубы Dance Family в одном приложении!\nСкачай DF Music прямо сейчас\n
-        И ССЫЛКА!!!
+        Все клубы Dance Family в одном приложении!\nСкачай DF Music прямо сейчас
     </string>
     <string name="text_for_share_for_friends">
-        Включай быстрее Dance Family Music, ждем только тебя!\nТеперь все клубы DF всегда с тобой!\nСкачай DF Music прямо сейчас\n
-        И ССЫЛКА!!!
+        Включай быстрее Dance Family Music, ждем только тебя!\nТеперь все клубы DF всегда с тобой!\nСкачай DF Music прямо сейчас
     </string>
 
 

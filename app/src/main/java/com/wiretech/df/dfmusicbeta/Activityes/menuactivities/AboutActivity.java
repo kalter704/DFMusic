@@ -29,7 +29,7 @@ public class AboutActivity extends AppCompatActivity {
 
         findViewById(R.id.rlBack).setOnClickListener(view -> finish());
 
-        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(AboutActivity.this, getString(R.string.text_for_share_for_clubs)));
+        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(AboutActivity.this, getString(R.string.text_for_share_for_clubs) + "\n" + getString(R.string.link_to_app)));
 
     }
 

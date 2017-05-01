@@ -15,6 +15,6 @@ public class SupportProjectActivity extends AppCompatActivity {
 
         findViewById(R.id.rlBack).setOnClickListener(v -> finish());
 
-        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(SupportProjectActivity.this, getString(R.string.text_for_share_support)));
+        findViewById(R.id.rlShare).setOnClickListener(v -> Share.share(SupportProjectActivity.this, getString(R.string.text_for_share_support) + "\n" + getString(R.string.link_to_app)));
     }
 }
