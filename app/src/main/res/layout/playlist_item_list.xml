@@ -19,7 +19,7 @@
         style="@style/playlist_song_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:text="1"/>
 
     <LinearLayout
@@ -32,8 +32,8 @@
             style="@style/playlist_song_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="5dp"
             android:lines="1"
             android:maxLines="1"
             android:singleLine="true"
@@ -46,7 +46,7 @@
         style="@style/playlist_song_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:text="00:00"/>
 
 

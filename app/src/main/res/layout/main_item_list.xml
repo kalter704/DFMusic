@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:background="@color/colorBlackBackground"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/rlBackground">
 
     <TextView
         android:id="@+id/tvSchoolName"
