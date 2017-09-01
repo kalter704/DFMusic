@@ -74,6 +74,10 @@ public class PlayerManager {
         sendPendingIntent(context, Const.ACTION.PLAY_ACTION);
     }
 
+    public void resume(Context context) {
+        sendPendingIntent(context, Const.ACTION.PLAY_ACTION);
+    }
+
     public void pause(Context context) {
         sendPendingIntent(context, Const.ACTION.PAUSE_ACTION);
     }
@@ -90,6 +94,10 @@ public class PlayerManager {
     public void previous(Context context) {
         setPreviousSongForPlayer();
         sendPendingIntent(context, Const.ACTION.PLAY_PREVIOUS_ACTION);
+    }
+
+    public void interrupt(Context context) {
+        sendPendingIntent(context, Const.ACTION.INTERRUPT_ACTION);
     }
 
     public void setNextSongForPlayer() {

@@ -17,6 +17,7 @@ import com.wiretech.df.dfmusicbeta.adapters.PlaylistsAdapter;
 import com.wiretech.df.dfmusicbeta.api.classes.Playlist;
 import com.wiretech.df.dfmusicbeta.Const;
 import com.wiretech.df.dfmusicbeta.classes.PlayerManager;
+import com.wiretech.df.dfmusicbeta.classes.SnackBarCreator;
 import com.wiretech.df.dfmusicbeta.database.DBManager;
 import com.wiretech.df.dfmusicbeta.R;
 import com.wiretech.df.dfmusicbeta.services.PlayerService;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fillDate() {
-        mPlayLists = DBManager.get(this).getPlayListsWithNameAndSchool();
+        mPlayLists = DBManager.get(this).getPlayLists();
     }
 
     private void initializeUI() {
@@ -84,19 +85,7 @@ public class MainActivity extends AppCompatActivity {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
         } else {
-            Snackbar snackbar = Snackbar.make(
-                    findViewById(R.id.mainCoordLayout),
-                    "Нажмите еще раз для выхода",
-                    Snackbar.LENGTH_SHORT);
-            View snackView = snackbar.getView();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                snackView.setBackgroundColor(getColor(R.color.snackErrorNetworkColor));
-            } else {
-                snackView.setBackgroundColor(getResources().getColor(R.color.snackErrorNetworkColor));
-            }
-            TextView snackTV = snackView.findViewById(android.support.design.R.id.snackbar_text);
-            snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            snackbar.show();
+            SnackBarCreator.show(this, "Нажмите еще раз для выхода");
         }
         backPressedTime = System.currentTimeMillis();
     }

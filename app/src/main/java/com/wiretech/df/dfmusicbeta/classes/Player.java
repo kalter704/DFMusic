@@ -1,6 +1,7 @@
 package com.wiretech.df.dfmusicbeta.classes;
 
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.media.AudioAttributes;
@@ -11,6 +12,7 @@ import com.wiretech.df.dfmusicbeta.api.classes.Song;
 import com.wiretech.df.dfmusicbeta.Const;
 import com.wiretech.df.dfmusicbeta.interfaces.OnPlayerListener;
 import com.wiretech.df.dfmusicbeta.receivers.BecomingNoisyReceiver;
+import com.wiretech.df.dfmusicbeta.receivers.RemoteControlReceiver;
 import com.wiretech.df.dfmusicbeta.services.PlayerService;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
 public class Player implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
 
-    public enum PlayerState { PREPARING,  PLAYING, PAUSE, STOP, INTERREPT }
+    public enum PlayerState { PREPARING,  PLAYING, PAUSE, STOP, INTERRUPT }
 
     private static Player sPlayer = null;
 
@@ -38,20 +40,11 @@ public class Player implements MediaPlayer.OnPreparedListener,
     private BecomingNoisyReceiver mBecomingNoisyReceiver = new BecomingNoisyReceiver();
     private IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 
-//    private boolean isPlaying = false;
-//    private boolean isPause = false;
-//    private boolean isPreparing = false;
-//    private boolean isInterrupt = false;
-//    private boolean isHasAudioFocus = false;
-
     private PlayerState mPlayerState = PlayerState.STOP;
 
     private boolean isLooping = false;
     private boolean isTransientCanDuck = false;
     private boolean isPrepared = false;
-//    private boolean isRegisterReceiver =false;
-
-    private int mCurrentVolume;
 
     private int mBufferingPercent = 0;
 
@@ -83,7 +76,12 @@ public class Player implements MediaPlayer.OnPreparedListener,
             case STOP:
                 playNewSong();
                 break;
-            case INTERREPT:
+            case INTERRUPT:
+                if (PlayerManager.get().getPlayingSong().getRealID() != mSong.getRealID()) {
+                    playNewSong();
+                } else {
+                    resumePlayerAfterInterrupt();
+                }
                 break;
             case PREPARING:
                 if (PlayerManager.get().getPlayingSong().getRealID() != mSong.getRealID()) {
@@ -131,6 +129,8 @@ public class Player implements MediaPlayer.OnPreparedListener,
             mMediaPlayer.setOnBufferingUpdateListener(this);
             mMediaPlayer.setOnPreparedListener(this);
             mMediaPlayer.prepareAsync();
+
+            mAudioManager.registerMediaButtonEventReceiver(new ComponentName(mContext, RemoteControlReceiver.class));
         }
     }
 
@@ -148,6 +148,14 @@ public class Player implements MediaPlayer.OnPreparedListener,
         } else {
             mPlayerState = PlayerState.PREPARING;
         }
+    }
+
+    private void resumePlayerAfterInterrupt() {
+        if (mMediaPlayer == null) {
+            return;
+        }
+        mMediaPlayer.start();
+        mPlayerState = PlayerState.PLAYING;
     }
 
     private void pausePlayer() {
@@ -174,7 +182,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
                 break;
             case PAUSE:
             case STOP:
-            case INTERREPT:
+            case INTERRUPT:
                 break;
         }
     }
@@ -187,6 +195,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
             e.printStackTrace();
         }
         mAudioManager.abandonAudioFocus(afChangeListener);
+        mAudioManager.unregisterMediaButtonEventReceiver(new ComponentName(mContext, RemoteControlReceiver.class));
         mPlayerState = PlayerState.STOP;
     }
 
@@ -195,7 +204,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
             case PLAYING:
             case PREPARING:
             case PAUSE:
-            case INTERREPT:
+            case INTERRUPT:
                 stopPlayer();
                 break;
             case STOP:
@@ -203,12 +212,27 @@ public class Player implements MediaPlayer.OnPreparedListener,
         }
     }
 
+    public void interruptPlayer() {
+        if (mMediaPlayer == null) {
+            return;
+        }
+        mMediaPlayer.pause();
+        mPlayerState = PlayerState.INTERRUPT;
+    }
 
+    public void interrupt() {
+        switch (mPlayerState) {
+            case PLAYING:
+            case PREPARING:
+                interruptPlayer();
+                break;
+            case PAUSE:
+            case INTERRUPT:
+            case STOP:
+                break;
+        }
+    }
 
-
-
-
-    // ????????????????????????????????????????????????????????????????????????????????
     public int getBufferingPercent() {
         return mBufferingPercent;
     }
@@ -224,6 +248,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
         if (mMediaPlayer != null) {
             mMediaPlayer.setLooping(isLooping);
         }
+    }
+
+    public boolean getLooping() {
+        return isLooping;
     }
 
     public int getDuration() {
@@ -257,6 +285,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
     private void releaseMediaPlayer() {
         if (mMediaPlayer != null) {
             try {
+                mMediaPlayer.stop();
                 mMediaPlayer.release();
                 mMediaPlayer = null;
             } catch (Exception e) {
@@ -276,12 +305,6 @@ public class Player implements MediaPlayer.OnPreparedListener,
     @Override
     public void onCompletion(MediaPlayer mp) {
         if ((mp.getDuration() - mp.getCurrentPosition()) < 1000 && mPlayerState != PlayerState.PREPARING) {
-//            PendingIntent pNextIntent = PlayerService.newPendingIntentToService(mContext, Const.ACTION.PLAY_NEXT_ACTION);
-//            try {
-//                pNextIntent.send();
-//            } catch (PendingIntent.CanceledException e) {
-//                e.printStackTrace();
-//            }
             Song tempSong = mSong;
             PlayerManager.get().next(mContext);
             for (OnPlayerListener listener : mListListeners) {
@@ -303,46 +326,29 @@ public class Player implements MediaPlayer.OnPreparedListener,
     public AudioManager.OnAudioFocusChangeListener afChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         public void onAudioFocusChange(int focusChange) {
             if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT) {
-                PendingIntent pPauseIntent = PlayerService.newPendingIntentToService(mContext, Const.ACTION.PAUSE_ACTION);
-                try {
-                    pPauseIntent.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
-                }
-                mPlayerState = PlayerState.INTERREPT;
+                PlayerManager.get().interrupt(mContext);
+
             } else if (focusChange == AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
                 if (mPlayerState == PlayerState.PLAYING) {
-//                    mCurrentVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-//                    int newVolume = (int) (0.3 * mCurrentVolume);
-//                    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, AudioManager.FLAG_PLAY_SOUND);
-//                    isTransientCanDuck = true;
+                    mMediaPlayer.setVolume(0.3f, 0.3f);
+                    isTransientCanDuck = true;
                 }
+
             } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
-                if (mPlayerState == PlayerState.INTERREPT) {
-                    PendingIntent pPlayIntent = PlayerService.newPendingIntentToService(mContext, Const.ACTION.PLAY_ACTION);
-                    try {
-                        pPlayIntent.send();
-                    } catch (PendingIntent.CanceledException e) {
-                        e.printStackTrace();
-                    }
-                    mPlayerState = PlayerState.PLAYING;
+                if (mPlayerState == PlayerState.INTERRUPT) {
+                    PlayerManager.get().resume(mContext);
                 }
+
                 if (isTransientCanDuck) {
                     isTransientCanDuck = false;
-                    mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mCurrentVolume, AudioManager.FLAG_PLAY_SOUND);
+                    mMediaPlayer.setVolume(1, 1);
                 }
+
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
                 // ????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
                 //manager.unregisterMediaButtonEventReceiver(RemoteControlReceiver);
 
-                PendingIntent pStopIntent = PlayerService.newPendingIntentToService(mContext, Const.ACTION.STOP_ACTION);
-                try {
-                    pStopIntent.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
-                }
-
-                mPlayerState = PlayerState.STOP;
+                PlayerManager.get().pause(mContext);
                 mAudioManager.abandonAudioFocus(afChangeListener);
             }
         }

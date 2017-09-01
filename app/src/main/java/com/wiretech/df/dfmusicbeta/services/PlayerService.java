@@ -56,6 +56,10 @@ public class PlayerService extends Service {
             Player.get().play(getApplicationContext());
             showNotification(NotificationState.PLAY);
 
+        } else if (action.equals(ACTION.INTERRUPT_ACTION)) {
+            Player.get().interrupt();
+            showNotification(NotificationState.PLAY);
+
         } else if (action.equals(ACTION.UPDATE_NOTIFICATION_ACTION)) {
             if (Player.get().getState() == Player.PlayerState.PLAYING
                     || Player.get().getState() == Player.PlayerState.PREPARING) {

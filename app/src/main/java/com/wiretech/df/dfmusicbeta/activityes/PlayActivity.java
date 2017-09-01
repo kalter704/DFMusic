@@ -152,6 +152,12 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             showUnSaveBtn();
         }
+
+        if (!Player.get().getLooping()) {
+            showRepeatOffBtn();
+        } else {
+            showRepeatOnBtn();
+        }
     }
 
     @Override
@@ -312,6 +318,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                             mHandler.post(updateProcessPlaying);
                         } else if (Player.get().getState() == Player.PlayerState.PREPARING) {
                             mHandler.post(updatePauseBtn);
+                        } else {
+                            mHandler.post(updatePlayBtn);
                         }
                     } else {
                         mHandler.post(updatePlayBtn);
@@ -435,19 +443,4 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-//    private void showSnackBar(String message) {
-//        Snackbar snackbar = Snackbar.make(
-//                findViewById(R.id.mainCoordLayout),
-//                message,
-//                Snackbar.LENGTH_SHORT);
-//        View snackView = snackbar.getView();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            snackView.setBackgroundColor(getColor(R.color.snackNotificationColor));
-//        } else {
-//            snackView.setBackgroundColor(getResources().getColor(R.color.snackNotificationColor));
-//        }
-//        TextView snackTV = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
-//        snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//        snackbar.show();
-//    }
 }

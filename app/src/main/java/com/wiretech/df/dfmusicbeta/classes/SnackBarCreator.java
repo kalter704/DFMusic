@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wiretech.df.dfmusicbeta.R;
 
 public class SnackBarCreator {
+
     public static void show(Context context, int stringResourceID) {
         show(context, context.getString(stringResourceID));
     }
@@ -21,9 +22,9 @@ public class SnackBarCreator {
                 Snackbar.LENGTH_SHORT);
         View snackView = snackbar.getView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            snackView.setBackgroundColor(context.getColor(R.color.snackErrorNetworkColor));
+            snackView.setBackgroundColor(context.getColor(R.color.snackNotificationColor));
         } else {
-            snackView.setBackgroundColor(context.getResources().getColor(R.color.snackErrorNetworkColor));
+            snackView.setBackgroundColor(context.getResources().getColor(R.color.snackNotificationColor));
         }
         TextView snackTV = snackView.findViewById(android.support.design.R.id.snackbar_text);
         snackTV.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

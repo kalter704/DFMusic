@@ -121,26 +121,11 @@ public class DBManager {
             Log.d(LOG_TAG, "FillDBBackground.doInBackground");
             ContentValues cv;
             SQLiteDatabase db = mDBHelper.getWritableDatabase();
-            Cursor c = null;
             try {
-                List<Integer> idsList = new ArrayList<>();
-                c = db.query(SavedSongTable.TABLE_NAME, new String[]{ SavedSongTable.Cols.SONG_ID }, null, null, null, null, null);
-                if (c.moveToFirst()) {
-                    do {
-                        // Зачем этот код???????????????????????????????????????????????????????????????????????????????????
-                        idsList.add(c.getInt(c.getColumnIndex(SavedSongTable.Cols.SONG_ID)));
-                    } while (c.moveToNext());
-                }
-
-                //String selection = PlaylistTable.Cols.ID + " = ?";
                 for (Playlist p : musicServerResponses[0].getPlaylists()) {
-                    //c = db.query(PlaylistTable.TABLE_NAME, null, selection, new String[]{String.valueOf(p.getID())}, null, null, null);
-
-                    //c.moveToFirst();
-                    //long pID = c.getLong(c.getColumnIndex(PlaylistTable.Cols.ID));
 
                     cv = createContentValuesFromPlaylist(p);
-                    db.update(PlaylistTable.TABLE_NAME, cv, "id = ?", new String[]{String.valueOf(p.getID())});
+                    db.update(PlaylistTable.TABLE_NAME, cv, PlaylistTable.Cols.ID + " = ?", new String[]{String.valueOf(p.getID())});
 
                     db.delete(SongTable.TABLE_NAME, SongTable.Cols.PLAYLIST_ID + " = " + String.valueOf(p.getID()), null);
                     for (Song s : p.getSongs()) {
@@ -151,10 +136,6 @@ public class DBManager {
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
-            } finally {
-                if (c != null) {
-                    c.close();
-                }
             }
             return true;
         }
@@ -186,22 +167,7 @@ public class DBManager {
         return result;
     }
 
-//    public List<Playlist> getPlayListsNames() {
-//        List<Playlist> playListsNamesAndIds = new ArrayList<>();
-//        SQLiteDatabase db = sDBHelper.getWritableDatabase();
-//        Cursor c = db.query(DBHelper.PLAYLIST_TABLE_NAME, null, null, null, null, null, DBHelper.PLAYLIST_POSITION_FIELD);
-//        if (c.moveToFirst()) {
-//            int nameIndex = c.getColumnIndex(DBHelper.PLAYLIST_TITLE_FIELD);
-//            int idIndex = c.getColumnIndex("id");
-//            do {
-//                playListsNamesAndIds.add(new Playlist(c.getInt(idIndex), c.getString(nameIndex)));
-//            } while (c.moveToNext());
-//        }
-//        return playListsNamesAndIds;
-//    }
-
-    // А вто зачем это? можно же использовать запрос getPlaylists() !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public List<Playlist> getPlayListsWithNameAndSchool() {
+    public List<Playlist> getPlayLists() {
         List<Playlist> playLists = new ArrayList<>();
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
         MusicCursorWrapper c = new MusicCursorWrapper(db.query(PlaylistTable.TABLE_NAME, null, null, null, null, null, PlaylistTable.Cols.POSITION));
@@ -213,28 +179,6 @@ public class DBManager {
         c.close();
         return playLists;
     }
-
-//    public List<Song> getSongsByPlayListId(int playListId) {
-//        List<Song> songs = new ArrayList<>();
-//        SQLiteDatabase db = sDBHelper.getWritableDatabase();
-//        String selection = DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = ?";
-//        String[] selectionArgs = new String[]{String.valueOf(playListId)};
-//        Cursor c = db.query(DBHelper.SONG_TABLE_NAME, null, selection, selectionArgs, null, null, DBHelper.SONG_POSITION_FIELD);
-//        logCursor(c);
-//        if (c.moveToFirst()) {
-//            int idIndex = c.getColumnIndex("id");
-//            int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
-//            int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
-//            do {
-//                songs.add(new Song(
-//                        c.getInt(idIndex),
-//                        c.getString(nameIndex),
-//                        c.getInt(lengthIndex)
-//                ));
-//            } while (c.moveToNext());
-//        }
-//        return songs;
-//    }
 
     public Song getSongById(int id) {
         Song song = null;
@@ -261,54 +205,6 @@ public class DBManager {
         return song;
     }
 
-//    public static Song getFirstSongByPlayListId(int playListId) {
-//        Song song = null;
-//        SQLiteDatabase db = sDBHelper.getWritableDatabase();
-//        String selection = DBHelper.SONG_CONNECT_TO_PLAYLIST_FIELD + " = ?";
-//        String[] selectionArgs = new String[]{String.valueOf(playListId)};
-//        Cursor c = db.query(DBHelper.SONG_TABLE_NAME, null, selection, selectionArgs, null, null, DBHelper.SONG_POSITION_FIELD);
-//        logCursor(c);
-//        if (c.moveToFirst()) {
-//            int idIndex = c.getColumnIndex("id");
-//            int realIdIndex = c.getColumnIndex(DBHelper.SONG_ID_FIELD);
-//            int posIndex = c.getColumnIndex(DBHelper.SONG_POSITION_FIELD);
-//            int nameIndex = c.getColumnIndex(DBHelper.SONG_TITLE_FIELD);
-//            int singerIndex = c.getColumnIndex(DBHelper.SONG_SINGER_FIELD);
-//            int lengthIndex = c.getColumnIndex(DBHelper.SONG_LENGTH_FIELD);
-//            int songUrlIndex = c.getColumnIndex(DBHelper.SONG_SONG_URL_FIELD);
-//            int albumUrlIndex = c.getColumnIndex(DBHelper.SONG_ALBUM_URL_FIELD);
-//            int isSavedIndex = c.getColumnIndex(DBHelper.SONG_IS_SAVED);
-//            song = new Song(
-//                    c.getInt(idIndex),
-//                    c.getInt(realIdIndex),
-//                    c.getString(nameIndex),
-//                    c.getString(singerIndex),
-//                    c.getString(lengthIndex),
-//                    c.getInt(posIndex),
-//                    c.getString(songUrlIndex),
-//                    c.getString(albumUrlIndex),
-//                    c.getInt(isSavedIndex),
-//                    Song.INT_FLAG
-//            );
-//        }
-//        return song;
-//    }
-
-    public ArrayList<Integer> getSongsIdsByPlaylistID(int playListId) {
-        ArrayList<Integer> list = new ArrayList<>();
-        SQLiteDatabase db = mDBHelper.getWritableDatabase();
-        String selection = SongTable.Cols.PLAYLIST_ID + " = ?";
-        String[] selectionArgs = new String[]{ String.valueOf(playListId) };
-        Cursor c = db.query(SongTable.TABLE_NAME, new String[]{ SongTable.Cols.ID }, selection, selectionArgs, null, null, SongTable.Cols.POSITION);
-        if (c.moveToFirst()) {
-            do {
-                list.add(c.getInt(c.getColumnIndex(SongTable.Cols.ID)));
-            } while (c.moveToNext());
-        }
-        c.close();
-        return list;
-    }
-
     public List<Song> getSongsByPlaylist(Playlist p) {
         List<Song> songs = new ArrayList<>();
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
@@ -325,27 +221,6 @@ public class DBManager {
         }
         c.close();
         return songs;
-    }
-
-    public Playlist getPlaylistBySongID(int songId) {
-        Playlist playList = null;
-        SQLiteDatabase db = mDBHelper.getWritableDatabase();
-
-        String selection = SongTable.Cols.ID + " = ?";
-        String[] selectionArgs = new String[]{ String.valueOf(songId) };
-
-        MusicCursorWrapper c = new MusicCursorWrapper(db.query(SongTable.TABLE_NAME, new String[]{ SongTable.Cols.PLAYLIST_ID }, selection, selectionArgs, null, null, null));
-
-        if (c.moveToFirst()) {
-            selection = PlaylistTable.Cols.ID + " = ?";
-            selectionArgs = new String[]{ c.getString(c.getColumnIndex(SongTable.Cols.PLAYLIST_ID)) };
-            c = new MusicCursorWrapper(db.query(PlaylistTable.TABLE_NAME, null, selection, selectionArgs, null, null, null));
-            if (c.moveToFirst()) {
-                playList = c.getPlaylist();
-            }
-        }
-        c.close();
-        return playList;
     }
 
     public Playlist getPlaylistByID(int playlistID) {
@@ -424,16 +299,6 @@ public class DBManager {
         db.delete(SavedSongTable.TABLE_NAME, SavedSongTable.Cols.SONG_ID + " = ?", new String[]{ String.valueOf(song.getRealID()) });
     }
 
-//    public void setUnSaveSongBySong(SQLiteDatabase db, Song song) {
-//        ContentValues cv = new ContentValues();
-
-//        cv.put(DBHelper.SONG_IS_SAVED, 0);
-//        db.update(SongTable.TABLE_NAME, cv, SongTable.Cols.ID + " = ?", new String[]{ String.valueOf(song.getID()) });
-//        cv.clear();
-//
-//        db.delete(DBHelper.SAVED_SONG_TABLE_NAME, DBHelper.SAVED_SONG_ID_FIELD + " = " + String.valueOf(song.getRealID()), null);
-//    }
-
     public List<Song> getAllSavedSongs() {
         return getAllSavedSongs(mDBHelper.getWritableDatabase());
     }
@@ -506,51 +371,51 @@ public class DBManager {
         return ids;
     }
 
-    public List<Song> getSongsBySongsIds(List<Integer> ids) {
-        List<Song> songs = new ArrayList<>();
-        SQLiteDatabase db = mDBHelper.getWritableDatabase();
-
-        // Этот вариант работает быстрее, но порядок песен получается как в БД
-        String idsStr = "(";
-        for (Integer id : ids) {
-            idsStr += "\"" + String.valueOf(id) + "\",";
-        }
-        idsStr += "\"-1\")";
-
-        String sqlQuery = "select "
-                + "SONG." + SongTable.Cols._ID
-                + ", SONG." + SongTable.Cols.ID
-                + ", SONG." + SongTable.Cols.NAME
-                + ", SONG." + SongTable.Cols.SINGER
-                + ", SONG." + SongTable.Cols.LENGTH
-                + ", SONG." + SongTable.Cols.POSITION
-                + ", SONG." + SongTable.Cols.SONG_URL
-                + ", SONG." + SongTable.Cols.IMG_URL
-                + ", SONG." + SongTable.Cols.SAVED
-                + " from " + SongTable.TABLE_NAME + " as SONG "
-                + "where " + SongTable.Cols.ID + " in " + idsStr;
-
-        MusicCursorWrapper c = new MusicCursorWrapper(db.rawQuery(sqlQuery, null));
-
-        if (c.moveToFirst()) {
-            do {
-                songs.add(c.getSong());
-            } while (c.moveToNext());
-        }
-
-        // Алгоритм изменения порядка
-        for (int i = 0; i < ids.size(); ++i) {
-            int id = ids.get(i);
-            for (int j = i; j < songs.size(); ++j) {
-                if (songs.get(j).getID() == id) {
-                    songs.add(i, songs.remove(j));
-                }
-            }
-        }
-
-        c.close();
-        return songs;
-    }
+//    public List<Song> getSongsBySongsIds(List<Integer> ids) {
+//        List<Song> songs = new ArrayList<>();
+//        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+//
+//        // Этот вариант работает быстрее, но порядок песен получается как в БД
+//        String idsStr = "(";
+//        for (Integer id : ids) {
+//            idsStr += "\"" + String.valueOf(id) + "\",";
+//        }
+//        idsStr += "\"-1\")";
+//
+//        String sqlQuery = "select "
+//                + "SONG." + SongTable.Cols._ID
+//                + ", SONG." + SongTable.Cols.ID
+//                + ", SONG." + SongTable.Cols.NAME
+//                + ", SONG." + SongTable.Cols.SINGER
+//                + ", SONG." + SongTable.Cols.LENGTH
+//                + ", SONG." + SongTable.Cols.POSITION
+//                + ", SONG." + SongTable.Cols.SONG_URL
+//                + ", SONG." + SongTable.Cols.IMG_URL
+//                + ", SONG." + SongTable.Cols.SAVED
+//                + " from " + SongTable.TABLE_NAME + " as SONG "
+//                + "where " + SongTable.Cols.ID + " in " + idsStr;
+//
+//        MusicCursorWrapper c = new MusicCursorWrapper(db.rawQuery(sqlQuery, null));
+//
+//        if (c.moveToFirst()) {
+//            do {
+//                songs.add(c.getSong());
+//            } while (c.moveToNext());
+//        }
+//
+//        // Алгоритм изменения порядка
+//        for (int i = 0; i < ids.size(); ++i) {
+//            int id = ids.get(i);
+//            for (int j = i; j < songs.size(); ++j) {
+//                if (songs.get(j).getID() == id) {
+//                    songs.add(i, songs.remove(j));
+//                }
+//            }
+//        }
+//
+//        c.close();
+//        return songs;
+//    }
 
 //    public void writeToLogDataFromTables() {
 //        writeDataFromTableToLog(DBHelper.SAVED_SONG_TABLE_NAME);
@@ -564,7 +429,7 @@ public class DBManager {
 //            logCursor(c);
 //        }
 //    }
-
+//
 //    private static void logCursor(Cursor c) {
 //        if (isDebug) {
 //            if (c != null) {
