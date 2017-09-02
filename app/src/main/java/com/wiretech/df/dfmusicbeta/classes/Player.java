@@ -144,6 +144,7 @@ public class Player implements MediaPlayer.OnPreparedListener,
                 mMediaPlayer.start();
                 mPlayerState = PlayerState.PLAYING;
                 mContext.registerReceiver(mBecomingNoisyReceiver, intentFilter);
+                mAudioManager.registerMediaButtonEventReceiver(new ComponentName(mContext, RemoteControlReceiver.class));
             }
         } else {
             mPlayerState = PlayerState.PREPARING;
@@ -343,13 +344,10 @@ public class Player implements MediaPlayer.OnPreparedListener,
                     isTransientCanDuck = false;
                     mMediaPlayer.setVolume(1, 1);
                 }
-
             } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
-                // ????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
-                //manager.unregisterMediaButtonEventReceiver(RemoteControlReceiver);
-
                 PlayerManager.get().pause(mContext);
                 mAudioManager.abandonAudioFocus(afChangeListener);
+                mAudioManager.unregisterMediaButtonEventReceiver(new ComponentName(mContext, RemoteControlReceiver.class));
             }
         }
     };
