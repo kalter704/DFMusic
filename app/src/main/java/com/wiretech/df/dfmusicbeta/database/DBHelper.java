@@ -13,7 +13,7 @@ import com.wiretech.df.dfmusicbeta.database.DBScheme.SavedSongTable;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "music_db";
-    private static final int DATABASE_VERSION = 25;
+    public static final int DATABASE_VERSION = 25;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

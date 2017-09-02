@@ -2,10 +2,13 @@ package com.wiretech.df.dfmusicbeta.api;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.wiretech.df.dfmusicbeta.Const;
 import com.wiretech.df.dfmusicbeta.api.classes.MusicServerResponse;
 import com.wiretech.df.dfmusicbeta.api.classes.Playlist;
 import com.wiretech.df.dfmusicbeta.api.classes.Song;
@@ -31,7 +34,7 @@ public class MusicServiceAPI {
     //public static final String SERVER_DOMAIN = "http://192.168.43.193";
     //public static final String SERVER_DOMAIN = "http://194.87.102.161";
     public static final String SERVER_DOMAIN = "http://188.166.211.232";
-    public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/";
+    public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/v2/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
     private static final int SONG_ACTION_ID = 2;
@@ -42,6 +45,8 @@ public class MusicServiceAPI {
 
     public static final int ERROR_PARCE = 0;
     public static final int ERROR_NOT_RESPONSE = 1;
+
+    private static final String SOUNDS_SHARED_PREFERENCE = "sounds_pref";
 
     private static Context sContext;
 
@@ -58,18 +63,29 @@ public class MusicServiceAPI {
         sContext = context;
     }
 
+    public static String getSoundsFromPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(SOUNDS_SHARED_PREFERENCE, null);
+    }
+
+    public static void setSoundsToPreferences(Context context, String sounds) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putString(SOUNDS_SHARED_PREFERENCE, sounds)
+                .apply();
+    }
+
     public static void requestPlaylistsAndSongs() {
         sMusicServerResponse = new MusicServerResponse();
         currentAction = PLAYLIST_ACTION_ID;
         globalAction = ALL_DATAS;
-        new BackgroundRequest().execute(SERVER_URL + "getplaylists/");
+        new BackgroundRequest().execute(SERVER_URL + "getplaylists/?os=android&v=" + Const.CURRENT_VERSION);
     }
 
     public static void requestPlaylists() {
         sMusicServerResponse = new MusicServerResponse();
         currentAction = PLAYLIST_ACTION_ID;
         globalAction = ONLY_PLAYLISTS;
-        new BackgroundRequest().execute(SERVER_URL + "getplaylists/");
+        new BackgroundRequest().execute(SERVER_URL + "getplaylists/?os=android&v=" + Const.CURRENT_VERSION);
     }
 
     public static void requestForUpdatePlaylists(MusicServerResponse m) {
@@ -86,8 +102,13 @@ public class MusicServiceAPI {
         }
         if (sMusicServerResponse.getCurrentPlaylist() != null) {
             int id = sMusicServerResponse.getCurrentPlaylist().getID();
+
+            String sounds = PreferenceManager.getDefaultSharedPreferences(sContext)
+                    .getString(SOUNDS_SHARED_PREFERENCE, "main");
+
             String url = SERVER_URL + "getsongs/?"
                     + "screen=" + screen
+                    + "&sounds=" + sounds
                     + "&playlist_id=" + String.valueOf(id);
             new BackgroundRequest().execute(url);
         } else {
@@ -149,32 +170,6 @@ public class MusicServiceAPI {
         }
     }
 
-    /*
-    private static void parcePlaylistsJson(String json) {
-        Log.d(LOG_TAG, "parceJSONToPlaylistsArray");
-        JSONObject resultJson = null;
-        try {
-            resultJson = new JSONObject(json);
-            sMusicServerResponse.setCount(resultJson.getJSONObject("response").getInt("count"));
-            JSONArray playlistsJson = resultJson.getJSONObject("response").getJSONArray("playlists");
-            for (int i = 0; i < playlistsJson.length(); ++i) {
-                JSONObject playlistJson = playlistsJson.getJSONObject(i);
-                sMusicServerResponse.addPlaylist(new Playlist(
-                        playlistJson.getInt("id"),
-                        playlistJson.getString("title"),
-                        playlistJson.getString("school_owner"),
-                        playlistJson.getString("last_update"),
-                        playlistJson.getInt("pos")
-                ));
-            }
-            requestSongs();
-        } catch (JSONException e) {
-            norifError();
-            e.printStackTrace();
-        }
-    }
-    */
-
     private static class parsePlayListsJsonBackground extends AsyncTask<String, Void, String> {
 
         @Override
@@ -183,6 +178,14 @@ public class MusicServiceAPI {
             JSONObject resultJson = null;
             try {
                 resultJson = new JSONObject(strings[0]);
+
+//                String sounds = resultJson.getJSONObject("response").getString("sounds");
+//                PreferenceManager.getDefaultSharedPreferences(sContext)
+//                        .edit()
+//                        .putString(SOUNDS_SHARED_PREFERENCE, sounds)
+//                        .apply();
+
+                sMusicServerResponse.setSounds(resultJson.getJSONObject("response").getString("sounds"));
                 sMusicServerResponse.setCount(resultJson.getJSONObject("response").getInt("count"));
                 JSONArray playlistsJson = resultJson.getJSONObject("response").getJSONArray("playlists");
                 for (int i = 0; i < playlistsJson.length(); ++i) {
@@ -344,23 +347,4 @@ public class MusicServiceAPI {
                 screen = "mdpi";
         }
     }
-
-//    public static Observable<Response<AdResponse>> interstitialAds() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(SERVER_URL)
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        return retrofit.create(AdsMusicServerService.class).getInterstitialAds();
-//    }
-//
-//    public static Observable<Response<AdResponse>> bannerAds() {
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl(SERVER_URL)
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//        return retrofit.create(AdsMusicServerService.class).getBannerAds();
-//    }
-
 }

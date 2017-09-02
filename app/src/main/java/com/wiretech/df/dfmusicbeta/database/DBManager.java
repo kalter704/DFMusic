@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.wiretech.df.dfmusicbeta.api.classes.MusicServerResponse;
@@ -160,8 +161,7 @@ public class DBManager {
                 if (!dbStr.equals(reqStr)) {
                     result.add(m.getIndex());
                 }
-                m.nextPlaylist();
-            } while (c.moveToNext());
+            } while (c.moveToNext() && m.nextPlaylist());
         }
         c.close();
         return result;
@@ -369,6 +369,10 @@ public class DBManager {
         }
         c.close();
         return ids;
+    }
+
+    public void clearDatabase() {
+        mDBHelper.onUpgrade(mDBHelper.getWritableDatabase(), DBHelper.DATABASE_VERSION, DBHelper.DATABASE_VERSION);
     }
 
 //    public List<Song> getSongsBySongsIds(List<Integer> ids) {

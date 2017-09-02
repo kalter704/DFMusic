@@ -115,17 +115,24 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
             isEndDownload = true;
             splashTimer2.start();
         } else if (action == MusicServiceAPI.ONLY_PLAYLISTS) {
-            // Сравнить данные по плейлистам с данными БД!!!!!!!!!!!!!!
-            List<Integer> diff = mDBManager.getIndexsOfDifferentPlaylists(musicServerResponse);
-            if (diff.size() > 0) {
-                MusicServerResponse m = new MusicServerResponse();
-                for (int i = 0; i < diff.size(); ++i) {
-                    m.addPlaylist(musicServerResponse.getPlaylistByIndex(diff.get(i)));
+            String sounds = MusicServiceAPI.getSoundsFromPreferences(this);
+            if (sounds != null && musicServerResponse.getSounds().equals(sounds)) {
+                // Сравнить данные по плейлистам с данными БД!!!!!!!!!!!!!!
+                List<Integer> diff = mDBManager.getIndexsOfDifferentPlaylists(musicServerResponse);
+                if (diff.size() > 0) {
+                    MusicServerResponse m = new MusicServerResponse();
+                    for (int i = 0; i < diff.size(); ++i) {
+                        m.addPlaylist(musicServerResponse.getPlaylistByIndex(diff.get(i)));
+                    }
+                    MusicServiceAPI.requestForUpdatePlaylists(m);
+                } else {
+                    isEndDownload = true;
+                    startMainActivity();
                 }
-                MusicServiceAPI.requestForUpdatePlaylists(m);
             } else {
-                isEndDownload = true;
-                startMainActivity();
+                MusicServiceAPI.setSoundsToPreferences(this, musicServerResponse.getSounds());
+                DBManager.get(this).clearDatabase();
+                downloadData();
             }
         } else if (action == MusicServiceAPI.UPDATE_PLAYLISTS) {
             mDBManager.updatePlaylists(musicServerResponse);
@@ -164,7 +171,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
         public void run() {
             try {
                 int splashTimer = 0;
-                while(splashTimer < (3 * mSecForSplashActivity * 1000)) {
+                while(splashTimer < (4 * mSecForSplashActivity * 1000)) {
                     sleep(mIterationTime);
                     splashTimer += mIterationTime;
                 }

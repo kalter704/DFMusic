@@ -6,6 +6,7 @@ import java.util.List;
 public class MusicServerResponse {
     private int index = 0;
     private int count;
+    private String sounds = null;
     private List<Playlist> mPlaylists = new ArrayList<>();
 
     public void addSongToPlailist(int i, Song s) {
@@ -28,8 +29,12 @@ public class MusicServerResponse {
         index = 0;
     }
 
-    public void nextPlaylist() {
+    public boolean nextPlaylist() {
         ++index;
+        if (index >= mPlaylists.size()) {
+            return false;
+        }
+        return true;
     }
 
     public int getIndex() {
@@ -54,5 +59,13 @@ public class MusicServerResponse {
 
     public void setPlaylists(List<Playlist> playlists) {
         mPlaylists = playlists;
+    }
+
+    public String getSounds() {
+        return sounds;
+    }
+
+    public void setSounds(String sounds) {
+        this.sounds = sounds;
     }
 }

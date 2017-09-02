@@ -11,8 +11,9 @@ public class Const {
         String NOTIFICATION_PLAY_NEXT_ACTION = "com.wiretech.df.dfmusicbeta.action.notification_play_next";
         String UPDATE_NOTIFICATION_ACTION = "com.wiretech.df.dfmusicbeta.action.update_notification";
         String INTERRUPT_ACTION = "com.wiretech.df.dfmusicbeta.action.interrupt";
-
     }
+
+    public static String CURRENT_VERSION = "1";
 
     public static int NOTIFICATION_ID = 102;
 }
