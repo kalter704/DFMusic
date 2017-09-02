@@ -39,7 +39,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activityes.PlayActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
 
         <activity
             android:name=".activityes.menuactivities.StudioActivity"

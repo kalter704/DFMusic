@@ -101,6 +101,7 @@ public class PlayerManager {
     }
 
     public void setNextSongForPlayer() {
+        Song oldSong = mPlayingSong;
         int i;
         if ((i = indexOfSong(mPlayingSong, mPlayingPlaylist)) != -1) {
             i++;
@@ -109,9 +110,11 @@ public class PlayerManager {
             }
             mPlayingSong = mPlayingPlaylist.getSongs().get(i);
         }
+        Player.get().onChangeSong(oldSong);
     }
 
     public void setPreviousSongForPlayer() {
+        Song oldSong = mPlayingSong;
         int i;
         if ((i = indexOfSong(mPlayingSong, mPlayingPlaylist)) != -1) {
             i--;
@@ -120,6 +123,7 @@ public class PlayerManager {
             }
             mPlayingSong = mPlayingPlaylist.getSongs().get(i);
         }
+        Player.get().onChangeSong(oldSong);
     }
 
     private int indexOfSong(Song song, Playlist playlist) {

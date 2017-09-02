@@ -50,6 +50,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.rlBack:
                 finish();
+                overridePendingTransition(R.anim.alpha_in, R.anim.left_out);
                 break;
             case R.id.rlShare:
                 Share.share(MenuActivity.this, getString(R.string.text_for_share_for_friends) + "\n" + getString(R.string.link_to_app));

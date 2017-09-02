@@ -314,6 +314,12 @@ public class Player implements MediaPlayer.OnPreparedListener,
         }
     }
 
+    public void onChangeSong(Song oldSong) {
+        for (OnPlayerListener listener : mListListeners) {
+            listener.OnChangeSong(oldSong);
+        }
+    }
+
     @Override
     public void onPrepared(MediaPlayer mp) {
         if (mPlayerState == PlayerState.PREPARING) {

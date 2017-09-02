@@ -1,7 +1,9 @@
 package com.wiretech.df.dfmusicbeta.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,45 +25,24 @@ import java.util.List;
 
 public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.PlaylistHolder> {
 
-    private final List<Integer> mBackgroundDrawableIDs = new ArrayList<Integer>() {{
-        add(R.drawable.p_1);
-        add(R.drawable.p_2);
-        add(R.drawable.p_3);
-        add(R.drawable.p_4);
-        add(R.drawable.p_5);
-        add(R.drawable.p_6);
-        add(R.drawable.p_7);
-        add(R.drawable.p_8);
-        add(R.drawable.p_9);
-        add(R.drawable.p_10);
-        add(R.drawable.p_11);
-        add(R.drawable.p_12);
-        add(R.drawable.p_13);
-        add(R.drawable.p_14);
-        add(R.drawable.p_15);
-        add(R.drawable.p_16);
-        add(R.drawable.p_17);
-    }};
-
     private List<Playlist> mPlayLists;
     private Context mContext;
+    private PlayListBackground mPlaylistBackground;
 
     public PlaylistsAdapter(Context context, List<Playlist> playLists) {
         mContext = context;
         mPlayLists = playLists;
-        shuffleBackgrounds();
+        mPlaylistBackground = new PlayListBackground();
     }
 
     public class PlaylistHolder extends RecyclerView.ViewHolder {
 
         private int mID;
-        private TextView mSchoolName;
         private TextView mPlaylistName;
         private View mBackgroundView;
 
         public PlaylistHolder(View itemView) {
             super(itemView);
-            mSchoolName = itemView.findViewById(R.id.tvPlayList);
             mPlaylistName = itemView.findViewById(R.id.tvSchoolName);
             mBackgroundView = itemView.findViewById(R.id.rlBackground);
             itemView.setOnClickListener(view -> {
@@ -75,7 +56,6 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
         public void bindPlaylist(Playlist p, int drawableID) {
             mID = p.getID();
-            mSchoolName.setText(p.getSchoolName());
             mPlaylistName.setText(p.getName());
             mBackgroundView.setBackgroundResource(drawableID);
             if (Player.get().getState() == Player.PlayerState.PLAYING
@@ -103,7 +83,7 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
 
     @Override
     public void onBindViewHolder(PlaylistHolder holder, int position) {
-        holder.bindPlaylist(mPlayLists.get(position), mBackgroundDrawableIDs.get(position));
+        holder.bindPlaylist(mPlayLists.get(position), mPlaylistBackground.getBackgroundIdRes(position));
     }
 
     @Override
@@ -111,13 +91,48 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
         return mPlayLists.size();
     }
 
-    public void shuffleBackgrounds() {
-        Collections.shuffle(mBackgroundDrawableIDs);
-    }
 
-    public void notifyDataChanged() {
-        shuffleBackgrounds();
-        notifyDataSetChanged();
+    private class PlayListBackground {
+        private static final String SAVED_INDEX = "saved_index";
+
+        private int index;
+        private int backgrounds[] = {
+                R.drawable.p_1,
+                R.drawable.p_2,
+                R.drawable.p_3,
+                R.drawable.p_4,
+                R.drawable.p_5,
+                R.drawable.p_6,
+                R.drawable.p_7,
+                R.drawable.p_8,
+                R.drawable.p_9,
+                R.drawable.p_10,
+                R.drawable.p_11,
+                R.drawable.p_12,
+                R.drawable.p_13,
+                R.drawable.p_14,
+                R.drawable.p_15,
+                R.drawable.p_16,
+                R.drawable.p_17
+        };
+
+        public PlayListBackground() {
+            SharedPreferences sPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+            index = sPref.getInt(SAVED_INDEX, 0);
+
+            if (index < 0) {
+                index = backgrounds.length - 1;
+            }
+
+            sPref.edit()
+                    .putInt(SAVED_INDEX, index - 1)
+                    .apply();
+        }
+
+        public int getBackgroundIdRes(int i) {
+            return backgrounds[(index + i) % backgrounds.length];
+        }
     }
 }
 

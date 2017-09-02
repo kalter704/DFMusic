@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wiretech.df.dfmusicbeta.R;
@@ -89,6 +90,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         Player.get().setOnPlayerListener(this);
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mSong = Player.get().getSong();
+        fillUIWithSong();
     }
 
     private void initializeUI() {
@@ -254,7 +262,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     public void nextSong() {
         if (Player.get().getSong() != null
-                && Player.get().getSong().getRealID() == mSong.getRealID()) {
+                && Player.get().getSong().getRealID() == mSong.getRealID()
+                && Player.get().getState() == Player.PlayerState.PLAYING) {
             PlayerManager.get().next(this);
             mSong = PlayerManager.get().getPlayingSong();
         } else {
@@ -265,7 +274,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
     public void previousSong() {
         if (Player.get().getSong() != null
-                && Player.get().getSong().getRealID() == mSong.getRealID()) {
+                && Player.get().getSong().getRealID() == mSong.getRealID()
+                && Player.get().getState() == Player.PlayerState.PLAYING) {
             PlayerManager.get().previous(this);
             mSong = PlayerManager.get().getPlayingSong();
         } else {
@@ -436,4 +446,11 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void OnChangeSong(Song song) {
+        if (song.getRealID() == mSong.getRealID()) {
+            mSong = PlayerManager.get().getPlayingSong();
+            fillUIWithSong();
+        }
+    }
 }

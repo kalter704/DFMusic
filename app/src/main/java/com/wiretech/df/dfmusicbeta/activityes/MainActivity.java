@@ -1,26 +1,19 @@
 package com.wiretech.df.dfmusicbeta.activityes;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.TextView;
 
 import com.wiretech.df.dfmusicbeta.adapters.PlaylistsAdapter;
 import com.wiretech.df.dfmusicbeta.api.classes.Playlist;
-import com.wiretech.df.dfmusicbeta.Const;
 import com.wiretech.df.dfmusicbeta.classes.PlayerManager;
 import com.wiretech.df.dfmusicbeta.classes.SnackBarCreator;
 import com.wiretech.df.dfmusicbeta.database.DBManager;
 import com.wiretech.df.dfmusicbeta.R;
-import com.wiretech.df.dfmusicbeta.services.PlayerService;
 
 import java.util.List;
 
@@ -60,13 +53,16 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mPlaylistsAdapter);
 
-        (findViewById(R.id.rlMenu)).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MenuActivity.class)));
+        (findViewById(R.id.rlMenu)).setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, MenuActivity.class));
+            overridePendingTransition(R.anim.left_in, R.anim.alpha_out);
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPlaylistsAdapter.notifyDataChanged();
+        mPlaylistsAdapter.notifyDataSetChanged();
     }
 
     @Override
