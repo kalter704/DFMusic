@@ -41,11 +41,6 @@
             android:name=".activityes.PlayActivity"
             android:screenOrientation="portrait"/>
 
-        <service
-            android:name=".services.MusicNotificationService"
-            android:enabled="true"
-            android:exported="false"/>
-
         <activity
             android:name=".activityes.menuactivities.StudioActivity"
             android:screenOrientation="portrait"/>

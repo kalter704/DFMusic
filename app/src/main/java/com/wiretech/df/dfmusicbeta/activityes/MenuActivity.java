@@ -37,8 +37,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.rlSavedAudio).setOnClickListener(v -> {
             List<Integer> songsIds = DBManager.get(this).getSavedSongsIds();
             if (songsIds.size() != 0) {
-                Intent intent = new Intent(MenuActivity.this, PlayActivity.class);
-                startActivity(intent);
+                startActivity(PlaylistActivity.newIntent(this, -1));
             } else {
                 SnackBarCreator.show(this, R.string.snack_have_not_saved_songs);
             }

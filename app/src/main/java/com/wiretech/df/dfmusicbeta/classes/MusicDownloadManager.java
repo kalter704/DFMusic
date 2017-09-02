@@ -1,5 +1,6 @@
 package com.wiretech.df.dfmusicbeta.classes;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -73,6 +74,7 @@ public class MusicDownloadManager {
     }
 
     class BackgroundDownload extends AsyncTask<Void, Void, Void> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -95,6 +97,9 @@ public class MusicDownloadManager {
                     Log.d(LOG_TAG, "Path = " + path);
 
                     try {
+
+                        MusicDownloadNotification notification = new MusicDownloadNotification(mContext, song.getName());
+
                         URL url = new URL(song.getFullSongURL());
                         URLConnection connection = url.openConnection();
                         connection.connect();
@@ -102,15 +107,22 @@ public class MusicDownloadManager {
                         InputStream input = new BufferedInputStream(url.openStream());
                         OutputStream output = new FileOutputStream(path);
 
+                        int totalSize = connection.getContentLength();
+                        int downloadSize = 0;
+
                         byte data[] = new byte[1024];
                         int count;
                         while ((count = input.read(data)) != -1) {
                             output.write(data, 0, count);
+                            downloadSize += count;
+                            notification.notifyProgress((int)(((float)downloadSize)/totalSize * 100));
                         }
 
                         output.flush();
                         output.close();
                         input.close();
+
+                        notification.endDownload(song.getName());
 
                         song.setSaved(true);
                         song.setSongURL(path);

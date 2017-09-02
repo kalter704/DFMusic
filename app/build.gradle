@@ -12,6 +12,7 @@ android {
         versionName '2.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -38,6 +39,7 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.squareup.picasso:picasso:2.3.2'
     debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 

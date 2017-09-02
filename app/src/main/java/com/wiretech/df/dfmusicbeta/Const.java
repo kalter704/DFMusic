@@ -16,4 +16,5 @@ public class Const {
     public static String CURRENT_VERSION = "1";
 
     public static int NOTIFICATION_ID = 102;
+    public static int NOTIFICATION_DOWNLOAD_ID = 103;
 }

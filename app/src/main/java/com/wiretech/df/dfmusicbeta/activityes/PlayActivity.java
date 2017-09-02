@@ -2,12 +2,9 @@ package com.wiretech.df.dfmusicbeta.activityes;
 
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,17 +13,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.wiretech.df.dfmusicbeta.api.classes.Playlist;
+import com.wiretech.df.dfmusicbeta.R;
 import com.wiretech.df.dfmusicbeta.api.classes.Song;
 import com.wiretech.df.dfmusicbeta.classes.MusicDownloadManager;
 import com.wiretech.df.dfmusicbeta.classes.Player;
-import com.wiretech.df.dfmusicbeta.Const;
 import com.wiretech.df.dfmusicbeta.classes.PlayerManager;
 import com.wiretech.df.dfmusicbeta.classes.SnackBarCreator;
-import com.wiretech.df.dfmusicbeta.database.DBManager;
 import com.wiretech.df.dfmusicbeta.interfaces.OnPlayerListener;
-import com.wiretech.df.dfmusicbeta.R;
-import com.wiretech.df.dfmusicbeta.services.MusicNotificationService;
 
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener,
         OnPlayerListener {
