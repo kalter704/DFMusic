@@ -14,6 +14,7 @@ import com.wiretech.df.dfmusicbeta.R;
 import com.wiretech.df.dfmusicbeta.activityes.PlayActivity;
 import com.wiretech.df.dfmusicbeta.api.classes.Song;
 import com.wiretech.df.dfmusicbeta.classes.Player;
+import com.wiretech.df.dfmusicbeta.classes.PlayerManager;
 
 import java.util.List;
 
@@ -71,8 +72,10 @@ public class SongsAdapter extends ArrayAdapter<Song> implements View.OnClickList
         songHolder.mTvLength.setText(song.getLength());
 
         if (Player.get().getSong() != null
-                && Player.get().getSong().getRealID() == songHolder.ID
-                && Player.get().getState() == Player.PlayerState.PLAYING) {
+                && PlayerManager.get().getPlayingSong() != null
+                && PlayerManager.get().getPlayingSong().getRealID() == songHolder.ID
+                && (Player.get().getState() == Player.PlayerState.PLAYING
+                    || Player.get().getState() == Player.PlayerState.PREPARING)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 songHolder.mTvPos.setTextColor(mContext.getColor(R.color.textColorRed));
                 songHolder.mTvName.setTextColor(mContext.getColor(R.color.textColorRed));

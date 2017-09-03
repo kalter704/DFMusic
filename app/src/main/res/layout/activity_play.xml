@@ -62,7 +62,7 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/rlPlaylist"
+            android:id="@+id/rlShare"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -70,12 +70,12 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin">
 
-            <!--<ImageView-->
-                <!--android:id="@+id/ivPlaylist"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--app:srcCompat="@drawable/ic_playlist_toolbar" />-->
+            <ImageView
+                android:id="@+id/ivShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_share_all" />
 
         </RelativeLayout>
 

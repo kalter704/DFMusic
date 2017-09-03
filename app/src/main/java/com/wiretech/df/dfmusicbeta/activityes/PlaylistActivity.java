@@ -7,14 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.wiretech.df.dfmusicbeta.R;
 import com.wiretech.df.dfmusicbeta.adapters.SongsAdapter;
 import com.wiretech.df.dfmusicbeta.api.classes.Playlist;
+import com.wiretech.df.dfmusicbeta.api.classes.Song;
+import com.wiretech.df.dfmusicbeta.classes.Player;
 import com.wiretech.df.dfmusicbeta.classes.PlayerManager;
 import com.wiretech.df.dfmusicbeta.database.DBManager;
+import com.wiretech.df.dfmusicbeta.interfaces.OnPlayerListener;
 
-public class PlaylistActivity extends AppCompatActivity implements View.OnClickListener{
+public class PlaylistActivity extends AppCompatActivity implements View.OnClickListener, OnPlayerListener{
 
     public static final String PLAYLIST_ID_EXTRA = "playlist_id_extra";
 
@@ -26,6 +30,8 @@ public class PlaylistActivity extends AppCompatActivity implements View.OnClickL
     private RelativeLayout mRlShuffleOff;
 
     private int mPlaylistID;
+
+    private boolean isSongShuffled = false;
 
     public static Intent newIntent(Context context, int playListId) {
         Intent i = new Intent(context, PlaylistActivity.class);
@@ -41,7 +47,22 @@ public class PlaylistActivity extends AppCompatActivity implements View.OnClickL
         mPlaylistID = getIntent().getExtras().getInt(PLAYLIST_ID_EXTRA, -1);
 
         if (mPlaylistID != -1) {
-            PlayerManager.get().setPlaylist(DBManager.get(this).getFullPlaylistByID(mPlaylistID));
+            Playlist playlist = DBManager.get(this).getFullPlaylistByID(mPlaylistID);
+            if (PlayerManager.get().getPlayingPlaylist() != null
+                    && playlist.getID() == PlayerManager.get().getPlayingPlaylist().getID()) {
+
+                PlayerManager.get().setPlaylist(PlayerManager.get().getPlayingPlaylist());
+                if (PlayerManager.get().getPlayingPlaylist().isShuffle()) {
+                    isSongShuffled = true;
+                    PlayerManager.get().getPlaylist().setSongs(playlist.getSongs());
+
+                } else {
+                    isSongShuffled = false;
+                }
+
+            } else {
+                PlayerManager.get().setPlaylist(playlist);
+            }
         } else {
             Playlist playlist = new Playlist(0, "SAVED", "SAVED");
             playlist.setSongs(DBManager.get(this).getAllSavedSongs());
@@ -50,16 +71,30 @@ public class PlaylistActivity extends AppCompatActivity implements View.OnClickL
 
         initializeUI();
 
-        resetOrderSongs();
+        PlayerManager.get().setShuffle(isSongShuffled);
+
+        Player.get().setOnPlayerListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Player.get().unSetOnPlayerListener(this);
     }
 
     private void initializeUI() {
+        ((TextView) findViewById(R.id.tvTitle)).setText(PlayerManager.get().getPlaylist().getName());
+
         findViewById(R.id.rlBack).setOnClickListener(view -> finish());
 
         mRlShuffleOn = (RelativeLayout) findViewById(R.id.rlShuffleOn);
         mRlShuffleOn.setOnClickListener(this);
         mRlShuffleOff = (RelativeLayout) findViewById(R.id.rlShuffleOff);
         mRlShuffleOff.setOnClickListener(this);
+
+        if (isSongShuffled) {
+            showShuffleOn();
+        }
 
         mSongsAdapter = new SongsAdapter(this, PlayerManager.get().getSongs());
 
@@ -68,11 +103,9 @@ public class PlaylistActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            mSongsAdapter.notifyDataSetChanged();
-        }
+    protected void onResume() {
+        super.onResume();
+        mSongsAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -81,10 +114,12 @@ public class PlaylistActivity extends AppCompatActivity implements View.OnClickL
             case R.id.rlShuffleOff:
                 showShuffleOn();
                 shuffleSongs();
+                isSongShuffled = true;
                 break;
             case R.id.rlShuffleOn:
                 showShuffleOff();
                 resetOrderSongs();
+                isSongShuffled = false;
                 break;
         }
     }
@@ -109,4 +144,18 @@ public class PlaylistActivity extends AppCompatActivity implements View.OnClickL
         mSongsAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void OnCompletionListener(Song s) {
+        mSongsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void OnBufferingUpdateListener(int percent) {
+
+    }
+
+    @Override
+    public void OnChangeSong(Song song) {
+        mSongsAdapter.notifyDataSetChanged();
+    }
 }

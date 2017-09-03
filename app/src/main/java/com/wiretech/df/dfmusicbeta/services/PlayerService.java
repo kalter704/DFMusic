@@ -34,7 +34,6 @@ public class PlayerService extends Service {
 
         } else if (action.equals(ACTION.STOP_ACTION)) {
             Player.get().stop();
-            //showNotification(NotificationState.PAUSE);
             stopForeground(true);
             stopSelf();
 

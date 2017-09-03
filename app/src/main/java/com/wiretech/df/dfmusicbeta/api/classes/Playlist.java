@@ -12,6 +12,7 @@ public class Playlist {
 
     private List<Song> mSongs = new ArrayList<>();
     private int mNumbersOfSongs = 0;
+    private boolean isShuffle = false;
 
     public Playlist() {}
 
@@ -23,6 +24,7 @@ public class Playlist {
         mPos = p.getPos();
         mSongs = new ArrayList<>(p.getSongs());
         mNumbersOfSongs = p.getNumbersOfSongs();
+        isShuffle = p.isShuffle;
     }
 
     public Playlist(int id, String name) {
@@ -97,10 +99,18 @@ public class Playlist {
     }
 
     public void setSongs(List<Song> songs) {
-        this.mSongs = songs;
+        this.mSongs = new ArrayList<>(songs);
     }
 
     public void setNumbersOfSongs(int numbersOfSongs) {
         this.mNumbersOfSongs = numbersOfSongs;
+    }
+
+    public boolean isShuffle() {
+        return isShuffle;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        isShuffle = shuffle;
     }
 }

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.wiretech.df.dfmusicbeta.R;
@@ -19,6 +18,7 @@ import com.wiretech.df.dfmusicbeta.api.classes.Song;
 import com.wiretech.df.dfmusicbeta.classes.MusicDownloadManager;
 import com.wiretech.df.dfmusicbeta.classes.Player;
 import com.wiretech.df.dfmusicbeta.classes.PlayerManager;
+import com.wiretech.df.dfmusicbeta.classes.Share;
 import com.wiretech.df.dfmusicbeta.classes.SnackBarCreator;
 import com.wiretech.df.dfmusicbeta.interfaces.OnPlayerListener;
 
@@ -128,6 +128,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.rlPreviousSong).setOnClickListener(this);
         findViewById(R.id.rlNextSong).setOnClickListener(this);
 
+        findViewById(R.id.rlShare).setOnClickListener(this);
+
         mIvAlbum = (ImageView) findViewById(R.id.ivAlbum);
     }
 
@@ -204,6 +206,10 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 isLooping = true;
                 SnackBarCreator.show(this, R.string.snack_repeat_on);
                 Player.get().setLooping(isLooping);
+                break;
+
+            case R.id.rlShare:
+                Share.share(this, getString(R.string.text_for_share_for_clubs) + "\n" + getString(R.string.link_to_app));
                 break;
         }
 

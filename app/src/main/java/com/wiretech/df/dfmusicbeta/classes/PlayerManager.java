@@ -31,6 +31,8 @@ public class PlayerManager {
     private Playlist mFocusPlaylist = null;
     private List<Song> mShuffledSongs = null;
 
+    private boolean isShuffle = false;
+
     public Song getPlayingSong() {
         return mPlayingSong;
     }
@@ -40,7 +42,7 @@ public class PlayerManager {
     }
 
     public void setPlaylist(Playlist p) {
-        mFocusPlaylist = p;
+        mFocusPlaylist = new Playlist(p);
         mShuffledSongs = new ArrayList<>(mFocusPlaylist.getSongs());
     }
 
@@ -54,17 +56,27 @@ public class PlayerManager {
 
     public List<Song> shuffleSongs() {
         Collections.shuffle(mShuffledSongs);
+        isShuffle = !isShuffle;
+        if (mPlayingPlaylist.getID() == mFocusPlaylist.getID()) {
+            mPlayingPlaylist.setSongs(mShuffledSongs);
+            mPlayingPlaylist.setShuffle(true);
+        }
         return mShuffledSongs;
     }
 
     public List<Song> resetOrderSongs() {
         mShuffledSongs = new ArrayList<>(mFocusPlaylist.getSongs());
+        if (mPlayingPlaylist.getID() == mFocusPlaylist.getID()) {
+            mPlayingPlaylist.setSongs(mShuffledSongs);
+            mPlayingPlaylist.setShuffle(false);
+        }
         return mShuffledSongs;
     }
 
     public void play(Context context, Song song) {
         mPlayingPlaylist = new Playlist(mFocusPlaylist);
         mPlayingPlaylist.setSongs(mShuffledSongs);
+        mPlayingPlaylist.setShuffle(isShuffle);
         for (Song s : mPlayingPlaylist.getSongs()) {
             if (s.getRealID() == song.getRealID()) {
                 mPlayingSong = s;
@@ -183,4 +195,11 @@ public class PlayerManager {
         }
     }
 
+    public boolean isShuffle() {
+        return isShuffle;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        isShuffle = shuffle;
+    }
 }

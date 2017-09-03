@@ -8,6 +8,7 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
+import com.wiretech.df.dfmusicbeta.api.classes.Playlist;
 import com.wiretech.df.dfmusicbeta.api.classes.Song;
 import com.wiretech.df.dfmusicbeta.Const;
 import com.wiretech.df.dfmusicbeta.interfaces.OnPlayerListener;
