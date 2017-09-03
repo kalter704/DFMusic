@@ -114,6 +114,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
             isEndTime2 = false;
             isEndDownload = true;
             splashTimer2.start();
+            mSecForSplashActivity += 3;
         } else if (action == MusicServiceAPI.ONLY_PLAYLISTS) {
             String sounds = MusicServiceAPI.getSoundsFromPreferences(this);
             if (sounds != null && musicServerResponse.getSounds().equals(sounds)) {
@@ -171,7 +172,7 @@ public class SplashActivity extends AppCompatActivity implements OnResponseAPILi
         public void run() {
             try {
                 int splashTimer = 0;
-                while(splashTimer < (4 * mSecForSplashActivity * 1000)) {
+                while(splashTimer < (2 * mSecForSplashActivity * 1000)) {
                     sleep(mIterationTime);
                     splashTimer += mIterationTime;
                 }

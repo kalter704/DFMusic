@@ -58,9 +58,11 @@ public class PlaylistsAdapter extends RecyclerView.Adapter<PlaylistsAdapter.Play
             mID = p.getID();
             mPlaylistName.setText(p.getName());
             mBackgroundView.setBackgroundResource(drawableID);
-            if (Player.get().getState() == Player.PlayerState.PLAYING
-                    && PlayerManager.get().getPlayingPlaylist() != null
-                    && PlayerManager.get().getPlayingPlaylist().getID() == mID) {
+            if ((Player.get().getState() == Player.PlayerState.PLAYING
+                    || Player.get().getState() == Player.PlayerState.PREPARING
+                    || Player.get().getState() == Player.PlayerState.PAUSE)
+                       && PlayerManager.get().getPlayingPlaylist() != null
+                       && PlayerManager.get().getPlayingPlaylist().getID() == mID) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     mPlaylistName.setTextColor(mContext.getColor(R.color.textColorRed));
                 } else {

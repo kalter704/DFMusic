@@ -75,7 +75,8 @@ public class SongsAdapter extends ArrayAdapter<Song> implements View.OnClickList
                 && PlayerManager.get().getPlayingSong() != null
                 && PlayerManager.get().getPlayingSong().getRealID() == songHolder.ID
                 && (Player.get().getState() == Player.PlayerState.PLAYING
-                    || Player.get().getState() == Player.PlayerState.PREPARING)) {
+                    || Player.get().getState() == Player.PlayerState.PREPARING
+                    || Player.get().getState() == Player.PlayerState.PAUSE)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 songHolder.mTvPos.setTextColor(mContext.getColor(R.color.textColorRed));
                 songHolder.mTvName.setTextColor(mContext.getColor(R.color.textColorRed));

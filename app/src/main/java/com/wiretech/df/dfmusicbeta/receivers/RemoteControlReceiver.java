@@ -26,6 +26,7 @@ public class RemoteControlReceiver extends BroadcastReceiver {
             KeyEvent event = intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
             if (event.getAction() == ACTION_DOWN) {
                 switch (event.getKeyCode()) {
+                    case KEYCODE_MEDIA_PLAY_PAUSE:
                     case KEYCODE_HEADSETHOOK:
                         if (Player.get().getState() == Player.PlayerState.PLAYING) {
                             PlayerManager.get().pause(context);
@@ -38,13 +39,6 @@ public class RemoteControlReceiver extends BroadcastReceiver {
                         break;
                     case KEYCODE_MEDIA_PAUSE:
                         PlayerManager.get().pause(context);
-                        break;
-                    case KEYCODE_MEDIA_PLAY_PAUSE:
-                        if (Player.get().getState() == Player.PlayerState.PLAYING) {
-                            PlayerManager.get().pause(context);
-                        } else {
-                            PlayerManager.get().resume(context);
-                        }
                         break;
                     case KEYCODE_MEDIA_NEXT:
                         PlayerManager.get().next(context);

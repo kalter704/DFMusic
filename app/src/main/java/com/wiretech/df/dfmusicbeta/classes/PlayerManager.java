@@ -57,7 +57,8 @@ public class PlayerManager {
     public List<Song> shuffleSongs() {
         Collections.shuffle(mShuffledSongs);
         isShuffle = !isShuffle;
-        if (mPlayingPlaylist.getID() == mFocusPlaylist.getID()) {
+        if (mPlayingPlaylist != null
+                && mPlayingPlaylist.getID() == mFocusPlaylist.getID()) {
             mPlayingPlaylist.setSongs(mShuffledSongs);
             mPlayingPlaylist.setShuffle(true);
         }
@@ -66,7 +67,8 @@ public class PlayerManager {
 
     public List<Song> resetOrderSongs() {
         mShuffledSongs = new ArrayList<>(mFocusPlaylist.getSongs());
-        if (mPlayingPlaylist.getID() == mFocusPlaylist.getID()) {
+        if (mPlayingPlaylist != null
+                && mPlayingPlaylist.getID() == mFocusPlaylist.getID()) {
             mPlayingPlaylist.setSongs(mShuffledSongs);
             mPlayingPlaylist.setShuffle(false);
         }
