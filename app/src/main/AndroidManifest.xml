@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wiretech.df.dfmusicbeta">
+          package="com.wiretech.df.dfmusic">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activityes.SplashActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -23,39 +23,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activityes.MainActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activityes.MenuActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.MenuActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activityes.menuactivities.AboutActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activityes.PlaylistActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.PlaylistActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activityes.menuactivities.DFClubsActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.DFClubsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activityes.PlayActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.PlayActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".activityes.menuactivities.StudioActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.StudioActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activityes.menuactivities.SupportProjectActivity"
+            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.SupportProjectActivity"
             android:screenOrientation="portrait"/>
 
         <service
-            android:name=".services.PlayerService"
+            android:name="com.wiretech.df.dfmusic.services.PlayerService"
             android:exported="false">
         </service>
 
         <receiver
-            android:name=".receivers.RemoteControlReceiver"
+            android:name="com.wiretech.df.dfmusic.receivers.RemoteControlReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
