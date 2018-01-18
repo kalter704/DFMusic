@@ -44,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/space_between_titles_in_toolbar"
+                android:textAllCaps="true"
                 android:text="@string/playlist_toolbar_title"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_title_toolbar"

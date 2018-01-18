@@ -143,21 +143,27 @@
     <string name="play_toolbar_title">SONG</string>
     <string name="play_toolbar_subtitle">NOW PLAYING</string>
 
-    <string name="studio_toolbar_title">HILK STUDIO</string>
+    <string name="studio_toolbar_title">RxProject</string>
     <string name="studio_toolbar_subtitle">CONTACTS</string>
 
     <string name="studio_support_title">МЫ ВСЕГДА НА СВЯЗИ!</string>
+    <string name="studio_support_title2">Мы всегда на связи!</string>
     <string name="studio_support">СЛУЖБА ПОДДЕРЖКИ</string>
-    <string name="studio_support_url">hilk.helpdesk@gmail.com</string>
+    <string name="studio_support1_2">Служба поддержки</string>
+    <string name="studio_support_url">support.android@rxproject.ru</string>
     <string name="studio_support2">СОТРУДНИЧЕСТВО</string>
-    <string name="studio_support2_url">hilk.commerce@gmail.com</string>
+    <string name="studio_support2_2">Сотрудничество</string>
+    <string name="studio_support2_url">info@rxproject.ru</string>
     <string name="studio_support_vk">СООБЩЕСТВО VK</string>
-    <string name="studio_support_vk_url">vk.com/hilk_studio</string>
+    <string name="studio_support_vk2">Сообщество VK</string>
+    <string name="studio_support_vk_url">vk.com/rxproject_studio</string>
 
     <string name="support_project_toolbar_title">PROJECT</string>
     <string name="support_project_toolbar_subtitle">SUPPORT</string>
 
-    <string name="support_project_main_text">ДРУЗЬЯ, ПОЖАЛУЙСТА,\nПОДДЕРЖИТЕ НАШИ ПРОЕКТЫ!\nВМЕСТЕ МЫ СДЕЛАЕМ МИР\nЧУТОЧКУ ЛУЧШЕ И ИНТЕРЕСНЕЕ!</string>
+    <string name="support_project_main_text">ДРУЗЬЯ, ПОЖАЛУЙСТА,\nПОДДЕРЖИТЕ НАШИ ПРОЕКТЫ!\nВМЕСТЕ
+        МЫ СДЕЛАЕМ МИР\nЧУТОЧКУ ЛУЧШЕ И ИНТЕРЕСНЕЕ!
+    </string>
     <string name="support_project_card_sber">КАРТА СБЕРБАНК</string>
     <string name="support_project_card_sber_number">4276 4000 6194 2877</string>
     <string name="support_project_yandex_money">ЯНДЕКС.ДЕНЬГИ</string>
@@ -197,23 +203,33 @@
         <item>UNISTREAM</item>
     </string-array>
 
-    <string name="link_to_app">https://play.google.com/store/apps/details?id=com.wiretech.df.dfmusic</string>
+    <string name="link_to_app">
+        https://play.google.com/store/apps/details?id=com.wiretech.df.dfmusic
+    </string>
 
     <string name="text_description_action">Поделиться</string>
     <string name="text_for_share_1">
         Включай быстрее Dance Family music, ждем только тебя!
     </string>
     <string name="text_for_share_studio">
-        Мне нравится HILK STUDIO!\n\nHILK В VK\nhttps://vk.com/hilk_studio\n\nСОТРУДНИЧЕСТВО C HILK\nhilk.commerce@gmail.com\n\nСЛУЖБА ПОДДЕРЖКИ HILK\nhilk.helpdesk@gmail.com\n\nСкачай DF Music прямо сейчас
+        Мне нравится RxProject!\n\nRxProject В VK\nhttps://vk.com/rxproject_studio\n\nСотрудничество
+        с
+        RxProject\ninfo@rxproject.ru\n\nСлужба поддержки
+        RxProject\nsupport.android@rxproject.ru\n\nСкачай DF
+        Music прямо сейчас
     </string>
     <string name="text_for_share_support">
-        Я поддерживаю проект DF Music от HILK Studio, поддержи и ты!\n\nКарта Сбербанка\n4276 4000 6194 2877\n\nЯндекс.Деньги\nhttps://money.yandex.ru/to/410015079982251\n\nPayPal\npaypal.me/HILKstudio\n\nQIWI Кошелек\n+79169016017\n\nСкачай DF Music прямо сейчас
+        Я поддерживаю проект DF Music от RxProject, поддержи и ты!\n\nКарта Сбербанка\n4276 4000
+        6194
+        2877\n\nЯндекс.Деньги\nhttps://money.yandex.ru/to/410015079982251\n\nPayPal\npaypal.me/HILKstudio\n\nQIWI
+        Кошелек\n+79169016017\n\nСкачай DF Music прямо сейчас
     </string>
     <string name="text_for_share_for_clubs">
         Все клубы Dance Family в одном приложении!\nСкачай DF Music прямо сейчас
     </string>
     <string name="text_for_share_for_friends">
-        Включай быстрее Dance Family Music, ждем только тебя!\nТеперь все клубы DF всегда с тобой!\nСкачай DF Music прямо сейчас
+        Включай быстрее Dance Family Music, ждем только тебя!\nТеперь все клубы DF всегда с
+        тобой!\nСкачай DF Music прямо сейчас
     </string>
 
 
@@ -272,5 +288,19 @@
         <item>12335</item>
         <item>178465</item>
     </string-array>
+
+
+    <string name="agreement">
+        Команда RxProject не несет ответственности за контент, который размещен в приложении DF
+        Music. Мы предоставляем администраторам (заказчику) со стороны Dance Family техническую
+        возможность размещать и хранить информацию на серверах третьих лиц. Чтобы получить
+        возможность размещать и хранить свой контент заказчик принимает условия пользовательского
+        соглашения, в соответствии с которым обязуется не создавать и не размещать незаконный
+        контент.
+        \n\nМы уважаем права и интересы правообладателей, а также пользователей наших сервисов. У
+        вас есть возможность отправить возникшие жалобы на почту info@rxproject.ru, в теме письма
+        укажите «Жалоба. DF Music». Жалобы должны быть обоснованными и содержать необходимую
+        информацию для принятия решения о мерах реагирования.
+    </string>
 
 </resources>

@@ -16,6 +16,7 @@
     <color name="colorBlackBackground">#000000</color>
 
     <color name="colorPressedMenuButton">#3cffffff</color>
+    <color name="colorPressedMenuButton2">#3c000000</color>
     <!--
     <color name="colorPressedMenuButton">#1F1F1F</color>
     -->

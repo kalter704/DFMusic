@@ -5,14 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.*;
 
+import com.wiretech.df.dfmusic.*;
 import com.wiretech.df.dfmusic.activityes.menuactivities.DFClubsActivity;
 import com.wiretech.df.dfmusic.activityes.menuactivities.StudioActivity;
 import com.wiretech.df.dfmusic.activityes.menuactivities.SupportProjectActivity;
 import com.wiretech.df.dfmusic.classes.Share;
 import com.wiretech.df.dfmusic.classes.SnackBarCreator;
 import com.wiretech.df.dfmusic.database.DBManager;
-import com.wiretech.df.dfmusic.R;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        ((TextView) findViewById(R.id.tv_version)).setText("Версия " + BuildConfig.VERSION_NAME);
 
         findViewById(R.id.rlBack).setOnClickListener(this);
         findViewById(R.id.rlShare).setOnClickListener(this);

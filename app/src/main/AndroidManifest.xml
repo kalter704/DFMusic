@@ -8,14 +8,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.SplashActivity"
-            android:screenOrientation="portrait">
+                android:name=".activityes.SplashActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -23,46 +23,47 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.MainActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.MainActivity"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.MenuActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.MenuActivity"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.AboutActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.menuactivities.AboutActivity"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.PlaylistActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.PlaylistActivity"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.DFClubsActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.menuactivities.DFClubsActivity"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.PlayActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
-
+                android:name=".activityes.PlayActivity"
+                android:launchMode="singleTop"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.StudioActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.menuactivities.StudioActivity"
+                android:screenOrientation="portrait"/>
         <activity
-            android:name="com.wiretech.df.dfmusic.activityes.menuactivities.SupportProjectActivity"
-            android:screenOrientation="portrait"/>
+                android:name=".activityes.menuactivities.SupportProjectActivity"
+                android:screenOrientation="portrait"/>
 
         <service
-            android:name="com.wiretech.df.dfmusic.services.PlayerService"
-            android:exported="false">
+                android:name=".services.PlayerService"
+                android:exported="false">
         </service>
 
         <receiver
-            android:name="com.wiretech.df.dfmusic.receivers.RemoteControlReceiver"
-            android:enabled="true"
-            android:exported="false">
+                android:name=".receivers.RemoteControlReceiver"
+                android:enabled="true"
+                android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activityes.menuactivities.AgreementActivity">
+        </activity>
     </application>
 
 </manifest>

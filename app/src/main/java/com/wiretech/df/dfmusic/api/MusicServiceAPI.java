@@ -30,9 +30,7 @@ public class MusicServiceAPI {
     private static final boolean isDEBUG = true;
     private static final String LOG_TAG = "MusicServerApi";
 
-    //public static final String SERVER_DOMAIN = "http://192.168.43.193";
-    //public static final String SERVER_DOMAIN = "http://194.87.102.161";
-    public static final String SERVER_DOMAIN = "http://188.166.211.232";
+    public static final String SERVER_DOMAIN = "http://188.226.190.221";
     public static final String SERVER_URL = SERVER_DOMAIN + "/musicapi/v2/";
 
     private static final int PLAYLIST_ACTION_ID = 1;
